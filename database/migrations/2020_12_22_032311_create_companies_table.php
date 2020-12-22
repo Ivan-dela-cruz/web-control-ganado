@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurcharsesTable extends Migration
+class CreateCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,18 @@ class CreatePurcharsesTable extends Migration
      */
     public function up()
     {
-        Schema::create('purcharses', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('estate_id');
-            $table->date('date')->nullable();
-            $table->double('total')->nullable();
-            $table->string('description')->nullable();
+            $table->string('name')->nullable();
+            $table->string('ruc')->nullable();
+            $table->string('owner')->nullable();
+            $table->string('url_image')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('email')->unique();
             $table->tinyInteger('status')->nullable()->default(1);
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('estate_id')->references('id')->on('estates');
         });
     }
 
@@ -33,6 +35,6 @@ class CreatePurcharsesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purcharses');
+        Schema::dropIfExists('companies');
     }
 }

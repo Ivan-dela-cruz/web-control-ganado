@@ -15,7 +15,21 @@ class CreateEmploysTable extends Migration
     {
         Schema::create('employs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('estate_id');
+            $table->string('name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('url_image')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('email')->unique();
+            $table->string('start_date')->nullable();
+            $table->string('end_date')->nullable();
+            $table->tinyInteger('status')->nullable()->default(1);
+            $table->softDeletes();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('estate_id')->references('id')->on('estates');
         });
     }
 
