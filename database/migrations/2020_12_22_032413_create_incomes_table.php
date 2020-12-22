@@ -15,7 +15,16 @@ class CreateIncomesTable extends Migration
     {
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('estate_id');
+            $table->integer('year')->nullable();
+            $table->date('date')->nullable();
+            $table->time('hour')->nullable();
+            $table->double('total_liters')->nullable()->default(0);
+            $table->string('description')->nullable();
+            $table->tinyInteger('status')->nullable()->default(1);
+            $table->softDeletes();
             $table->timestamps();
+            $table->foreign('estate_id')->references('id')->on('estates');
         });
     }
 

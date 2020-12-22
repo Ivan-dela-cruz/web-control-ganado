@@ -15,7 +15,14 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('estate_id');
+            $table->date('date')->nullable();
+            $table->double('total')->nullable();
+            $table->string('description')->nullable();
+            $table->tinyInteger('status')->nullable()->default(1);
+            $table->softDeletes();
             $table->timestamps();
+            $table->foreign('estate_id')->references('id')->on('estates');
         });
     }
 

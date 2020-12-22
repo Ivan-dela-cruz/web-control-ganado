@@ -13,7 +13,17 @@ class DetailPurcharses extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('detail_purcharses', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('purcharse_id');
+            $table->string('description')->nullable();
+            $table->integer('quanity')->nullable();
+            $table->double('price_unit')->nullable();
+            $table->string('price_total')->nullable();
+            $table->tinyInteger('status')->nullable()->default(1);
+            $table->timestamps();
+            $table->foreign('purcharse_id')->references('id')->on('purcharses');
+        });
     }
 
     /**
@@ -23,6 +33,6 @@ class DetailPurcharses extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('detail_purcharses');
     }
 }
