@@ -19,7 +19,7 @@
                         </div>
                         <div class="card-body">
                             <div class="dt-responsive table-responsive">
-                                @livewire('subject')
+                               
                             </div>
                         </div>
                     </div>
