@@ -15,7 +15,17 @@ class CreateMilkingsTable extends Migration
     {
         Schema::create('milkings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('income_id');
+            $table->unsignedBigInteger('animalproduction_id');
+            $table->double('total_liters')->nullable()->default(0);
+            $table->integer('year')->nullable();
+            $table->date('date')->nullable();
+            $table->time('hour')->nullable();
+            $table->boolean('status')->nullable()->default(true);
+            $table->softDeletes();
             $table->timestamps();
+            $table->foreign('income_id')->references('id')->on('incomes');
+            $table->foreign('animalproduction_id')->references('id')->on('animal_production');
         });
     }
 

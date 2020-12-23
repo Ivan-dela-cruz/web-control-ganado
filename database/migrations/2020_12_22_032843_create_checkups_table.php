@@ -15,7 +15,16 @@ class CreateCheckupsTable extends Migration
     {
         Schema::create('checkups', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('animal_id');
+            $table->unsignedBigInteger('veteninarie_id');
+            $table->string('doctor_name')->nullable();
+            $table->date('date')->nullable(); 
+            $table->string('disease')->nullable();     
+            $table->date('next_date')->nullable();    
+            $table->softDeletes();
             $table->timestamps();
+            $table->foreign('animal_id')->references('id')->on('animals');
+            $table->foreign('veteninarie_id')->references('id')->on('veteninaries');
         });
     }
 

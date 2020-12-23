@@ -15,7 +15,15 @@ class CreateMastitisTable extends Migration
     {
         Schema::create('mastitis', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('animal_production_id');
+            $table->unsignedBigInteger('treatment_id');
+            $table->string('tipe_mastitis')->nullable();
+            $table->string('description')->nullable();
+            $table->string('level')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+            $table->foreign('treatment_id')->references('id')->on('treatments');
+            $table->foreign('animal_production_id')->references('id')->on('animal_production');
         });
     }
 
