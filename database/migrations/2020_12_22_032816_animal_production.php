@@ -14,6 +14,19 @@ class AnimalProduction extends Migration
     public function up()
     {
         //
+        Schema::create('animal_production', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('animal_id');
+            $table->string('name')->nullable();
+            $table->string('code')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->string('url_image')->nullable();
+            $table->boolean('status')->nullable()->default(true);
+            $table->softDeletes();
+            $table->timestamps();
+            $table->foreign('animal_id')->references('id')->on('animals');
+        });
     }
 
     /**
@@ -24,5 +37,6 @@ class AnimalProduction extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('animal_production');
     }
 }

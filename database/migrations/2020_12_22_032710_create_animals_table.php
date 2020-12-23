@@ -15,7 +15,16 @@ class CreateAnimalsTable extends Migration
     {
         Schema::create('animals', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('estate_id');
+            $table->string('name')->nullable();
+            $table->string('code')->nullable();
+            $table->string('url_image')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->boolean('status')->nullable()->default(true);
+            $table->softDeletes();
             $table->timestamps();
+            $table->foreign('estate_id')->references('id')->on('estates');
         });
     }
 
