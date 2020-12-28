@@ -11,19 +11,25 @@
 
 @include('admin.modals.veterinaries.edit')
 <br />
-
 <table id="user-list-table" class="table nowrap">
     <thead>
         <tr>
-            <th>Nombres</th>
+            <th>Nombre Completo</th>
+            <th>Dni</th>
+            <th>Email</th>
+            <th>Telèfonos</th>
             <th>Direcciòn</th>
+            <th>Registrado</th>
             <th>Estado</th>
         </tr>
     </thead>
     <tbody>
         @foreach($veterinaries as $veterinary)
             <tr>
-                <td>{{$veterinary->name}}</td>
+                <td>{{$veterinary->name}} {{$veterinary->last_name}}</td>
+                <td>{{$veterinary->dni}}</td>
+                <td>{{$veterinary->email}}</td>
+                <td>{{$veterinary->phone1}} - {{$veterinary->phone2}} </td>
                 <td>{{$veterinary->direction}}</td>
                 <td>{{$veterinary->created_at}}</td>
                 <td>
