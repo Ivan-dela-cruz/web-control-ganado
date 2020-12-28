@@ -34,4 +34,7 @@ Route::get('dashboard/estates','Admin\DashboardController@estates')->name('estat
 Route::get('dashboard/users','Admin\DashboardController@users')->name('users');
 Route::get('dashboard/employes','Admin\DashboardController@employes')->name('employes');
 
+Route::get('dashboard/veterinaries','Admin\DashboardController@veterinaries')->name('veterinaries');
+Route::get('dashboard/treatments','Admin\DashboardController@Treatments')->name('treatments');
+Route::get('dashboard/diseases','Admin\DashboardController@Diseases')->name('diseases');
 

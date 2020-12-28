@@ -25,6 +25,7 @@ class AnimalTreatments extends Migration
             $table->time('time_treatment')->nullable();    
             $table->double('price')->default(0); 
             $table->string('Description')->nullable();
+            $table->boolean('status')->nullable()->default(true);
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('animal_id')->references('id')->on('animals');

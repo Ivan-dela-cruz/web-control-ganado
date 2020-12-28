@@ -20,6 +20,7 @@ class CreateMastitisTable extends Migration
             $table->string('tipe_mastitis')->nullable();
             $table->string('description')->nullable();
             $table->string('level')->nullable();
+            $table->boolean('status')->nullable()->default(true);
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('treatment_id')->references('id')->on('treatments');

@@ -15,9 +15,10 @@ class CreateDiseasesTable extends Migration
     {
         Schema::create('diseases', function (Blueprint $table) {
             $table->id();
-            $table->date('name')->nullable();
+            $table->String('name')->nullable();
             $table->string('description')->nullable();
             $table->string('time_diseases')->nullable();
+            $table->boolean('status')->nullable()->default(true);
             $table->softDeletes();
             $table->timestamps();
         });

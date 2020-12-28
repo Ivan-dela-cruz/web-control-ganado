@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVeteninariesTable extends Migration
+class CreateVeterinariesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateVeteninariesTable extends Migration
      */
     public function up()
     {
-        Schema::create('veteninaries', function (Blueprint $table) {
+        Schema::create('veterinaries', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
             $table->string('direction')->nullable();
-            $table->softDeletes();
+            $table->boolean('status')->nullable()->default(true);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateVeteninariesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('veteninaries');
+        Schema::dropIfExists('veterinaries');
     }
 }
