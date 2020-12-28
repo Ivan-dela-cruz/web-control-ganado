@@ -76,7 +76,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <span class="pcoded-mtext">Usuarios</span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li><a href="">Usuarios</a></li>
+                        <li><a href="{{route('users')}}">Usuarios</a></li>
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
@@ -165,8 +165,8 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <span class="pcoded-mtext">Configuraciones</span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li><a href="{{route('periods')}}">Periodos</a></li>
-                        <li><a href="{{route('courses')}}">Cursos</a></li>
+                        <li><a href="{{route('estates')}}">Haciendas</a></li>
+                        <li><a href="{{route('employes')}}">Empleados</a></li>
 
                        
                     </ul>

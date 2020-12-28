@@ -21,7 +21,7 @@ class DashboardController extends Controller
    
     public function users()
     {
-        //
+        return view('admin.dashboard.users.index');
     }
     public function subjects()
     {
@@ -52,16 +52,23 @@ class DashboardController extends Controller
     public function levels()
     {
         return view('admin.dashboard.levels.index');
-        
     }
     public function tasks()
     {
         return view('admin.dashboard.tasks.index');
-        
     }
     public function files()
     {
         return view('admin.dashboard.file.index');
+    }
+    public function estates()
+    {
+        return view('admin.dashboard.estates.index');
+        
+    }
+    public function employes()
+    {
+        return view('admin.dashboard.employes.index');
         
     }
 }

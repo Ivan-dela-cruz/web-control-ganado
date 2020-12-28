@@ -11,7 +11,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Souri Dental</title>
+    <title>Control ganado</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -26,7 +26,7 @@
 	<!-- vendor css -->
 <link rel="stylesheet" href="{{asset('assets2/css/style.css')}}">
 </head>
-<body>
+<body style=" background-image: url({{asset('img/what.jpg')}});">
     <div id="app">
         {{----
 

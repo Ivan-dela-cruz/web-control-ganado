@@ -30,4 +30,8 @@ Route::get('dashboard/levels','Admin\DashboardController@levels')->name('levels'
 Route::get('dashboard/tasks','Admin\DashboardController@tasks')->name('tasks');
 Route::get('dashboard/files','Admin\DashboardController@files')->name('files');
 
+Route::get('dashboard/estates','Admin\DashboardController@estates')->name('estates');
+Route::get('dashboard/users','Admin\DashboardController@users')->name('users');
+Route::get('dashboard/employes','Admin\DashboardController@employes')->name('employes');
+
 

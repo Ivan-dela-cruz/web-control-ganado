@@ -19,6 +19,7 @@ class CreateEmploysTable extends Migration
             $table->unsignedBigInteger('estate_id');
             $table->string('name')->nullable();
             $table->string('last_name')->nullable();
+            $table->string('dni')->nullable();
             $table->string('url_image')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
