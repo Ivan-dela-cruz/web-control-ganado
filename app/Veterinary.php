@@ -12,7 +12,12 @@ class Veterinary extends Model
     protected $table = 'veterinaries';
     protected $fillable = [
         'name',
-        'description',
+        'last_name',
+        'dni',
+        'email',
+        'phone1',
+        'phone2',
+        'direction',
         'status'
     ];
 }

@@ -7,11 +7,40 @@
 </div>
 <div class="form-group">
     <label for="exampleFormControlInput2">Apellidos</label>
+    <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="" wire:model="last_name" />
+    @error('last_name')<span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>
+<div class="form-group">
+    <label for="exampleFormControlInput2">Dni</label>
+    <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="" wire:model="dni" />
+    @error('dni')<span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>
+<div class="form-group">
+    <label for="exampleFormControlInput2">Email</label>
+    <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="" wire:model="email" />
+    @error('email')<span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>
+<div class="form-group">
+    <label for="exampleFormControlInput2">Telefono Principal:</label>
+    <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="" wire:model="phone1" />
+    @error('phone1')<span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>
+<div class="form-group">
+    <label for="exampleFormControlInput2">Telefono Secundario</label>
+    <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="" wire:model="phone2" />
+    @error('phone2')<span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>
+<div class="form-group">
+    <label for="exampleFormControlInput2">Direcciòn</label>
     <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="" wire:model="direction" />
     @error('direction')<span class="text-danger">{{ $message }}</span>
     @enderror
 </div>
-
 <div class="form-group">
     <label for="exampleFormControlInput3">Estado</label>
     <select class="form-control" id="exampleFormControlInput3" wire:model="status">
