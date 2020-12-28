@@ -13,6 +13,12 @@
     @enderror
 </div>
 <div class="form-group">
+    <label for="exampleFormControlInput2">Propietario</label>
+    <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="" wire:model="owner" />
+    @error('owner')<span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>
+<div class="form-group">
     <label for="exampleFormControlInput2">Dirección</label>
     <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="" wire:model="address" />
     @error('address')<span class="text-danger">{{ $message }}</span>

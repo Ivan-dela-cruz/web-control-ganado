@@ -65,7 +65,6 @@ class Estates extends Component
         $this->address = $estates->address;
         $this->data_id = $estates->id;
         $this->action = 'PUT';
-
     }
 
     public function update()
@@ -77,9 +76,7 @@ class Estates extends Component
             'address' => 'required',
             'status' => 'required'
         ]);
-
         $data = Estate::find($this->data_id);
-
         $data->update([
             'name'=>$this->name,
             'ruc'=>$this->ruc,
