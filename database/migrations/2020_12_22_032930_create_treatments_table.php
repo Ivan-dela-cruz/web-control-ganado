@@ -17,6 +17,7 @@ class CreateTreatmentsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
+            $table->boolean('status')->nullable()->default(true);
             $table->softDeletes();
             $table->timestamps();
         });
