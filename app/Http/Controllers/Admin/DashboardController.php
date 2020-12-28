@@ -64,4 +64,19 @@ class DashboardController extends Controller
         return view('admin.dashboard.file.index');
         
     }
+    public function veterinaries()
+    {
+        return view('admin.dashboard.veterinaries.index');
+        
+    }
+    public function treatments()
+    {
+        return view('admin.dashboard.treatments.index');
+        
+    }
+    public function diseases()
+    {
+        return view('admin.dashboard.diseases.index');
+        
+    }
 }
