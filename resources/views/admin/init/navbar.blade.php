@@ -56,7 +56,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                
 
                 <li class="nav-item pcoded-hasmenu">
-                    <a href="javascript: return void();" class="nav-link ">
+                    <a href="javascript: void(0);" class="nav-link ">
                         <span class="pcoded-micon">
                             <i class="feather icon-home"></i>
                         </span>
@@ -69,7 +69,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                 </li>
                
                 <li class="nav-item pcoded-hasmenu">
-                    <a href="javascript: return void();" class="nav-link ">
+                    <a href="javascript: void(0);" class="nav-link ">
                         <span class="pcoded-micon">
                             <i class="feather icon-layout"></i>
                         </span>
@@ -80,14 +80,25 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
-                    <a href="javascript: return void();" class="nav-link ">
+                    <a href="javascript: void(0);" class="nav-link ">
                         <span class="pcoded-micon">
                             <i class="feather icon-layout"></i>
                         </span>
-                        <span class="pcoded-mtext">Estudiantes</span>
+                        <span class="pcoded-mtext">Empleados</span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li><a href="{{route('students')}}">Estudiantes</a></li>
+                        <li><a href="{{route('employes')}}">Empleados</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item pcoded-hasmenu">
+                    <a href="javascript: void(0);" class="nav-link ">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-layout"></i>
+                        </span>
+                        <span class="pcoded-mtext">Tratamientos</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li><a href="{{route('treatments')}}">Lista de tratamientos</a></li>
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
@@ -95,10 +106,10 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <span class="pcoded-micon">
                             <i class="feather icon-layout"></i>
                         </span>
-                        <span class="pcoded-mtext">Materias</span>
+                        <span class="pcoded-mtext">Emfermedades</span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li><a href="{{route('subjects')}}">Lista de materias</a></li>
+                        <li><a href="{{route('diseases')}}">Lista de emfermedades</a></li>
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
@@ -106,56 +117,13 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <span class="pcoded-micon">
                             <i class="feather icon-layout"></i>
                         </span>
-                        <span class="pcoded-mtext">Profesores</span>
+                        <span class="pcoded-mtext">Veterinarios</span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li><a href="{{route('teachers')}}">Lista de profesores</a></li>
+                        <li><a href="{{route('veterinaries')}}">Lista de veterinarios</a></li>
                     </ul>
                 </li>
-                <li class="nav-item pcoded-hasmenu">
-                    <a href="javascript: return void();" class="nav-link ">
-                        <span class="pcoded-micon">
-                            <i class="feather icon-layout"></i>
-                        </span>
-                        <span class="pcoded-mtext">Ciclos</span>
-                    </a>
-                    <ul class="pcoded-submenu">
-                        <li><a href="{{route('levels')}}">Ciclos</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item pcoded-hasmenu">
-                    <a href="javascript: return void();" class="nav-link ">
-                        <span class="pcoded-micon">
-                            <i class="feather icon-layout"></i>
-                        </span>
-                        <span class="pcoded-mtext">Cursos</span>
-                    </a>
-                    <ul class="pcoded-submenu">
-                        <li><a href="{{route('courses')}}">Cursos</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item pcoded-hasmenu">
-                    <a href="javascript: return void();" class="nav-link ">
-                        <span class="pcoded-micon">
-                            <i class="feather icon-layout"></i>
-                        </span>
-                        <span class="pcoded-mtext">Tareas</span>
-                    </a>
-                    <ul class="pcoded-submenu">
-                        <li><a href="{{route('tasks')}}">Tareas</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item pcoded-hasmenu">
-                    <a href="javascript: return void();" class="nav-link ">
-                        <span class="pcoded-micon">
-                            <i class="feather icon-layout"></i>
-                        </span>
-                        <span class="pcoded-mtext">Archivos</span>
-                    </a>
-                    <ul class="pcoded-submenu">
-                        <li><a href="{{route('files')}}">Archivos</a></li>
-                    </ul>
-                </li>
+                
                 
                  <li class="nav-item pcoded-hasmenu">
                     <a href="javascript: return void();" class="nav-link ">
