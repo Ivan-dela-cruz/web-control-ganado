@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Employ extends Model
 {
     use SoftDeletes;
-    protected $table = 'students';
+    protected $table = 'employs';
    
     protected $fillable = [
         'user_id',
         'estate_id',
         'name',
         'last_name',
+        'dni',
         'url_image',
         'phone',
         'address',
