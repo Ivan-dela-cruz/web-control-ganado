@@ -29,6 +29,11 @@ Route::get('dashboard/teachers','Admin\DashboardController@teachers')->name('tea
 Route::get('dashboard/levels','Admin\DashboardController@levels')->name('levels');
 Route::get('dashboard/tasks','Admin\DashboardController@tasks')->name('tasks');
 Route::get('dashboard/files','Admin\DashboardController@files')->name('files');
+
+Route::get('dashboard/estates','Admin\DashboardController@estates')->name('estates');
+Route::get('dashboard/users','Admin\DashboardController@users')->name('users');
+Route::get('dashboard/employes','Admin\DashboardController@employes')->name('employes');
+
 Route::get('dashboard/veterinaries','Admin\DashboardController@veterinaries')->name('veterinaries');
 Route::get('dashboard/treatments','Admin\DashboardController@Treatments')->name('treatments');
 Route::get('dashboard/diseases','Admin\DashboardController@Diseases')->name('diseases');

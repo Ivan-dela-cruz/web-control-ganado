@@ -38,6 +38,6 @@ class AnimalDiseases extends Migration
     {
         //
         Schema::dropIfExists('animal_diseases');
-    
     }
+    
 }

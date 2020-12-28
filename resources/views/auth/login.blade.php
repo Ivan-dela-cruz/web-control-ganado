@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="auth-wrapper">
+<div style=" background-image: url({{asset('img/what.jpg')}});"  class="auth-wrapper">
 	<div class="auth-content">
 		<div class="card">
 			<div class="row align-items-center text-center">
