@@ -23,9 +23,9 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard.users.index');
     }
-    public function subjects()
+    public function deliveries()
     {
-         return view('admin.dashboard.subjects.index');
+         return view('admin.dashboard.deliveries.index');
     }
 
    

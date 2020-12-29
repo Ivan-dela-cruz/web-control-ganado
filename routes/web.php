@@ -21,7 +21,7 @@ Auth::routes();
 Route::get('dashboard/periods','Admin\DashboardController@periods')->name('periods');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('dashboard','Admin\DashboardController@index')->name('dashboard');
-Route::get('dashboard/subjects','Admin\DashboardController@subjects')->name('subjects');
+Route::get('dashboard/deliveries','Admin\DashboardController@deliveries')->name('deliveries');
 Route::get('dashboard/roles','Admin\DashboardController@roles')->name('roles');
 Route::get('dashboard/students','Admin\DashboardController@students')->name('students');
 
