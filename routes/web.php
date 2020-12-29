@@ -38,4 +38,4 @@ Route::get('dashboard/veterinaries','Admin\DashboardController@veterinaries')->n
 Route::get('dashboard/treatments','Admin\DashboardController@Treatments')->name('treatments');
 Route::get('dashboard/diseases','Admin\DashboardController@Diseases')->name('diseases');
 Route::get('dashboard/animals','Admin\DashboardController@Animals')->name('animals');
-
+Route::get('dashboard/mastitis','Admin\DashboardController@Mastitis')->name('mastitis');

@@ -20,10 +20,10 @@ class Mastitis extends Model
 
     public function animal_production()
     {
-        return $this->belongsTo(User::class, 'animal_production_id');
+        return $this->belongsTo(Animal_production::class, 'animal_production_id');
     }
     public function treatment()
     {
-        return $this->belongsTo(User::class, 'treatment_id');
+        return $this->belongsTo(Treatment::class, 'treatment_id');
     }
 }
