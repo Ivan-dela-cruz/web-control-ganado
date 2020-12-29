@@ -123,6 +123,17 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <li><a href="{{route('veterinaries')}}">Lista de veterinarios</a></li>
                     </ul>
                 </li>
+                <li class="nav-item pcoded-hasmenu">
+                    <a href="javascript: return void();" class="nav-link ">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-layout"></i>
+                        </span>
+                        <span class="pcoded-mtext">Animales</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li><a href="{{route('animals')}}">Lista de Animales</a></li>
+                    </ul>
+                </li>
                 
                 
                  <li class="nav-item pcoded-hasmenu">
