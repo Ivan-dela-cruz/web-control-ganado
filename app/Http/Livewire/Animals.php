@@ -80,7 +80,7 @@ class Animals extends Component
             'start_date'         =>  $this->start_date,
             'end_date'         =>  $this->end_date,
             'status'            =>  $this->status,
-            'level_id'            =>  $this->level_id
+            'estate_id'            =>  $this->estate_id
         ]);
 
         session()->flash('message', 'Animal actualizado con exíto.');

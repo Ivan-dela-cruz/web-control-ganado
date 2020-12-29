@@ -37,4 +37,5 @@ Route::get('dashboard/employes','Admin\DashboardController@employes')->name('emp
 Route::get('dashboard/veterinaries','Admin\DashboardController@veterinaries')->name('veterinaries');
 Route::get('dashboard/treatments','Admin\DashboardController@Treatments')->name('treatments');
 Route::get('dashboard/diseases','Admin\DashboardController@Diseases')->name('diseases');
+Route::get('dashboard/animals','Admin\DashboardController@Animals')->name('animals');
 
