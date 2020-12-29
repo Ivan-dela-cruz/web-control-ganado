@@ -134,7 +134,17 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <li><a href="{{route('animals')}}">Lista de Animales</a></li>
                     </ul>
                 </li>
-                
+                <li class="nav-item pcoded-hasmenu">
+                    <a href="javascript: return void();" class="nav-link ">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-layout"></i>
+                        </span>
+                        <span class="pcoded-mtext">Mastitis</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li><a href="{{route('mastitis')}}">Lista de Mastitis</a></li>
+                    </ul>
+                </li>
                 
                  <li class="nav-item pcoded-hasmenu">
                     <a href="javascript: return void();" class="nav-link ">

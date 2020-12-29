@@ -82,6 +82,10 @@ window.livewire.on('animalStore', () => {
     $('#createModal').modal('hide');
     $('#updateModal').modal('hide');
 });
+window.livewire.on('mastitisStore', () => {
+    $('#createModal').modal('hide');
+    $('#updateModal').modal('hide');
+});
 window.livewire.on('Success', () => {
     swal("¡Satisfactorio!", "Proceso realizado con exíto", "success");
 });

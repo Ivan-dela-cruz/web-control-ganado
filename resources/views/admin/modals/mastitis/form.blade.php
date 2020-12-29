@@ -1,7 +1,7 @@
 <div class="form-group">
-    <label for="exampleFormControlInput1">Nombre</label>
-    <input type="text" id="exampleFormControlInput1" class="form-control"  placeholder="Ingrese" wire:model="name" />
-    @error('name')
+    <label for="exampleFormControlInput1">Tipo </label>
+    <input type="text" id="exampleFormControlInput1" class="form-control"  placeholder="Ingrese" wire:model="tipe_mastitis" />
+    @error('tipe_mastitis')
     <span class="text-danger">{{ $message }}</span>
     @enderror
 </div>
@@ -12,20 +12,31 @@
     @enderror
 </div>
  <div class="form-group">
-    <label for="exampleFormControlInput2">Slug</label>
-    <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="Slug" wire:model="slug" />
-    @error('slug')<span class="text-danger">{{ $message }}</span>
+    <label for="exampleFormControlInput2">Level</label>
+    <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="Slug" wire:model="level" />
+    @error('level')<span class="text-danger">{{ $message }}</span>
     @enderror
 </div>
 <div class="form-group">
-    <label for="exampleFormControlInput3">Ciclo</label>
-    <select class="form-control" id="exampleFormControlInput3" wire:model="level_id">
+    <label for="exampleFormControlInput3">Tratamiento</label>
+    <select class="form-control" id="exampleFormControlInput3" wire:model="treatment_id">
         <option value="">Seleccione</option>
-        @foreach ($levels as $level)
-        <option value="{{ $level->id }}">{{$level->name}}</option>
+        @foreach ($treatments as $treatment)
+        <option value="{{ $treatment->id }}">{{$treatment->name}}</option>
         @endforeach
     </select>
-    @error('status')<span class="text-danger">{{ $message }}</span>
+    @error('treatment_id')<span class="text-danger">{{ $message }}</span>
+    @enderror
+</div>
+<div class="form-group">
+    <label for="exampleFormControlInput3">Animal</label>
+    <select class="form-control" id="exampleFormControlInput3" wire:model="animal_production_id">
+        <option value="">Seleccione</option>
+        @foreach ($animals_production as $animal_production)
+        <option value="{{ $animal_production->id }}">{{$animal_production->name}}</option>
+        @endforeach
+    </select>
+    @error('animal_production_id')<span class="text-danger">{{ $message }}</span>
     @enderror
 </div>
 <div class="form-group">
