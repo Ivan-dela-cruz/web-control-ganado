@@ -45,22 +45,11 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard.students.index');
     }
-     public function teachers()
+     public function companies()
     {
-        return view('admin.dashboard.teachers.index');
+        return view('admin.dashboard.companies.index');
     }
-    public function levels()
-    {
-        return view('admin.dashboard.levels.index');
-    }
-    public function tasks()
-    {
-        return view('admin.dashboard.tasks.index');
-    }
-    public function files()
-    {
-        return view('admin.dashboard.file.index');
-    }
+    
     public function estates()
     {
         return view('admin.dashboard.estates.index');
