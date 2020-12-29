@@ -146,7 +146,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                     <ul class="pcoded-submenu">
                         <li><a href="{{route('estates')}}">Haciendas</a></li>
                         <li><a href="{{route('companies')}}">Companias</a></li>
-
+                        <li><a href="{{route('deliveries')}}">Entregas de leche</a></li>
                        
                     </ul>
                 </li>
