@@ -11,7 +11,7 @@ class EstateController extends Controller
    public function index()
    {
         try{
-            $estates = Estate::where('status',1)->orderBy('name','ASC')->get(['name','ruc', 'owner', 'url_image', 'phone', 'address','email']);
+            $estates = Estate::orderBy('name','ASC')->get(['name','ruc', 'owner', 'url_image', 'phone', 'address','email']);
             return response()->json([
                 'success' => true,
                 'code' => 'SUCCESS_QUERY',

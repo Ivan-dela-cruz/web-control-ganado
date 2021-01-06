@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\StatusScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -22,5 +23,9 @@ class Estate extends Model
         'status'
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope(new StatusScope());
+    }
    
 }
