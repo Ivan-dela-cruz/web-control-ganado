@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\User;
 use App\Level;
-use App\Student;
+
 use App\Course;
 use App\Http\Controllers\Controller;
 use http\Env\Response;
@@ -34,12 +34,7 @@ class AuthController extends Controller
         unset($user["updated_at"]);
 
         //ADJUNTAR LA DATA DEL ESTUDAINTE A LA DATA DE USER
-        $student = Student::where('user_id',$user->id)->first(['id','name','last_name','dni','url_image']);
-        $user["url_image"] = $student->url_image;
-        $user["name"] = $student->name;
-        $user["last_name"] = $student->last_name;
-        $user["dni"] = $student->dni;
-        $user["student_id"] = $student->id;
+       
         return response()->json([
             'success' => true,
             'token' => $token,
@@ -115,24 +110,22 @@ class AuthController extends Controller
     {
         try{
             $user = User::find(Auth::user()->id);
-            $student = Student::where('user_id', $user->id)->first();
-            if(is_null($student)){
+           
+            if(is_null($user)){
                 return response()->json([
                     'success' => false,
                     'code' => 'PROFILE_NOT_FOUND',
                     'status' => 404,
                 ],404);
             }else{
-                $levels = Level::where('status',1)->count();
-                $courses = Course::where('status',1)->count();
+                
                 return response()->json([
-                    'profile' => $student,
+                    'profile' => $user,
                     'user' => $user,
                     'success' => true,
                     'code' => 'PROFILE_FOUND',
                     'status' => 200,
-                    'level'=>$levels,
-                    'courses'=>$courses
+                    
                 ],200);
             }
         }catch(Exception $e){

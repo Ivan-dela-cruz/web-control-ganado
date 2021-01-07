@@ -18,5 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::namespace('Api')->group(function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
+    Route::get('logout', 'AuthController@logout');
+    Route::post('save-profile-user', 'AuthController@profileUser')->name('save-profile-user')->middleware('jwtAuth');
+    Route::get('profile','AuthController@getProfile')->name('profile')->middleware('jwtAuth');
+    Route::post('change-password','AuthController@ChangePassword')->name('change-password')->middleware('jwtAuth');
     Route::get('estates','EstateController@index')->name('estates');
 });
