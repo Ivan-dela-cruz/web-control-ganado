@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\StatusScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Employ extends Model
@@ -23,6 +24,10 @@ class Employ extends Model
         'end_date',
         'status'
     ];
+    protected static function booted()
+    {
+        static::addGlobalScope(new StatusScope());
+    }
 
     public function user()
     {
