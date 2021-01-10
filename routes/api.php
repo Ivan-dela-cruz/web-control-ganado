@@ -24,5 +24,9 @@ Route::namespace('Api')->group(function () {
     Route::post('save-profile-user', 'AuthController@profileUser')->name('save-profile-user')->middleware('jwtAuth');
     Route::get('profile','AuthController@getProfile')->name('profile')->middleware('jwtAuth');
     Route::post('change-password','AuthController@ChangePassword')->name('change-password')->middleware('jwtAuth');
+
+    //RUTAS PARA EL 
     Route::get('estates','EstateController@index')->name('estates');
+    Route::get('estates/info/{id}','EstateController@genaralInformation')->name('estatesinfo');
+
 });
