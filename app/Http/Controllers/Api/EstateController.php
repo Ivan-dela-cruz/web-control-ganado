@@ -12,6 +12,7 @@ class EstateController extends Controller
    {
         try{
             $estates = Estate::orderBy('name','ASC')->get(['name','ruc', 'owner', 'url_image', 'phone', 'address','email']);
+            
             return response()->json([
                 'success' => true,
                 'code' => 'SUCCESS_QUERY',
@@ -27,4 +28,22 @@ class EstateController extends Controller
             ],500);
         }
    }
+   public function genaralInformation($id)
+   {
+       $object  = [
+           'employes'=>'23',
+           'animal_production'=>'56',
+           'animal_disease'=>'23',
+           'total_milk'=>'12',
+           'estate_id'=>$id
+       ];
+
+       return response()->json([
+           'success' => true,
+           'info'=>$object,
+           'code'=> 'SUCCESS_FOUND_INFO',
+           'status'=>200
+       ],200);
+   }
+   
 }
