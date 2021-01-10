@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Estate;
+use App\Veterinary;
+use App\Employ;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Exception;
@@ -45,5 +47,25 @@ class EstateController extends Controller
            'status'=>200
        ],200);
    }
+
+   public function employesByEstate($id){
+        $employes = Employ::orderBy('name')->where('estate_id',$id)->get(['id','name','last_name','url_image','dni','address','email','start_date','end_date']);
+        return response()->json([
+            'success'=>true,
+            'employes'=>$employes,
+            'code'=>'SUCCESS_FOUND_EMPLOYES',
+            'status'=>200
+        ],200);
+    }
+   
+    public function veterinariesByEstate($id){
+        $veterinaries = Veterinary::orderBy('name')->get([ 'id', 'name', 'last_name', 'dni', 'email', 'phone1','phone2','direction']);
+        return response()->json([
+            'success'=>true,
+            'veterinaries'=>$veterinaries,
+            'code'=>'SUCCESS_FOUND_EMPLOYES',
+            'status'=>200
+        ],200);
+    }
    
 }
