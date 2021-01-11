@@ -5,9 +5,11 @@ namespace App\Http\Livewire;
 use App\Estate;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
+use Livewire\WithFileUploads;
 
 class Estates extends Component
 {
+    use WithFileUploads;
     public $data_id,$name,$ruc,$owner,$url_image,$phone,$address,$email,$status = 1;
     public $estates, $action='POST';
     public function render()
@@ -35,13 +37,19 @@ class Estates extends Component
     		'ruc' => 'required|unique:estates',
             'email' => 'required|email|unique:estates',
             'address' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'url_image'=>'image'
         ]);
+         //UPLOAD IMAGE
+         $name = "file-" . time() . '.' .  $this->url_image->getClientOriginalExtension();
+         $path =  $this->url_image->storeAs('/',$name,'estates');
+ 
+
         $data =  [
             'name'=>$this->name,
             'ruc'=>$this->ruc,
             'owner'=>$this->owner,
-            'url_image'=>$this->url_image,
+            'url_image'=>'estates/'.$name,
             'phone'=>$this->phone,
             'address'=>$this->address,
             'email'=>$this->email,
@@ -74,14 +82,19 @@ class Estates extends Component
     		'ruc' => ['required',Rule::unique('estates')->ignore($this->data_id)],
             'email' => ['required','email',Rule::unique('estates')->ignore($this->data_id)],
             'address' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'url_image'=>'image'
         ]);
         $data = Estate::find($this->data_id);
+         //UPLOAD IMAGE
+        $name = "file-" . time() . '.' .  $this->url_image->getClientOriginalExtension();
+        $path =  $this->url_image->storeAs('/',$name,'estates');
+
         $data->update([
             'name'=>$this->name,
             'ruc'=>$this->ruc,
             'owner'=>$this->owner,
-            'url_image'=>$this->url_image,
+            'url_image'=>'estates/'.$name,
             'phone'=>$this->phone,
             'address'=>$this->address,
             'email'=>$this->email,

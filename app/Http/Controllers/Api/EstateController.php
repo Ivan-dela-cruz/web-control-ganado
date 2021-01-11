@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Estate;
 use App\Veterinary;
 use App\Employ;
+use App\Animal_production;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Exception;
@@ -63,9 +64,23 @@ class EstateController extends Controller
         return response()->json([
             'success'=>true,
             'veterinaries'=>$veterinaries,
-            'code'=>'SUCCESS_FOUND_EMPLOYES',
+            'code'=>'SUCCESS_FOUND_VETERINARIES',
             'status'=>200
         ],200);
+    }
+    public function AnimalsProductionByEstate($id)
+    {
+        $animals = Animal_production::join('animals','animal_production.animal_id','=','animals.id')
+        ->select('animals.id','animals.name','animals.code','animals.start_date')
+        ->where('animal_production.estate_id',$id)
+        ->get();
+        return response()->json([
+            'success'=>true,
+            'animals'=>$animals,
+            'code'=>'SUCCESS_FOUND_ANIMALS',
+            'status'=>200
+        ],200);
+
     }
    
 }

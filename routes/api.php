@@ -27,8 +27,9 @@ Route::namespace('Api')->group(function () {
 
     //RUTAS PARA EL 
     Route::get('estates','EstateController@index')->name('estates');
-    Route::get('estates/info/{id}','EstateController@genaralInformation')->name('estatesinfo');
-    Route::get('estates/employes/{id}','EstateController@employesByEstate')->name('estatesemployes');
-    Route::get('estates/veterinaries/{id}','EstateController@veterinariesByEstate')->name('estatesveterinaries');
+    Route::get('estates/info/{id}','EstateController@genaralInformation');
+    Route::get('estates/employes/{id}','EstateController@employesByEstate');
+    Route::get('estates/veterinaries/{id}','EstateController@veterinariesByEstate');
+    Route::get('estates/animals/production/{id}','EstateController@AnimalsProductionByEstate');
 
 });

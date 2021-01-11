@@ -132,6 +132,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </a>
                     <ul class="pcoded-submenu">
                         <li><a href="{{route('animals')}}">Lista de Animales</a></li>
+                        <li><a href="{{route('animalprodcution')}}">Animales de producción</a></li>
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">

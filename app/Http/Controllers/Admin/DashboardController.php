@@ -85,5 +85,11 @@ class DashboardController extends Controller
         return view('admin.dashboard.mastitis.index');
         
     }
+
+    public function animalProduction()
+    {
+        return view('admin.dashboard.animals_production.index');
+        
+    }
 }
 

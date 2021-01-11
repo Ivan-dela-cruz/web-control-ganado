@@ -5,15 +5,19 @@ namespace App\Http\Livewire;
 use App\Animal;
 use Livewire\Component;
 use App\Estate;
-
+use Illuminate\Validation\Rule;
+use Livewire\WithFileUploads;
 class Animals extends Component
 {
-    public  $animals,$estates, $name, $code, $url_image,$start_date,$end_date,$status, $data_id,$estate_id;
+    use WithFileUploads;
+
+    public $animals, $estates, $name, $code, $url_image, $start_date, $end_date, $status, $data_id, $estate_id;
+    
     public function render()
     {
         $this->estates = Estate::all();
-    	$this->animals = Animal::all();
-    	
+        $this->animals = Animal::all();
+        
         return view('livewire.animals');
     }
 
@@ -21,7 +25,7 @@ class Animals extends Component
     {
     	$this->name = '';
         $this->code = '';
-        $this->url_image = '';
+        $this->url_image ;
         $this->start_date = '';
         $this->end_date = '';
         $this->status = '';
@@ -30,17 +34,34 @@ class Animals extends Component
 
     public function store()
     {
+       
     	$validation = $this->validate([
     		'name'	=>	'required',
     		'code' => 'required',
-            'url_image' => 'required',
+            'url_image' => 'image',
             'start_date' => 'required',
             'end_date' => 'required',
             'status' => 'required',
             'estate_id' => 'required'      
-    	]);
-    	Animal::create($validation);
-    	session()->flash('message', 'Animal creado con exíto.');
+        ]);
+         //UPLOAD IMAGE
+         $name = "file-" . time() . '.' .  $this->url_image->getClientOriginalExtension();
+         $path =  $this->url_image->storeAs('/',$name,'animals');
+ 
+        $data = [
+            'name'	=> $this->name,
+    		'code' => $this->code,
+            'url_image'=> 'amimals/'.$path,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'status' => $this->status,
+            'estate_id' => $this->estate_id, 
+        ];
+
+        Animal::create($data);
+
+       
+    	$this->alert('success', 'Animal creado con exíto.');
     	$this->resetInputFields();
 
     	$this->emit('animalStore');
@@ -70,21 +91,21 @@ class Animals extends Component
             'status' => 'required',
             'estate_id' => 'required'
         ]);
+        //UPLOAD IMAGE
+        $name = "file-" . time() . '.' .  $this->url_image->getClientOriginalExtension();
+        $path =  $this->url_image->storeAs('/',$name,'animals');
 
         $data = Animal::find($this->data_id);
-
         $data->update([
             'name'       =>   $this->name,
             'code'         =>  $this->code,
-            'url_image'         =>  $this->url_image,
+            'url_image'=> 'amimals/'.$path,
             'start_date'         =>  $this->start_date,
             'end_date'         =>  $this->end_date,
             'status'            =>  $this->status,
             'estate_id'            =>  $this->estate_id
         ]);
-
-        session()->flash('message', 'Animal actualizado con exíto.');
-
+        $this->alert('success', 'Animal actualizado con exíto.');
         $this->resetInputFields();
 
         $this->emit('animalStore');
@@ -93,6 +114,6 @@ class Animals extends Component
     public function delete($id)
     {
         Animal::find($id)->delete();
-        session()->flash('message', 'Animal eliminado con exíto.');
+        $this->alert('success', 'Animal actualizado con exíto.');
     }
 }
