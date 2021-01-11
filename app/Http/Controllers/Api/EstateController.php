@@ -71,7 +71,7 @@ class EstateController extends Controller
     public function AnimalsProductionByEstate($id)
     {
         $animals = Animal_production::join('animals','animal_production.animal_id','=','animals.id')
-        ->select('animals.id','animals.name','animals.code','animals.start_date')
+        ->select('animals.id','animals.name','animals.code','animals.start_date','animals.url_image')
         ->where('animal_production.estate_id',$id)
         ->get();
         return response()->json([
