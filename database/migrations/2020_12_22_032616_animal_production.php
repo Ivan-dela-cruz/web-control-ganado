@@ -17,6 +17,7 @@ class AnimalProduction extends Migration
         Schema::create('animal_production', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('animal_id');
+            $table->unsignedBigInteger('estate_id');
             $table->string('name')->nullable();
             $table->string('code')->nullable();
             $table->date('start_date')->nullable();
@@ -26,6 +27,7 @@ class AnimalProduction extends Migration
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('animal_id')->references('id')->on('animals');
+            $table->foreign('estate_id')->references('id')->on('estates');
         });
     }
 

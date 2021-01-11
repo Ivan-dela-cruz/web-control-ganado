@@ -47,7 +47,18 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-
+        'animals' => [
+            'driver' => 'local',
+            'root' => public_path('animals'),
+            'url' => env('APP_URL').'public/animals',
+            'visibility' => 'public',
+        ],
+        'estates' => [
+            'driver' => 'local',
+            'root' => public_path('estates'),
+            'url' => env('APP_URL').'public/estates',
+            'visibility' => 'public',
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

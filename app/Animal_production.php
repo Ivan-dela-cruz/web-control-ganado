@@ -17,10 +17,11 @@ class Animal_production extends Model
         'end_date',
         'status',
         'animal_id',
+        'estate_id',
     ];
     public function animal()
     {
-        return $this->belongsTo(Estate::class, 'animal_id');
+        return $this->belongsTo(Animal::class, 'animal_id');
     }
 
 }
