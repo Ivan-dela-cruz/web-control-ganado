@@ -50,10 +50,10 @@ class="{{request()->is('/ruta')?'active':''}}"
                     <a href="" class="nav-link ">
                         <label>Panel de control</label>
                     </a>
-                    
+
                 </li>
-              
-               
+
+
 
                 <li class="nav-item pcoded-hasmenu">
                     <a href="javascript: void(0);" class="nav-link ">
@@ -67,7 +67,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <li><a href="">Crear rol</a></li>
                     </ul>
                 </li>
-               
+
                 <li class="nav-item pcoded-hasmenu">
                     <a href="javascript: void(0);" class="nav-link ">
                         <span class="pcoded-micon">
@@ -146,7 +146,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <li><a href="{{route('mastitis')}}">Lista de Mastitis</a></li>
                     </ul>
                 </li>
-                
+
                  <li class="nav-item pcoded-hasmenu">
                     <a href="javascript: return void();" class="nav-link ">
                         <span class="pcoded-micon">
@@ -158,10 +158,35 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <li><a href="{{route('estates')}}">Haciendas</a></li>
                         <li><a href="{{route('companies')}}">Companias</a></li>
                         <li><a href="{{route('deliveries')}}">Entregas de leche</a></li>
-                       
+
                     </ul>
                 </li>
-               
+
+                <!--code-->
+                <li class="nav-item pcoded-hasmenu">
+                    <a href="javascript: return void(0);" class="nav-link ">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-shopping-cart"></i>
+                        </span>
+                        <span class="pcoded-mtext">Compras</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li><a href="{{route('purchases')}}">Lista de Compras</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item pcoded-hasmenu">
+                    <a href="javascript: return void(0);" class="nav-link ">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-shopping-cart"></i>
+                        </span>
+                        <span class="pcoded-mtext">Ventas</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li><a href="{{route('sales')}}">Lista de Ventas</a></li>
+                    </ul>
+                </li>
+
             </ul>
         </div>
     </div>
