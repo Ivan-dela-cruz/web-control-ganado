@@ -40,3 +40,7 @@ Route::get('dashboard/diseases','Admin\DashboardController@Diseases')->name('dis
 Route::get('dashboard/animals','Admin\DashboardController@Animals')->name('animals');
 Route::get('dashboard/mastitis','Admin\DashboardController@Mastitis')->name('mastitis');
 Route::get('dashboard/animals/production','Admin\DashboardController@animalProduction')->name('animalprodcution');
+
+//code
+Route::get('dashboard/purchases','Admin\DashboardController@Purchases')->name('purchases');
+Route::get('dashboard/sales','Admin\DashboardController@Sales')->name('sales');
