@@ -51,7 +51,7 @@ class Animals extends Component
         $data = [
             'name'	=> $this->name,
     		'code' => $this->code,
-            'url_image'=> 'amimals/'.$path,
+            'url_image'=> 'animals/'.$path,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'status' => $this->status,
@@ -99,7 +99,7 @@ class Animals extends Component
         $data->update([
             'name'       =>   $this->name,
             'code'         =>  $this->code,
-            'url_image'=> 'amimals/'.$path,
+            'url_image'=> 'animals/'.$path,
             'start_date'         =>  $this->start_date,
             'end_date'         =>  $this->end_date,
             'status'            =>  $this->status,
