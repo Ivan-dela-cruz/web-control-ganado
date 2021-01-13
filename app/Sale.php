@@ -15,4 +15,13 @@ class Sale extends Model
         'description',
         'status',
     ];
+
+    public function details()
+    {
+        return $this->hasMany(DetailSale::class,'sale_id');
+    }
+
+    public function estate(){
+        return $this->belongsTo(Estate::class,'estate_id');
+    }
 }

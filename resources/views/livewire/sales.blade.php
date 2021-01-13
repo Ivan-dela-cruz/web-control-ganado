@@ -3,7 +3,7 @@
     @include('admin.modals.sales.create')
     @include('admin.modals.sales.edit')
 
-    <div class="card">
+    <div class="card ">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-5">
@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card  user-profile-list">
         <div class="card-body">
             @if($items->count()>0)
                 <div class="row col-sm-2 float-right mb-2">
@@ -59,7 +59,7 @@
                         <th>Cantidad</th>
                         <th>Precio</th>
                         <th>Total</th>
-                        <th colspan="2"></th>
+                        <th>&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -69,29 +69,27 @@
                             <td>{{$count++}}</td>
                             <td>{{$item->description}}</td>
                             <td>{{$item->quanity}}</td>
-                            <td>{{$item->price_unit}}</td>
-                            <td>{{$item->price_total}}</td>
-                            <td>
+                            <td>${{$item->price_unit}}</td>
+                            <td>${{$item->price_total}}</td>
+                            <td>&nbsp;
                                 <div class="overlay-edit">
                                     <button
-                                        class="btn btn-sm btn-icon btn-warning"
+                                        class="btn  btn-icon btn-warning"
                                         wire:click="editItem({{ $item->id }})"
                                         type="button"
                                         title="Editar"
                                         data-toggle="modal" data-target="#updateModal">
                                         <i class="feather icon-edit-2"></i></button>
-
                                     <button
                                         wire:click="deleteItem({{ $item->id }})"
                                         data-toggle="tooltip"
                                         title="Quitar"
                                         type="button"
-                                        class="btn btn-sm btn-icon btn-danger">
+                                        class="btn btn-icon btn-danger">
                                         <i class="feather icon-trash-2"></i>
                                     </button>
                                 </div>
                             </td>
-
                         </tr>
                     @endforeach
 
