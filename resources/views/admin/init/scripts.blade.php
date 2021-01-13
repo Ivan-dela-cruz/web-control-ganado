@@ -29,7 +29,7 @@
  @livewireScripts
 
  <x-livewire-alert::scripts />
- 
+
 <script type="text/javascript">
 window.livewire.on('courseStore', () => {
     $('#createModal').modal('hide');
@@ -104,6 +104,35 @@ window.livewire.on('RoleEdit', () => {
 window.livewire.on('RoleUpdate', () => {
     $('.btn_update_rol').attr('hidden',true);
     $('.btn_store_rol').removeAttr('hidden','hidden');
+});
+
+//code
+window.livewire.on('newPurchase', () => {
+    $('#addItemPurchase').removeAttr('disabled');
+    $('#btnNewPurchase').attr('disabled','disabled');
+    $('#btnNewPurchase').addClass('d-none');
+    $('#btnUpPurchase').removeClass('d-none');
+});
+
+window.livewire.on('endPurchase', () => {
+    $('#btnNewPurchase').removeAttr('disabled');
+    $('#addItemPurchase').attr('disabled','disabled');
+    $('#btnUpPurchase').addClass('d-none');
+    $('#btnNewPurchase').removeClass('d-none');
+});
+
+window.livewire.on('newSale', () => {
+    $('#addItemSale').removeAttr('disabled');
+    $('#btnNewSale').attr('disabled','disabled');
+    $('#btnNewSale').addClass('d-none');
+    $('#btnUpSale').removeClass('d-none');
+});
+
+window.livewire.on('endSale', () => {
+    $('#btnNewSale').removeAttr('disabled');
+    $('#addItemSale').attr('disabled','disabled');
+    $('#btnUpSale').addClass('d-none');
+    $('#btnNewSale').removeClass('d-none');
 });
 
 </script>

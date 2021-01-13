@@ -42,5 +42,7 @@ Route::get('dashboard/mastitis','Admin\DashboardController@Mastitis')->name('mas
 Route::get('dashboard/animals/production','Admin\DashboardController@animalProduction')->name('animalprodcution');
 
 //code
-Route::get('dashboard/purchases','Admin\DashboardController@Purchases')->name('purchases');
+Route::get('dashboard/purchases','Admin\DashboardController@Purchases')->name('purchase');
+Route::get('dashboard/purchases/list','Admin\DashboardController@List_purchases')->name('purchases.list');
 Route::get('dashboard/sales','Admin\DashboardController@Sales')->name('sales');
+Route::get('dashboard/sales/list','Admin\DashboardController@List_sales')->name('sales.list');
