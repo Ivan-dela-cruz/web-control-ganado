@@ -92,6 +92,11 @@ class DashboardController extends Controller
 
     }
 
+    public function list_purchases()
+    {
+        return view('admin.dashboard.purchases.list');
+    }
+
     public function purchases()
     {
         return view('admin.dashboard.purchases.index');
@@ -100,6 +105,11 @@ class DashboardController extends Controller
     public function sales()
     {
         return view('admin.dashboard.sales.index');
+    }
+
+    public function list_sales()
+    {
+        return view('admin.dashboard.sales.list');
     }
 }
 

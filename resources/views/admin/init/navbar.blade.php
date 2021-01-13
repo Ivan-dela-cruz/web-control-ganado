@@ -171,7 +171,8 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <span class="pcoded-mtext">Compras</span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li><a href="{{route('purchases')}}">Lista de Compras</a></li>
+                        <li><a href="{{route('purchase')}}">Nueva Compra</a></li>
+                        <li><a href="{{route('purchases.list')}}">Lista de Compras</a></li>
                     </ul>
                 </li>
 
@@ -183,7 +184,8 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <span class="pcoded-mtext">Ventas</span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li><a href="{{route('sales')}}">Lista de Ventas</a></li>
+                        <li><a href="{{route('sales')}}">Nueva Venta</a></li>
+                        <li><a href="{{route('sales.list')}}">Lista de Ventas</a></li>
                     </ul>
                 </li>
 

@@ -1,15 +1,14 @@
 @extends('admin.init.index')
 @section('title')
-    Ventas
+    Compras
 @endsection
 @section('content')
     <div class="pcoded-main-container">
         <div class="pcoded-content">
-            <x-content title="Ventas" position="Nueva Venta"></x-content>
+            <x-content title="Compras" position="Lista de compras"></x-content>
             <div class="row">
-                @livewire('sales')
+
             </div>
         </div>
     </div>
 @endsection
-
