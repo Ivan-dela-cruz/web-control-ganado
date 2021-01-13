@@ -22,8 +22,12 @@ class Purchase extends Model
         static::addGlobalScope(new StatusScope());
     }*/
 
-    public function detailPurcharses()
+    public function details()
     {
-        return $this->belongsTo(DetailPurchase::class);
+        return $this->hasMany(DetailPurchase::class,'purcharse_id');
+    }
+
+    public function estate(){
+        return $this->belongsTo(Estate::class,'estate_id');
     }
 }

@@ -7,7 +7,7 @@
         <div class="pcoded-content">
             <x-content title="Ventas" position="Lista de Ventas"></x-content>
             <div class="row">
-
+                @livewire('list-sales')
             </div>
         </div>
     </div>
