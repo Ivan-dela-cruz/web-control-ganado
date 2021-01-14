@@ -21,6 +21,8 @@ class CreateIncomesTable extends Migration
             $table->time('hour')->nullable();
             $table->double('total_liters')->nullable()->default(0);
             $table->string('description')->nullable();
+            $table->string('time_milking')->nullable();
+            $table->string('status_milking')->nullable();
             $table->tinyInteger('status')->nullable()->default(1);
             $table->softDeletes();
             $table->timestamps();
