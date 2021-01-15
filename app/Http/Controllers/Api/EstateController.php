@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Exception;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 class EstateController extends Controller
 {
    public function index()
@@ -86,6 +87,43 @@ class EstateController extends Controller
 
     }
 
+    public function AnimalsProductionByMilking(Request $request, $id)
+    {
+
+        //fechas
+        $now = Carbon::now("America/Guayaquil");
+        $date =  $now->format('Y-m-d');
+       
+        //coleccion de animae sd eprocuccion
+        $animals = Animal_production::join('animals','animal_production.animal_id','=','animals.id')
+        ->select('animal_production.id','animals.name','animals.code','animals.start_date','animals.url_image')
+        ->where('animal_production.estate_id',$id)
+        ->get();
+        
+        //ANIMALES YA ORÑADOS
+        $income = null;
+        $income = Income::where('estate_id',$id)->where('date',$date)->where('time_milking',$request->time_milking)->first(['id']);
+        if(!is_null($income)){
+            $animals_milinkgs = Milking::where('income_id',$income->id)->get(['id','animalproduction_id','income_id']);
+
+            foreach( $animals as $animal){
+                $animal_milking = null;
+                $animal_milking =  $animals_milinkgs->firstWhere('animalproduction_id',$animal->id);
+                if(!is_null($animal_milking){
+                    unset($animal);
+                })
+            }
+        }
+
+        return response()->json([
+            'success'=>true,
+            'animals'=>$animals,
+            'code'=>'SUCCESS_FOUND_ANIMALS',
+            'status'=>200
+        ],200);
+
+    }
+
     public function milkingByEstate(Request $request, $id)
     {
         $now = Carbon::now("America/Guayaquil");
@@ -123,6 +161,7 @@ class EstateController extends Controller
         $milking->hour = $time;
         $milking->save();
         
+        ///TOTAL DE LITROS SUMATORIA
         $income->total_liters = $income->total_liters + $request->total_liters;
         $income->save();
 
@@ -134,5 +173,7 @@ class EstateController extends Controller
         ],200);
 
     }
+
+
    
 }
