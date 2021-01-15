@@ -11,6 +11,7 @@ use App\Animal_production;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Exception;
+use Carbon\Carbon;
 class EstateController extends Controller
 {
    public function index()
@@ -87,16 +88,21 @@ class EstateController extends Controller
 
     public function milkingByEstate(Request $request, $id)
     {
+        $now = Carbon::now("America/Guayaquil");
+        $date =  $now->format('Y-m-d');
+        $time = $now->format('H:i:s');
+        $year = $now->year;
+       
         $estate = Estate::find($id);
         $income  = null;
-        $income = Income::where('estate_id',$id)->where('date',$request->date)->where('time_milking',$request->time_milking)->first();
+        $income = Income::where('estate_id',$id)->where('date',$date)->where('time_milking',$request->time_milking)->first();
        
         if(is_null($income)){
             $income = new Income();
             $income->estate_id = $estate->id;
-            $income->year = $request->year;
-            $income->date = $request->date;
-            $income->hour = $request->hour;
+            $income->year = $year;
+            $income->date = $date;
+            $income->hour = $time;
             $income->total_liters = 0;
             $income->description = $request->description;
           
@@ -112,9 +118,9 @@ class EstateController extends Controller
         $milking->income_id = $income->id;
         $milking->animalproduction_id = $animal->id;
         $milking->total_liters = $request->total_liters;
-        $milking->year = $request->year;
-        $milking->date = $request->date;
-        $milking->hour = $request->hour;
+        $milking->year = $year;
+        $milking->date = $date;
+        $milking->hour = $time;
         $milking->save();
         
         $income->total_liters = $income->total_liters + $request->total_liters;
