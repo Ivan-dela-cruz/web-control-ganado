@@ -6,3 +6,6 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+/public/animals/
+/public/estates/
+/public/img/users/
