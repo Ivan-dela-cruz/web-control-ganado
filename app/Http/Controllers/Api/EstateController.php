@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+
+use Illuminate\Support\Facades\Log;
+
 class EstateController extends Controller
 {
    public function index()
@@ -89,7 +92,7 @@ class EstateController extends Controller
 
     public function AnimalsProductionByMilking(Request $request, $id)
     {
-        
+        $time_milking = $request->query('time');
         //fechas
         $now = Carbon::now("America/Guayaquil");
         $date =  $now->format('Y-m-d');
@@ -100,12 +103,11 @@ class EstateController extends Controller
         ->where('animal_production.estate_id',$id)
         ->get();
 
-      
 
         //ANIMALES YA ORÑADOS
         $income = null;
-        $income = Income::where('estate_id',$id)->where('date',$date)->where('time_milking',$request->time_milking)->first(['id']);
-       
+        $income = Income::where('estate_id',$id)->where('date',$date)->where('time_milking',$time_milking)->first(['id']);
+        $list = new Collection();
         if(!is_null($income)){
             $animals_milinkgs = Milking::where('income_id',$income->id)->get(['id','animalproduction_id','income_id']);
             foreach( $animals as $k => $v){
@@ -116,9 +118,22 @@ class EstateController extends Controller
                 }
             }
         }
+
+        foreach( $animals as $k => $v){
+            $item =[
+                'id' => $v->id,
+                'name' => $v->name,
+                'code' => $v->code,
+                'start_date' => $v->start_date,
+                'url_image' => $v->url_image,
+            ];
+            $list->push($item);
+        }
+        //dd($list);
+
         return response()->json([
             'success'=>true,
-            'animals'=>$animals,
+            'animals'=>$list,
             'code'=>'SUCCESS_FOUND_ANIMALS',
             'status'=>200
         ],200);
