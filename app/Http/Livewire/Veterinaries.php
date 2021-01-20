@@ -4,14 +4,36 @@ namespace App\Http\Livewire;
 use App\Veterinary;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class Veterinaries extends Component
 {
-    public $veterinaries, $data_id,$name,$last_name,$dni,$email,$phone1,$phone2, $direction, $status;
+    use WithPagination;
+    use WithFileUploads;
+
+    protected $paginationTheme = 'bootstrap';
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage' => ['except' => '5'],
+
+    ];
+    public $perPage = '10';
+    public $search = '';
+
+    public $data_id,$name,$last_name,$dni,$email,$phone1,$phone2, $direction, $status = 1;
     public function render()
     {
-        $this->veterinaries = Veterinary::all();
-        return view('livewire.veterinaries');
+        $veterinaries = Veterinary::where('name', 'LIKE', "%{$this->search}%")
+            ->orWhere('last_name', 'LIKE', "%{$this->search}%")
+            ->orWhere('email', 'LIKE', "%{$this->search}%")
+            ->orWhere('phone1', 'LIKE', "%{$this->search}%")
+            ->orWhere('phone2', 'LIKE', "%{$this->search}%")
+            ->orWhere('direction', 'LIKE', "%{$this->search}%")
+            ->orWhere('created_at', 'LIKE', "%{$this->search}%")
+            ->paginate($this->perPage);
+        return view('livewire.veterinaries',compact('veterinaries'));
     }
     public function resetInputFields()
     {
@@ -23,7 +45,14 @@ class Veterinaries extends Component
         $this->phone2 = '';
         $this->direction = '';
         $this->status = '';
-      
+
+    }
+
+    public function clear()
+    {
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = '10';
     }
 
     public function store()
@@ -50,9 +79,9 @@ class Veterinaries extends Component
             'status'=> $this->status
         ];
         Veterinary::create($data);
-        
-        session()->flash('message', 'Veterinaria creado con exíto.');
-        
+
+        session()->flash('message', 'Veterinario registrado con exíto.');
+
     	$this->resetInputFields();
 
     	$this->emit('veterinaryStore');
@@ -98,7 +127,7 @@ class Veterinaries extends Component
             'status'=> $this->status
         ]);
 
-        session()->flash('message', 'Veterinaria actualizado con exíto.');
+        session()->flash('message', 'Veterinario actualizado con exíto.');
 
         $this->resetInputFields();
 
@@ -108,7 +137,7 @@ class Veterinaries extends Component
     public function delete($id)
     {
         Veterinary::find($id)->delete();
-        session()->flash('message', 'Veterinaria eliminado con exíto.');
+        session()->flash('message', 'Veterinario eliminado con exíto.');
     }
-  
+
 }

@@ -64,7 +64,7 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'read_delivery', 'modulo' => 'Entregas', 'alias' => 'Leer']);
         Permission::create(['name' => 'update_delivery', 'modulo' => 'Entregas', 'alias' => 'Modificar']);
         Permission::create(['name' => 'destroy_delivery', 'modulo' => 'Entregas', 'alias' => 'Eliminar']);
-    
+
           //permisos para el crud de los tasks
         Permission::create(['name' => 'create_disease', 'modulo' => 'Enfermedades', 'alias' => 'Crear']);
         Permission::create(['name' => 'read_disease', 'modulo' => 'Enfermedades', 'alias' => 'Leer']);
@@ -100,7 +100,19 @@ class RolesSeeder extends Seeder
          Permission::create(['name' => 'read_purcharse', 'modulo' => 'Compras', 'alias' => 'Leer ']);
          Permission::create(['name' => 'update_purcharse', 'modulo' => 'Compras', 'alias' => 'Modificar']);
          Permission::create(['name' => 'destroy_purcharse', 'modulo' => 'Compras', 'alias' => 'Eliminar']);
- 
+
+        //permisos para el crud de los veterinarios
+        Permission::create(['name' => 'create_vets', 'modulo' => 'Veterinarios', 'alias' => 'Crear']);
+        Permission::create(['name' => 'read_vets', 'modulo' => 'Veterinarios', 'alias' => 'Leer ']);
+        Permission::create(['name' => 'update_vets', 'modulo' => 'Veterinarios', 'alias' => 'Modificar']);
+        Permission::create(['name' => 'destroy_vets', 'modulo' => 'Veterinarios', 'alias' => 'Eliminar']);
+
+        //permisos para el crud de los companias
+        Permission::create(['name' => 'create_company', 'modulo' => 'Companias', 'alias' => 'Crear']);
+        Permission::create(['name' => 'read_company', 'modulo' => 'Companias', 'alias' => 'Leer ']);
+        Permission::create(['name' => 'update_company', 'modulo' => 'Companias', 'alias' => 'Modificar']);
+        Permission::create(['name' => 'destroy_company', 'modulo' => 'Companias', 'alias' => 'Eliminar']);
+
 
 
         /// cramos los roles para que son admin, propietario, secretaria, medico
@@ -115,7 +127,7 @@ class RolesSeeder extends Seeder
         ///crearmos el usario por defecto
         $user_password = Hash::make('root1234');
         $user = User::create([
-               
+
                 'name' => 'Ivan',
                 'last_name' => 'admin',
                 'url_image' => 'img/user.jpg',

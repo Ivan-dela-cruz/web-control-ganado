@@ -5,14 +5,35 @@ namespace App\Http\Livewire;
 use App\Company;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
+
 class Companies extends Component
 {
+    use WithPagination;
+    use WithFileUploads;
+
+    protected $paginationTheme = 'bootstrap';
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage' => ['except' => '5'],
+    ];
+    public $perPage = '10';
+    public $search = '';
+
     public $name,$ruc,$owner,$url_image,$phone,$address,$email,$status = true;
-    public $companies, $data_id;
+    public  $data_id;
     public function render()
     {
-        $this->companies = Company::all();
-        return view('livewire.companies');
+        $companies = Company::where('name', 'LIKE', "%{$this->search}%")
+            ->orWhere('ruc', 'LIKE', "%{$this->search}%")
+            ->orWhere('owner', 'LIKE', "%{$this->search}%")
+            ->orWhere('phone', 'LIKE', "%{$this->search}%")
+            ->orWhere('address', 'LIKE', "%{$this->search}%")
+            ->orWhere('email', 'LIKE', "%{$this->search}%")
+            ->paginate($this->perPage);
+        return view('livewire.companies',compact('companies'));
     }
     public function resetInputFields()
     {
@@ -27,6 +48,13 @@ class Companies extends Component
         $this->data_id = '';
     }
 
+    public function clear()
+    {
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = '10';
+    }
+
     public function store()
     {
     	$validation = $this->validate([
@@ -36,11 +64,19 @@ class Companies extends Component
             'address' => 'required',
             'status' => 'required'
         ]);
+        $path = 'img/user.jpg';
+        if ($this->url_image != '') {
+            $this->validate(['url_image' => 'image'], ['url_image.image' => 'La imagen debe ser de formato: .jpg,.jpeg ó .png']);
+            //save image
+            $name = "file-" . time() . '.' . $this->url_image->getClientOriginalExtension();
+            $path = 'companies/' . $this->url_image->storeAs('/', $name, 'companies');
+        }
+
         $data =  [
             'name'=>$this->name,
             'ruc'=>$this->ruc,
             'owner'=>$this->owner,
-            'url_image'=>$this->url_image,
+            'url_image'=>$path,
             'phone'=>$this->phone,
             'address'=>$this->address,
             'email'=>$this->email,
@@ -62,6 +98,7 @@ class Companies extends Component
         $this->phone = $company->phone;
         $this->status = $company->status;
         $this->address = $company->address;
+        $this->owner = $company->owner;
         $this->data_id = $company->id;
     }
 
@@ -75,11 +112,19 @@ class Companies extends Component
             'status' => 'required'
         ]);
         $data = Company::find($this->data_id);
+        if ($this->url_image != $data->url_image) {
+            $this->validate(['url_image' => 'image'], ['url_image.image' => 'La imagen debe ser de formato: .jpg,.jpeg ó .png']);
+            //save image
+            $name = "file-" . time() . '.' . $this->url_image->getClientOriginalExtension();
+            $path = 'companies/' . $this->url_image->storeAs('/', $name, 'companies');
+        } else {
+            $path = $data->url_image;
+        }
         $data->update([
             'name'=>$this->name,
             'ruc'=>$this->ruc,
             'owner'=>$this->owner,
-            'url_image'=>$this->url_image,
+            'url_image'=>$path,
             'phone'=>$this->phone,
             'address'=>$this->address,
             'email'=>$this->email,
