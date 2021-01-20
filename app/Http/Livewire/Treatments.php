@@ -4,20 +4,43 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Treatment;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
+
 class Treatments extends Component
 {
-    public $treatments, $data_id,$name, $description,$status;
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage' => ['except' => '5'],
+
+    ];
+    public $perPage = '10';
+    public $search = '';
+
+    public  $data_id,$name, $description,$status = 1;
     public function render()
     {
-        $this->treatments = Treatment::all();
-        return view('livewire.treatments');
+        $treatments = Treatment::where('name', 'LIKE', "%{$this->search}%")
+            ->orWhere('description', 'LIKE', "%{$this->search}%")
+            ->paginate($this->perPage);
+        return view('livewire.treatments', compact('treatments'));
     }
     public function resetInputFields()
     {
     	$this->name = '';
     	$this->description = '';
         $this->status = '';
-      
+    }
+
+    public function clear()
+    {
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = '10';
     }
 
     public function store()
@@ -33,9 +56,9 @@ class Treatments extends Component
             'status'=> $this->status
         ];
         Treatment::create($data);
-        
+
         session()->flash('message', 'tratamiento creado con exíto.');
-        
+
     	$this->resetInputFields();
 
     	$this->emit('treatmentStore');

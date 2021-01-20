@@ -3,74 +3,130 @@
 namespace App\Http\Livewire;
 
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 use Illuminate\Validation\Rule;
 
 class Users extends Component
 {
-    public $users, $roles, $roles_selected=[]; 
-    public $data_id, $user_id,$name, $last_name;
-    public $url_image, $email, $phone, $status = true,$address, $password,$confirm_password;
-    
-    
+    use WithPagination;
+    use WithFileUploads;
+
+    protected $paginationTheme = 'bootstrap';
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage' => ['except' => '5'],
+
+    ];
+    public $perPage = '10';
+    public $search = '';
+
+    public $roles, $role_selected = [];
+    public $data_id, $user_id, $name, $last_name;
+    public $url_image, $email, $phone, $status = true, $address, $password, $password_confirmation;
+
+
     public function render()
     {
-        $this->users = User::all();
-     
-        $this->roles = Role::where('status',1)->get(['id','name']);
-        return view('livewire.users');
+        $users = User::where('name', 'LIKE', "%{$this->search}%")
+            ->orWhere('last_name', 'LIKE', "%{$this->search}%")
+            ->orWhere('email', 'LIKE', "%{$this->search}%")
+            ->orWhere('phone', 'LIKE', "%{$this->search}%")
+            ->orWhere('address', 'LIKE', "%{$this->search}%")
+            ->orWhere('created_at', 'LIKE', "%{$this->search}%")
+            ->paginate($this->perPage);
+
+        $this->roles = Role::where('status', 1)->get(['id', 'name']);
+        return view('livewire.users', compact('users'));
     }
+
+    public function clear()
+    {
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = '10';
+    }
+
     public function resetInputFields()
     {
-    	$this->name = '';
-    	$this->last_name = '';
+        $this->name = '';
+        $this->last_name = '';
         $this->url_image = '';
         $this->email = '';
         $this->address = '';
-        $this->status = false;
+        $this->status = true;
         $this->phone = '';
         $this->user_id = '';
         $this->password = '';
-        $this->confirm_password = '';
-        $this->roles_selected = [];
+        $this->password_confirmation = '';
+        $this->role_selected = '';
 
     }
 
     public function store()
     {
-    	$validation = $this->validate([
-    		'name'	=>	'required',
-    		'last_name' => 'required',
-            'email' => 'required|email|unique:users',
-            'status' => 'required',
-            'password'=>'required|min:8',
-            'confirm_password'=>'required|same:password'
+        $this->validate([
+            'name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required|max:10',
+            'address' => 'required',
+            'role_selected' => 'required',
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => 'required|confirmed|min:8',
+            'password_confirmation' => 'required'
+        ], [
+            'name.required' => 'Campo obligatorio.',
+            'last_name.required' => 'Campo obligatorio.',
+            'phone.required' => 'Campo obligatorio.',
+            'address.required' => 'Campo obligatorio.',
+            'phone.number' => 'Teléfono incorrecto.',
+            'phone.max' => 'Teléfono incorrecto.',
+            'role_selected.required' => 'Seleccione un rol.',
+            'email.required' => 'Campo obligatorio.',
+            'email.email' => 'El correo no es valido.',
+            'email.unique' => 'El correo ya esta en uso, intente con otro.',
+            'password.required' => 'Campo obligatorio.',
+            'password_confirmation.required' => 'Campo obligatorio.',
+            'password.min' => 'Contraseña demasiado corta.',
+            'password.confirmed' => 'No se ha confirmado la contraseña.',
         ]);
-       
-        $password = bcrypt($this->password);
-        $user = User::create([
-            'name'=>$this->name,
-            'last_name'=>$this->last_name,
-            'url_image'=>$this->url_image,
-            'phone'=>$this->phone, 
-            'address'=>$this->address, 
-            'email'=>$this->email,
-            'password'=> $password,
-            'status'=> $this->status
-            ]);
-        $user->roles()->sync($this->roles_selected);
-        $this->alert('success', '¡Usuario creado con exíto!');
-    	$this->resetInputFields();
 
-    	$this->emit('studentStore');
+        $path = 'img/user.jpg';
+        if ($this->url_image != '') {
+            $this->validate(['url_image' => 'image'], ['url_image.image' => 'La imagen debe ser de formato: .jpg,.jpeg ó .png']);
+            //save image
+            $name = "file-" . time() . '.' . $this->url_image->getClientOriginalExtension();
+            $path = 'users/' . $this->url_image->storeAs('/', $name, 'users');
+        }
+        // $this->validate();
+        $data = [
+            'name' => $this->name,
+            'last_name' => $this->last_name,
+            'phone' => $this->phone,
+            'address' => $this->address,
+            'email' => $this->email,
+            'url_image' => $path,
+            'password' => Hash::make($this->password),
+            'status' => $this->status,
+        ];
+
+        $user = User::create($data);
+        $user->roles()->sync($this->role_selected);
+        $this->alert('success', '¡Usuario creado con exíto!');
+        $this->resetInputFields();
+
+        $this->emit('studentStore');
     }
 
     public function edit($id)
     {
         $user = User::findOrFail($id);
         $this->name = $user->name;
-    	$this->last_name = $user->last_name;
+        $this->last_name = $user->last_name;
         $this->url_image = $user->url_image;
         $this->phone = $user->phone;
         $this->address = $user->address;
@@ -78,45 +134,71 @@ class Users extends Component
         $this->status = $user->status;
         $this->data_id = $id;
 
-        $roles =  Role::where('status',1)->get(['id']);
+        $roles = Role::where('status', 1)->get(['id']);
         $list = $user->roles;
         $cont = 1;
         $data_list = [];
-        foreach($roles as $role){
-           $find_role = $list->firstWhere('id',$role->id);
-           if(!isset($find_role)){ $data_list[$cont] = false; }
-           else{$data_list[$cont] =  $find_role->id; }
-           $cont++;
+        foreach ($roles as $role) {
+            $find_role = $list->firstWhere('id', $role->id);
+            if (!isset($find_role)) {
+                $data_list[$cont] = false;
+            } else {
+                $data_list[$cont] = $find_role->id;
+            }
+            $cont++;
         }
-        $this->roles_selected = $data_list;
-       
+        $this->role_selected = $data_list;
     }
 
     public function update()
     {
-       
-        $validation = $this->validate([
-    		'name'	=>	'required',
-    		'last_name' => 'required',
-            'email' => ['required',Rule::unique('users')->ignore($this->data_id)],
-            'status' => 'required'
+        $this->validate([
+            'name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required|max:10',
+            'address' => 'required',
+            'role_selected' => 'required',
+            'email' => ['required', 'email',Rule::unique('users')->ignore($this->data_id)],
+
+        ], [
+            'name.required' => 'Campo obligatorio.',
+            'last_name.required' => 'Campo obligatorio.',
+            'phone.required' => 'Campo obligatorio.',
+            'address.required' => 'Campo obligatorio.',
+            'phone.number' => 'Teléfono incorrecto.',
+            'phone.max' => 'Teléfono incorrecto.',
+            'role_selected.required' => 'Seleccione un rol.',
+            'email.required' => 'Campo obligatorio.',
+            'email.email' => 'El correo no es valido.',
+            'email.unique' => 'El correo ya esta en uso, intente con otro.',
         ]);
 
+
+
         $user = User::find($this->data_id);
-        
+        if ($this->url_image != $user->url_image) {
+            $this->validate(['url_image' => 'image'], ['url_image.image' => 'La imagen debe ser de formato: .jpg,.jpeg ó .png']);
+            //save image
+            $name = "file-" . time() . '.' . $this->url_image->getClientOriginalExtension();
+            $path = 'users/' . $this->url_image->storeAs('/', $name, 'users');
+        } else {
+            $path = $user->url_image;
+        }
+
         $user->update([
-            'name'=>$this->name,
-            'last_name'=>$this->last_name,
-            'url_image'=>$this->url_image,
-            'phone'=>$this->phone, 
-            'address'=>$this->address, 
-            'email'=>$this->email,
-            'status'=> $this->status
+            'name' => $this->name,
+            'last_name' => $this->last_name,
+            'phone' => $this->phone,
+            'address' => $this->address,
+            'email' => $this->email,
+            'url_image' => $path,
+            'password' => Hash::make($this->password),
+            'status' => $this->status,
         ]);
-        
-        
+
+
         $user->roles()->detach();
-        $user->syncRoles($this->roles_selected);
+        $user->syncRoles($this->role_selected);
         $this->alert('success', '¡Usuario actualizado con exíto!');
 
         $this->resetInputFields();

@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Role as HasRoles;
 
 class Roles extends Component
 {
-    public  $roles,$permissions,$name, $description, $status, $data_id;
+    public  $roles,$permissions,$name, $description, $status = 1, $data_id;
     public $select_permissions  = [];
     public $confirming, $action = 'POST';
     public function render()
@@ -23,10 +23,10 @@ class Roles extends Component
     {
     	$this->name = '';
     	$this->description = '';
-        $this->status = '';
+        $this->status = 1;
         $this->select_permissions  = [];
         $this->action = 'POST';
-    
+
     }
 
     public function store()
@@ -55,7 +55,7 @@ class Roles extends Component
         $this->status = $data->status;
         $this->data_id = $id;
         $permissions = $data->permissions->pluck('id');
-        
+
         $data_list = [];
         $list = [];
         $cont=1;
@@ -65,7 +65,7 @@ class Roles extends Component
                 $var_temp = false;
                 foreach ($permissions as $k => $v){
                     if($per->id == $v){
-                      
+
                        $var_temp = $v;
                         unset($permissions[$k]);
                         break;
@@ -74,7 +74,7 @@ class Roles extends Component
                     }
                 }
                 $data_list[$cont] =  $var_temp;
-               
+
                 $cont ++;
             }else{
                 $data_list[$cont] = false;
@@ -104,7 +104,7 @@ class Roles extends Component
         $role->revokePermissionTo(Permission::all());
         // sincronizar los nuevos permisos
         $role->syncPermissions($this->select_permissions);
-        
+
         session()->flash('message', 'Role actualizada con exíto.');
         $this->resetInputFields();
         $this->action = 'POST';
@@ -123,5 +123,5 @@ class Roles extends Component
         $this->confirming = $id;
     }
 
-   
+
 }

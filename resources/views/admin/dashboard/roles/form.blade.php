@@ -19,27 +19,27 @@
                 @enderror
             </div>
         </div>
-        
+
         <div class="col-sm-12">
             <div class="form-group fill">
                 <label class="floating-label" for="status">Estado</label>
-                <select class="form-control" name="status" id="exampleFormControlInput3" wire:model="status">
-                    <option value="">Seleciona estado</option>
-                    <option value="1">Activo</option>
-                    <option value="0">Inactivo</option>
-                </select>
-                
+                <div class="switch switch-info d-inline m-r-10">
+                    <input  wire:model="status"  type="checkbox" id="switch-i-1" checked>
+                    <label for="switch-i-1" class="cr"></label>
+                </div>
+
                 @error('status')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
         </div>
-        <div class="col-sm-12 table-responsive">
-             <div class="form-group">
+        <div class="col-sm-12 ">
+            <div class="form-group">
                 <h6>Permisos</h6>
-             </div>
-           <table class="table table-hover table-striped text-center">
-                <thead>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm table-hover table-striped text-center">
+                    <thead>
                     <tr>
                         <th class="text-left">Módulo</th>
                         <th>Crear</th>
@@ -47,9 +47,9 @@
                         <th>Modificar</th>
                         <th>Eliminar</th>
                     </tr>
-                </thead>
-                <tbody>
-                   
+                    </thead>
+                    <tbody>
+
                     @foreach($permissions->groupBy('modulo') as $k => $v)
                         <tr>
                             <td class="text-left">{{$k}}</td>
@@ -58,17 +58,18 @@
                             @endforeach
                         </tr>
                     @endforeach
-                </tbody>
-           </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
         <div class="col-sm-12">
-         
             @if($action=='POST')
-                <button  wire:click.prevent="store()" class="btn btn-primary ">Guardar</button>
+                <button  wire:click.prevent="store()" class="btn btn-sm btn-primary ">Guardar</button>
             @else
-                <button  wire:click.prevent="update()" class="btn btn-success ">Update</button>
+                <button  wire:click.prevent="update()" class="btn btn-sm btn-success ">Actualizar</button>
             @endif
-            <button wire:click.prevent="resetInputFields()" class="btn btn-danger">Cancelar</button>
+            <button wire:click.prevent="resetInputFields()" class="btn btn-sm btn-danger">Cancelar</button>
         </div>
     </div>
 </form>

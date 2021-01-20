@@ -7,18 +7,35 @@ use Livewire\Component;
 use App\Treatment;
 use App\Animal_production;
 use App\Mastitis As Mastitiss;
+use Livewire\WithPagination;
 use phpDocumentor\Reflection\Types\This;
 Use Illuminate\Support\Facades\DB;
 class Mastitis extends Component
 {
-    public  $animals_production,$mastitiss,$treatments, $tipe_mastitis, $description, $level,$animal_production_id,$treatment_id,$status;
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage' => ['except' => '5'],
+
+    ];
+    public $perPage = '10';
+    public $search = '';
+
+    public  $animals_production,$treatments, $tipe_mastitis, $description, $level,$animal_production_id,$treatment_id,$status = 1;
+   public $data_id;
     public function render()
     {
-        
+
         $this->animals_production = DB::table('animal_production')->select('*')->get();
-        $this->mastitiss = Mastitiss::all();
+        $mastitiss = Mastitiss::where('tipe_mastitis', 'LIKE', "%{$this->search}%")
+            ->orWhere('description', 'LIKE', "%{$this->search}%")
+            ->orWhere('level', 'LIKE', "%{$this->search}%")
+            ->paginate($this->perPage);
         $this->treatments = Treatment::all();
-        return view('livewire.mastitis');
+        return view('livewire.mastitis',compact('mastitiss'));
     }
     public function resetInputFields()
     {
@@ -30,6 +47,13 @@ class Mastitis extends Component
         $this->treatment_id= '';
     }
 
+    public function clear()
+    {
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = '10';
+    }
+
     public function store()
     {
     	$validation = $this->validate([
@@ -38,10 +62,10 @@ class Mastitis extends Component
             'level' => 'required',
             'status' => 'required',
             'animal_production_id' => 'required',
-            'treatment_id' => 'required'      
+            'treatment_id' => 'required'
     	]);
     	Mastitiss::create($validation);
-    	session()->flash('message', 'Mastitis creado con exíto.');
+    	session()->flash('message', 'Mastitis registrada con exíto.');
     	$this->resetInputFields();
 
     	$this->emit('mastitisStore');
@@ -67,7 +91,7 @@ class Mastitis extends Component
             'level' => 'required',
             'status' => 'required',
             'animal_production_id' => 'required',
-            'treatment_id' => 'required'      
+            'treatment_id' => 'required'
     	]);
 
         $data = Mastitiss::find($this->data_id);
@@ -81,7 +105,7 @@ class Mastitis extends Component
             'treatment_id'            =>  $this->treatment_id
         ]);
 
-        session()->flash('message', 'Mastitis actualizado con exíto.');
+        session()->flash('message', 'Mastitis actualizada con exíto.');
 
         $this->resetInputFields();
 
@@ -91,6 +115,6 @@ class Mastitis extends Component
     public function delete($id)
     {
         Mastitiss::find($id)->delete();
-        session()->flash('message', 'Mastitis eliminado con exíto.');
+        session()->flash('message', 'Mastitis eliminada con exíto.');
     }
 }

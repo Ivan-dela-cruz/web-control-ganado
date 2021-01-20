@@ -30,9 +30,6 @@ class ListSales extends Component
         if($this->search != ''){
             $this->estate_filter = 0;
         }
-        if($this->perPage != '5'){
-            $this->page = 1;
-        }
         $sales = Sale::where('status', 1)
             ->where(function ($query) {
                 $query->when($this->estate_filter > 0, function ($q) {

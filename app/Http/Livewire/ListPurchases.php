@@ -30,9 +30,7 @@ class ListPurchases extends Component
         if($this->search != ''){
             $this->estate_filter = 0;
         }
-        if($this->perPage != '5'){
-            $this->page = 1;
-        }
+
         $purchases = Purchase::where('status', 1)
             ->where(function ($query) {
                 $query->when($this->estate_filter > 0, function ($q) {

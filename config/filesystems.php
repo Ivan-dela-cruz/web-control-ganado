@@ -47,6 +47,18 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
+        'users' => [
+            'driver' => 'local',
+            'root' => public_path('users'),
+            'url' => env('APP_URL').'public/users',
+            'visibility' => 'public',
+        ],
+        'employees' => [
+            'driver' => 'local',
+            'root' => public_path('employees'),
+            'url' => env('APP_URL').'public/employees',
+            'visibility' => 'public',
+        ],
         'animals' => [
             'driver' => 'local',
             'root' => public_path('animals'),
@@ -57,6 +69,12 @@ return [
             'driver' => 'local',
             'root' => public_path('estates'),
             'url' => env('APP_URL').'public/estates',
+            'visibility' => 'public',
+        ],
+        'companies' => [
+            'driver' => 'local',
+            'root' => public_path('companies'),
+            'url' => env('APP_URL').'public/companies',
             'visibility' => 'public',
         ],
         'public' => [

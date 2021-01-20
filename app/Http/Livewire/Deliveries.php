@@ -6,18 +6,34 @@ use App\Delivery;
 use App\Company;
 use App\Estate;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Deliveries extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'perPage' => ['except' => '5'],
+
+    ];
+    public $perPage = '10';
+    public $search = '';
     public $estate_id,$company_id,$ruc,$driver,$year,$date,$hour,$total_liters,$description,$type,$status = true;
-    public $data_id, $deliveries,$companies,$estates;
-    
+    public $data_id,$companies,$estates;
+
     public function render()
     {
-        $this->deliveries = Delivery::all();
+        $deliveries = Delivery::where('ruc', 'LIKE', "%{$this->search}%")
+            ->orWhere('driver', 'LIKE', "%{$this->search}%")
+            ->orWhere('total_liters', 'LIKE', "%{$this->search}%")
+            ->orWhere('description', 'LIKE', "%{$this->search}%")
+            ->paginate($this->perPage);
         $this->companies = Company::all();
         $this->estates = Estate::all();
-        return view('livewire.deliveries');
+        return view('livewire.deliveries',compact('deliveries'));
     }
     public function resetInputFields()
     {
@@ -34,6 +50,13 @@ class Deliveries extends Component
         $this->status = '';
     }
 
+    public function clear()
+    {
+        $this->search = '';
+        $this->page = 1;
+        $this->perPage = '10';
+    }
+
     public function store()
     {
     	$validation = $this->validate([
@@ -41,9 +64,10 @@ class Deliveries extends Component
     		'company_id' => 'required',
             'ruc' => 'required',
             'driver' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'type' => 'required',
         ]);
-       
+
         $data =  [
             'estate_id'=>$this->estate_id,
             'company_id'=>$this->company_id,
@@ -58,9 +82,9 @@ class Deliveries extends Component
             'status'=>$this->status
         ];
         Delivery::create($data);
-        
+
         $this->alert('success','¡Registro creado con exíto!');
-        
+
     	$this->resetInputFields();
 
     	$this->emit('studentStore');
@@ -90,7 +114,8 @@ class Deliveries extends Component
     		'company_id' => 'required',
             'ruc' => 'required',
             'driver' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'type' => 'required',
         ]);
 
         $data = Delivery::find($this->data_id);
