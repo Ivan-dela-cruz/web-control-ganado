@@ -33,7 +33,7 @@ class Treatments extends Component
     {
     	$this->name = '';
     	$this->description = '';
-        $this->status = '';
+        $this->status = 1;
     }
 
     public function clear()
@@ -49,7 +49,11 @@ class Treatments extends Component
     		'name'	=>	'required',
     		'description' => 'required',
             'status' => 'required'
-        ]);
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'description.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
+            ]);
         $data =  [
             'name'=>$this->name,
             'description'=>$this->description,
@@ -57,7 +61,7 @@ class Treatments extends Component
         ];
         Treatment::create($data);
 
-        session()->flash('message', 'tratamiento creado con exíto.');
+        $this->alert('success', 'Tratamiento registrado con exíto.');
 
     	$this->resetInputFields();
 
@@ -79,6 +83,10 @@ class Treatments extends Component
     		'name'	=>	'required',
     		'description' => 'required',
             'status' => 'required'
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'description.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
         ]);
 
         $data = Treatment::find($this->data_id);
@@ -89,7 +97,7 @@ class Treatments extends Component
             'status'=> $this->status
         ]);
 
-        session()->flash('message', 'Tratamiento actualizado con exíto.');
+        $this->alert('success', 'Tratamiento actualizado con exíto.');
 
         $this->resetInputFields();
 
@@ -99,6 +107,6 @@ class Treatments extends Component
     public function delete($id)
     {
         Treatment::find($id)->delete();
-        session()->flash('message', 'Tratamiento eliminado con exíto.');
+        $this->alert('success', 'Tratamiento eliminado con exíto.');
     }
 }

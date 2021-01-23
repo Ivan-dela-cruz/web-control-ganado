@@ -1,6 +1,6 @@
 @extends('admin.init.index')
 @section('title')
-    Estudiantes
+    Tratamientos
 @endsection
 @section('content')
     <div class="pcoded-main-container">

@@ -45,7 +45,6 @@ class Veterinaries extends Component
         $this->phone2 = '';
         $this->direction = '';
         $this->status = '';
-
     }
 
     public function clear()
@@ -58,15 +57,33 @@ class Veterinaries extends Component
     public function store()
     {
     	$validation = $this->validate([
-    		'name'	=>	'required',
-            'last_name' => 'required',
-            'dni' => 'required',
-            'email' => 'required',
-            'phone1' => 'required',
-            'phone2' => 'required',
+    		'name'	=>	'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
+            'last_name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
+            'dni' => 'required|numeric|digits:10',
+            'email' => 'required|email',
+            'phone1' => 'required|numeric|digits:10',
             'direction' => 'required',
             'status' => 'required'
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'last_name.required' => 'Campo obligatorio.',
+            'dni.required' => 'Campo obligatorio.',
+            'email.required' => 'Campo obligatorio.',
+            'phone1.required' => 'Campo obligatorio.',
+            'direction.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
+            'phone1.numeric' => 'Teléfono incorrecto.',
+            'phone1.digits' => 'Teléfono incorrecto.',
         ]);
+
+    	if($this->phone2 != ''){
+    	    $this->validate([
+                'phone2' => 'numeric|digits:10',
+            ],[
+                'phone2.numeric' => 'Teléfono incorrecto.',
+                'phone2.digits' => 'Teléfono incorrecto.',
+            ]);
+        }
 
         $data =  [
             'name'=>$this->name,
@@ -80,7 +97,7 @@ class Veterinaries extends Component
         ];
         Veterinary::create($data);
 
-        session()->flash('message', 'Veterinario registrado con exíto.');
+        $this->alert('success', 'Veterinario registrado con exíto.');
 
     	$this->resetInputFields();
 
@@ -104,15 +121,32 @@ class Veterinaries extends Component
     public function update()
     {
         $validation = $this->validate([
-    		'name'	=>	'required',
-            'last_name' => 'required',
-            'dni' => 'required',
-            'email' => 'required',
-            'phone1' => 'required',
-            'phone2' => 'required',
+    		'name'	=>	'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
+            'last_name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
+            'dni' => 'required|numeric|digits:10',
+            'email' => 'required|email',
+            'phone1' => 'required|numeric|digits:10',
             'direction' => 'required',
             'status' => 'required'
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'last_name.required' => 'Campo obligatorio.',
+            'dni.required' => 'Campo obligatorio.',
+            'email.required' => 'Campo obligatorio.',
+            'phone1.required' => 'Campo obligatorio.',
+            'direction.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
+            'phone1.numeric' => 'Teléfono incorrecto.',
+            'phone1.digits' => 'Teléfono incorrecto.',
         ]);
+        if($this->phone2 != ''){
+            $this->validate([
+                'phone2' => 'numeric|digits:10',
+            ],[
+                'phone2.numeric' => 'Teléfono incorrecto.',
+                'phone2.digits' => 'Teléfono incorrecto.',
+            ]);
+        }
 
         $data = Veterinary::find($this->data_id);
 
@@ -126,8 +160,7 @@ class Veterinaries extends Component
             'direction'=>$this->direction,
             'status'=> $this->status
         ]);
-
-        session()->flash('message', 'Veterinario actualizado con exíto.');
+        $this->alert('success', 'Veterinario actualizado con exíto.');
 
         $this->resetInputFields();
 
@@ -137,7 +170,7 @@ class Veterinaries extends Component
     public function delete($id)
     {
         Veterinary::find($id)->delete();
-        session()->flash('message', 'Veterinario eliminado con exíto.');
+        $this->alert('success', 'Veterinario eliminado con exíto.');
     }
 
 }

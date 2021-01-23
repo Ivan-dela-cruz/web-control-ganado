@@ -24,5 +24,7 @@
             <input  wire:model="status"  type="checkbox" id="switch-i-1" checked>
             <label for="switch-i-1" class="cr"></label>
         </div>
+        @error('status')<span class="text-danger mt-2">{{ $message }}</span>
+        @enderror
     </div>
 </div>

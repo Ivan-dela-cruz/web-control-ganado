@@ -18,9 +18,9 @@
         <div class="input-group">
             <div class="input-group-prepend">
                 @if($url_image == '')
-                    <img src="{{asset('img/user.jpg')}}" alt="user image" class="img-radius align-top m-r-15" style="width:40px;">
+                    <img wire:ignore src="{{asset('img/user.jpg')}}" alt="user image" class="img-radius align-top m-r-15" style="width:40px; height: 40px">
                 @else
-                    <img src="{{asset($url_image)}}" alt="user image" class="img-radius align-top m-r-15" style="width:40px;">
+                    <img wire:ignore src="{{asset($url_image)}}" alt="user image" class="img-radius align-top m-r-15" style="width:40px; height: 40px;">
                 @endif
             </div>
             <div class="custom-file">
@@ -32,14 +32,14 @@
         @enderror
     </div>
     <div class="col-md-6 form-group">
-        <small class="mr-3 text-primary">Inicio</small>
+        <small class="mr-3 text-primary">Fecha de Nacimiento</small>
         <input type="date" id="exampleFormControlInput2" class="form-control" placeholder="Slug"
                wire:model="start_date"/>
         @error('start_date')<span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
     <div class="col-md-6 form-group">
-        <small class="mr-3 text-primary">Fin</small>
+        <small class="mr-3 text-primary">Fecha de Salida</small>
         <input type="date" id="exampleFormControlInput2" class="form-control" placeholder="Slug" wire:model="end_date"/>
         @error('end_date')<span class="text-danger">{{ $message }}</span>
         @enderror
@@ -52,7 +52,7 @@
                 <option value="{{ $estate->id }}">{{$estate->name}}</option>
             @endforeach
         </select>
-        @error('status')<span class="text-danger">{{ $message }}</span>
+        @error('estate_id')<span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
     <div class="col-md-6 form-group">
@@ -61,5 +61,7 @@
             <input wire:model="status" type="checkbox" id="switch-i-1" checked>
             <label for="switch-i-1" class="cr"></label>
         </div>
+        @error('status')<span class="text-danger mt-2">{{ $message }}</span>
+        @enderror
     </div>
 </div>

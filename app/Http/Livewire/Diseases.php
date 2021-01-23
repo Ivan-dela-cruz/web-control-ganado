@@ -35,7 +35,7 @@ class Diseases extends Component
     	$this->name = '';
         $this->description = '';
         $this->time_diseases = '';
-        $this->status = '';
+        $this->status = 1;
 
     }
 
@@ -53,6 +53,11 @@ class Diseases extends Component
             'description' => 'required',
             'time_diseases' => 'required',
             'status' => 'required'
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'description.required' => 'Campo obligatorio.',
+            'time_diseases.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
         ]);
         $data =  [
             'name'=>$this->name,
@@ -62,7 +67,7 @@ class Diseases extends Component
         ];
         Disease::create($data);
 
-        session()->flash('message', 'Enfermedad creada con exíto.');
+        $this->alert('success', 'Enfermedad registrada con exíto.');
 
     	$this->resetInputFields();
 
@@ -86,6 +91,11 @@ class Diseases extends Component
             'description' => 'required',
             'time_diseases' => 'required',
             'status' => 'required'
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'description.required' => 'Campo obligatorio.',
+            'time_diseases.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
         ]);
 
         $data = Disease::find($this->data_id);
@@ -97,7 +107,7 @@ class Diseases extends Component
             'status'=> $this->status
         ]);
 
-        session()->flash('message', 'Enfermedad actualizada con exíto.');
+        $this->alert('success', 'Enfermedad actualizada con exíto.');
 
         $this->resetInputFields();
 
@@ -107,6 +117,6 @@ class Diseases extends Component
     public function delete($id)
     {
         Disease::find($id)->delete();
-        session()->flash('message', 'Enfermedad eliminada con exíto.');
+        $this->alert('success', 'Enfermedad eliminada con exíto.');
     }
 }

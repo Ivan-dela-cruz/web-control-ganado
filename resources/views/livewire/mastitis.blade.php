@@ -73,7 +73,7 @@
                             <td>{{ $data->level }}</td>
 
                             <td>{{ $data->treatment->name}}</td>
-                            <td></td>
+                            <td>{{$data->animal_production->animal->name }}</td>
                             <td>{{ $data->created_at->format('Y-m-d') }}</td>
                             <td>
                                 @if ($data->status === 1)
@@ -86,9 +86,7 @@
                                         class="badge badge-light-danger">
                                 Inactivo
                              </span>
-
                                 @endif
-
                                 <div class="overlay-edit">
                                     @can('update_disease')
                                     <button

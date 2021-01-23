@@ -30,7 +30,7 @@ class Mastitis extends Component
     {
 
         $this->animals_production = Animal_production::where('status',1)->get();
-       
+
         $mastitiss = Mastitiss::where('tipe_mastitis', 'LIKE', "%{$this->search}%")
             ->orWhere('description', 'LIKE', "%{$this->search}%")
             ->orWhere('level', 'LIKE', "%{$this->search}%")
@@ -43,7 +43,7 @@ class Mastitis extends Component
     	$this->tipe_mastitis = '';
         $this->description = '';
         $this->level = '';
-        $this->status = '';
+        $this->status = 1;
         $this->animal_production_id = '';
         $this->treatment_id= '';
     }
@@ -64,9 +64,16 @@ class Mastitis extends Component
             'status' => 'required',
             'animal_production_id' => 'required',
             'treatment_id' => 'required'
-    	]);
+    	],[
+    	    'tipe_mastitis.required' =>'Campo obligatorio.',
+    	    'description.required' =>'Campo obligatorio.',
+    	    'level.required' =>'Campo obligatorio.',
+    	    'status.required' =>'Campo obligatorio.',
+    	    'animal_production_id.required' =>'Campo obligatorio.',
+    	    'treatment_id.required' =>'Campo obligatorio.',
+        ]);
     	Mastitiss::create($validation);
-    	session()->flash('message', 'Mastitis registrada con exíto.');
+    	$this->alert('success', 'Mastitis registrada con exíto.');
     	$this->resetInputFields();
 
     	$this->emit('mastitisStore');
@@ -106,7 +113,7 @@ class Mastitis extends Component
             'treatment_id'            =>  $this->treatment_id
         ]);
 
-        session()->flash('message', 'Mastitis actualizada con exíto.');
+        $this->alert('success', 'Mastitis actualizada con exíto.');
 
         $this->resetInputFields();
 
@@ -116,6 +123,6 @@ class Mastitis extends Component
     public function delete($id)
     {
         Mastitiss::find($id)->delete();
-        session()->flash('message', 'Mastitis eliminada con exíto.');
+       $this->alert('success', 'Mastitis eliminada con exíto.');
     }
 }

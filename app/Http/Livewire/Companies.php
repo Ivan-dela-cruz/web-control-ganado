@@ -17,12 +17,12 @@ class Companies extends Component
 
     protected $queryString = [
         'search' => ['except' => ''],
-        'perPage' => ['except' => '5'],
+        'perPage' => ['except' => '10'],
     ];
     public $perPage = '10';
     public $search = '';
 
-    public $name,$ruc,$owner,$url_image,$phone,$address,$email,$status = true;
+    public $name,$ruc,$owner,$url_image,$phone,$address,$email,$status = 1;
     public  $data_id;
     public function render()
     {
@@ -59,10 +59,21 @@ class Companies extends Component
     {
     	$validation = $this->validate([
     		'name'	=>	'required|unique:estates',
-    		'ruc' => 'required|unique:estates',
-            'email' => 'required|email|unique:estates',
+    		'ruc' => 'required|unique:estates|numeric|digits:13',
+            'email' => 'required|email|unique:companies',
             'address' => 'required',
             'status' => 'required'
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'name.unique' => 'Nombre en uso.',
+            'ruc.required' => 'Campo obligatorio.',
+            'ruc.numeric' => 'El ruc debe ser numérico.',
+            'ruc.digits' => 'RUC incorrecto.',
+            'email.required' => 'Campo obligatorio.',
+            'email.email' => 'Correo incorrecto.',
+            'email.unique' => 'Correo en uso .',
+            'address.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
         ]);
         $path = 'img/user.jpg';
         if ($this->url_image != '') {
@@ -83,14 +94,14 @@ class Companies extends Component
             'status'=>$this->status
         ];
         Company::create($data);
-        $this->alert('success','¡Registro creado con exíto!');
+        $this->alert('success','¡Compania registrada con exíto!');
     	$this->resetInputFields();
     	$this->emit('studentStore');
     }
 
     public function edit($id)
     {
-        $company = Company::findOrFail($id);
+        $company = Company::find($id);
         $this->name = $company->name;
     	$this->ruc = $company->ruc;
         $this->url_image = $company->url_image;
@@ -106,10 +117,22 @@ class Companies extends Component
     {
         $validation = $this->validate([
             'name'	=>	['required',Rule::unique('companies')->ignore($this->data_id)],
-    		'ruc' => ['required',Rule::unique('companies')->ignore($this->data_id)],
+    		'ruc' => ['required',Rule::unique('companies')->ignore($this->data_id),'digits:13','numeric'],
             'email' => ['required','email',Rule::unique('companies')->ignore($this->data_id)],
             'address' => 'required',
             'status' => 'required'
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'name.unique' => 'Nombre en uso.',
+            'ruc.required' => 'Campo obligatorio.',
+            'ruc.numeric' => 'El ruc debe ser numérico.',
+            'ruc.digits' => 'RUC incorrecto.',
+            'ruc.unique' => 'RUC en uso.',
+            'email.required' => 'Campo obligatorio.',
+            'email.email' => 'Correo incorrecto.',
+            'email.unique' => 'Correo en uso .',
+            'address.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
         ]);
         $data = Company::find($this->data_id);
         if ($this->url_image != $data->url_image) {
@@ -130,7 +153,7 @@ class Companies extends Component
             'email'=>$this->email,
             'status'=>$this->status
         ]);
-        $this->alert('success','¡Registro modificado con exíto!');
+        $this->alert('success','¡Compania actualizada con exíto!');
         $this->resetInputFields();
         $this->emit('studentStore');
     }
@@ -138,6 +161,6 @@ class Companies extends Component
     public function delete($id)
     {
         Company::find($id)->delete();
-        $this->alert('success','¡Registro eliminado con exíto!');
+        $this->alert('success','¡Compania eliminada con exíto!');
     }
 }
