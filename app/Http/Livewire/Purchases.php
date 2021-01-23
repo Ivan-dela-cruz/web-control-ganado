@@ -145,6 +145,7 @@ class Purchases extends Component
             $d->update([
                 'status' => 1,
             ]);
+            //CREAR REGISTRO DEL ANIMAL
         }
         $this->resetInputFields();
         $this->emit('endPurchase');

@@ -7,6 +7,7 @@ use App\Veterinary;
 use App\Employ;
 use App\Income;
 use App\Milking;
+use App\Checkup;
 use App\Animal_production;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -181,7 +182,26 @@ class EstateController extends Controller
         $income->save();
         return $this->AnimalsProductionByMilking($request, $id);
     }
+    public function CheckupsAnimalsByEstate()
+    {
+        $checkups = Checkup::join('animals','checkups.animal_id','=','animals.id')
+        ->join('veterinaries','checkups.veterinarie_id','=','veterinaries.id')
+        ->join('estates','checkups.estate_id','=','estates.id')
+        ->select(
+        'checkups.topic','checkups.date',
+        'animals.id','animals.name','animals.code',
+        'estates.name as name_estate',
+        'veterinaries.name as name_vet','veterinaries.last_name as last_name_vet')
+        ->where('checkups.status',1)
+        ->get();
+        return response()->json([
+            'success'=>true,
+            'checkups'=>$checkups,
+            'code'=>'SUCCESS_FOUND_CHECKUPS',
+            'status'=>200
+        ],200);
 
+    }
 
 
 }

@@ -46,3 +46,7 @@ Route::get('dashboard/purchases','Admin\DashboardController@Purchases')->name('p
 Route::get('dashboard/purchases/list','Admin\DashboardController@List_purchases')->name('purchases.list');
 Route::get('dashboard/sales','Admin\DashboardController@Sales')->name('sales');
 Route::get('dashboard/sales/list','Admin\DashboardController@List_sales')->name('sales.list');
+
+
+///CHEQUEOS
+Route::get('dashboard/checkups','Admin\DashboardController@checkups')->name('checkups');
