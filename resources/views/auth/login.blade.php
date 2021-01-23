@@ -8,7 +8,7 @@
 			<div class="row align-items-center text-center">
 				<div class="col-md-12">
 					<div class="card-body">
-						 <img height="100" width="200" src="{{asset('assets2/images/auth/auth-logo-dark.png')}}" alt="" class="img-fluid mb-4">
+						 <img height="100" width="200" src="{{asset('img/logocontrol.png')}}" alt="" class="img-fluid mb-4">
                        
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
@@ -38,7 +38,7 @@
                                 <label class="custom-control-label" for="remember">Recordar sesión.</label>
 
                             </div>
-                            <button type="submit" class="btn btn-block btn-primary mb-4">
+                            <button type="submit" class="btn btn-block btn-info mb-4">
                                 {{ __('Inicar sesión') }}
                             </button>
                             @if (Route::has('password.request'))
