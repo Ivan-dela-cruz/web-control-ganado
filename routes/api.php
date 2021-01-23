@@ -27,6 +27,7 @@ Route::namespace('Api')->group(function () {
 
     //RUTAS PARA EL 
     Route::get('estates','EstateController@index')->name('estates');
+    Route::get('checkups','EstateController@CheckupsAnimalsByEstate');
     Route::get('estates/info/{id}','EstateController@genaralInformation');
     Route::get('estates/employes/{id}','EstateController@employesByEstate');
     Route::get('estates/veterinaries/{id}','EstateController@veterinariesByEstate');
