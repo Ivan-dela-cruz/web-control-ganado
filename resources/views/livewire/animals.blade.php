@@ -71,10 +71,10 @@
                         <th>Nombre</th>
                         <th>Codigo</th>
                         <th>Imagen</th>
-                        <th>Comienzo</th>
-                        <th>Fin</th>
-                        <th>Registrado</th>
-                        <th>Finca</th>
+                    <th>F. Nacimiento</th>
+                        <th>F. Salida</th>
+                        <th>F. Registro</th>
+                        <th>Hacienda</th>
                         <th>Estado</th>
                     </tr>
                     </thead>

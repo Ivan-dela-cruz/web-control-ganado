@@ -49,6 +49,7 @@
         @error('url_image')<span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
+    @if($view == 'create')
     <div class="col-md-6 form-group">
         <small  class="text-primary" for="password">Contraseña</small>
         <input type="password" id="password" class="form-control" placeholder="" wire:model="password" />
@@ -70,6 +71,7 @@
             @enderror
 
     </div>
+    @endif
     <div class="col-md-6 form-group" wire:ignore >
         <small class="text-primary" for="password_confirmation">Roles</small>
         <select id="role" class="select2 form-control" multiple data-placeholder="{{__('Seleccione...')}}">

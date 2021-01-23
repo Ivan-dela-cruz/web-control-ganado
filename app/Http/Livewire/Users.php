@@ -178,9 +178,9 @@ class Users extends Component
             $user->roles()->detach();
             $user->syncRoles($this->roles_selected);
         }
-        $this->resetInputFields();
         $this->emit('modal');
         $this->alert('success', 'Usuario actualizado con exíto.');
+        $this->resetInputFields();
         return redirect()->route('users');
     }
 

@@ -24,7 +24,7 @@
     @enderror
 </div>
 <div class="col-md-6 form-group">
-    <small  class="mr-3 text-primary">RUC</small>
+    <small  class="mr-3 text-primary">RUC Conductor</small>
     <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="" wire:model="ruc" />
     @error('ruc')<span class="text-danger">{{ $message }}</span>
     @enderror
@@ -66,8 +66,12 @@
     @enderror
 </div>
 <div class="col-md-6 form-group">
-    <small  class="mr-3 text-primary">Tipo</small>
-    <input type="text" id="exampleFormControlInput2" class="form-control" placeholder="" wire:model="type" />
+    <small  class="mr-3 text-primary">Tiempo</small>
+    <select class="form-control" id="exampleFormControlInput3" wire:model="type">
+        <option value="">Seleccione...</option>
+        <option value="morning">Mañana</option>
+        <option value="afternoon">Tarde</option>
+    </select>
     @error('type')<span class="text-danger">{{ $message }}</span>
     @enderror
 </div>
@@ -77,5 +81,7 @@
             <input  wire:model="status"  type="checkbox" id="switch-i-1" checked>
             <label for="switch-i-1" class="cr"></label>
         </div>
+        @error('status')<span class="text-danger">{{ $message }}</span>
+        @enderror
     </div>
 </div>

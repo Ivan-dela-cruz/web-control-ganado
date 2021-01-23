@@ -19,7 +19,7 @@ class Employes extends Component
 
     protected $queryString = [
         'search' => ['except' => ''],
-        'perPage' => ['except' => '5'],
+        'perPage' => ['except' => '10'],
 
     ];
     public $perPage = '10';
@@ -70,12 +70,38 @@ class Employes extends Component
     public function store()
     {
         $validation = $this->validate([
-            'name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
+            'last_name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
             'email' => 'required|email|unique:users',
-            'dni' => 'required|unique:employs',
-            'status' => 'required'
+            'dni' => 'required|unique:employs|numeric|digits:10',
+            'status' => 'required',
+            'estate_id' => 'required',
+            'address' => 'required',
+            'start_date' => 'required',
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'last_name.required' => 'Campo obligatorio.',
+            'email.required' => 'Campo obligatorio.',
+            'email.unique' => 'El correo ya esta en uso.',
+            'email.email' => 'El correo es incorrecto.',
+            'dni.required' => 'Campo obligatorio.',
+            'dni.unique' => 'DNI ya esta en uso.',
+            'dni.numeric' => 'DNI incorrecto.',
+            'dni.digits' => 'DNI incorrecto.',
+            'status.required' => 'Campo obligatorio.',
+            'estate_id.required' => 'Campo obligatorio.',
+            'address.required' => 'Campo obligatorio.',
+            'start_date.required' => 'Campo obligatorio.',
         ]);
+
+        if($this->phone != ''){
+            $this->validate([
+                'phone' => 'numeric|digits:10',
+            ],[
+                'phone.numeric' => 'Teléfono incorrecto.',
+                'phone.digits' => 'Teléfono incorrecto.',
+            ]);
+        }
 
         $path = 'img/user.jpg';
         if ($this->url_image != '') {
@@ -95,7 +121,7 @@ class Employes extends Component
             'email' => $this->email,
             'password' => $password
         ]);
-        
+
         $user->assignRole('Empleado');
         $data = [
             'user_id' => $user->id,
@@ -112,7 +138,7 @@ class Employes extends Component
             'status' => $this->status
         ];
         Employ::create($data);
-        $this->alert('success', 'Registro creado con exíto.');
+        $this->alert('success', 'Empleado registrado con exíto.');
         $this->resetInputFields();
         $this->emit('studentStore');
     }
@@ -138,11 +164,31 @@ class Employes extends Component
     public function update()
     {
         $validation = $this->validate([
-            'name' => 'required',
-            'last_name' => 'required',
-            'email' => ['required', Rule::unique('employs')->ignore($this->data_id)],
-            'dni' => ['required', Rule::unique('employs')->ignore($this->data_id)],
-            'status' => 'required'
+            'name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
+            'last_name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
+            'email' => ['required', Rule::unique('employs')->ignore($this->data_id),'email'],
+            'dni' => ['required', Rule::unique('employs')->ignore($this->data_id),'numeric','digits:10'],
+            'status' => 'required',
+            'estate_id' => 'required',
+            'address' => 'required',
+            'start_date' => 'required',
+            'phone' => 'numeric|digits:10'
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'last_name.required' => 'Campo obligatorio.',
+            'email.required' => 'Campo obligatorio.',
+            'email.unique' => 'El correo ya esta en uso.',
+            'email.email' => 'El correo es incorrecto.',
+            'dni.required' => 'Campo obligatorio.',
+            'dni.unique' => 'DNI ya esta en uso.',
+            'dni.numeric' => 'DNI incorrecto.',
+            'dni.digits' => 'DNI incorrecto.',
+            'status.required' => 'Campo obligatorio.',
+            'estate_id.required' => 'Campo obligatorio.',
+            'address.required' => 'Campo obligatorio.',
+            'start_date.required' => 'Campo obligatorio.',
+            'phone.numeric' => 'Teléfono incorrecto.',
+            'phone.digits' => 'Teléfono incorrecto.',
         ]);
         $data = Employ::find($this->data_id);
         if ($this->url_image != $data->url_image) {
@@ -167,7 +213,7 @@ class Employes extends Component
             'status' => $this->status
         ]);
 
-        $this->alert('success', 'Registro actualizado con exíto.');
+        $this->alert('success', 'Empleado actualizado con exíto.');
         $this->resetInputFields();
         $this->emit('studentStore');
     }
@@ -175,6 +221,6 @@ class Employes extends Component
     public function delete($id)
     {
         Employ::find($id)->delete();
-        $this->alert('success', 'Registro eliminado con exíto.');
+        $this->alert('success', 'Empleado eliminado con exíto.');
     }
 }

@@ -62,10 +62,22 @@ class Deliveries extends Component
     	$validation = $this->validate([
     		'estate_id'	=>	'required',
     		'company_id' => 'required',
-            'ruc' => 'required',
+            'ruc' => 'required|numeric|digits:13',
             'driver' => 'required',
             'status' => 'required',
             'type' => 'required',
+           'total_liters' => 'required|numeric'
+        ],[
+            'estate_id.required' => 'Campo obligatorio.',
+            'company_id.required' => 'Campo obligatorio.',
+            'ruc.required' => 'Campo obligatorio.',
+            'ruc.numeric' => 'El ruc debe ser numérico.',
+            'ruc.digits' => 'RUC incorrecto.',
+            'driver.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
+            'type.required' => 'Campo obligatorio.',
+            'total_liters.required' => 'Campo obligatorio.',
+            'total_liters.numeric' => 'Campo incorrecto.',
         ]);
 
         $data =  [
@@ -112,10 +124,22 @@ class Deliveries extends Component
         $validation = $this->validate([
     		'estate_id'	=>	'required',
     		'company_id' => 'required',
-            'ruc' => 'required',
+            'ruc' => 'required|numeric|digits:13',
             'driver' => 'required',
             'status' => 'required',
             'type' => 'required',
+            'total_liters' => 'required|numeric'
+        ],[
+            'estate_id.required' => 'Campo obligatorio.',
+            'company_id.required' => 'Campo obligatorio.',
+            'ruc.required' => 'Campo obligatorio.',
+            'ruc.numeric' => 'El ruc debe ser numérico.',
+            'ruc.digits' => 'RUC incorrecto.',
+            'driver.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
+            'type.required' => 'Campo obligatorio.',
+            'total_liters.required' => 'Campo obligatorio.',
+            'total_liters.numeric' =>'Campo incorrecto.',
         ]);
 
         $data = Delivery::find($this->data_id);

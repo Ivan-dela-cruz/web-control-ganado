@@ -58,9 +58,10 @@
                     <tr>
                         <th>Hacienda</th>
                         <th>Companía</th>
-                        <th>Hora</th>
-                        <th>Fecha</th>
+                        <th>RUC Conductor</th>
+                        <th>Tiempo</th>
                         <th>Total entregado</th>
+                        <th>Regisrtro</th>
                         <th>Estado</th>
                     </tr>
                     </thead>
@@ -69,9 +70,14 @@
                         <tr>
                             <td>{{$delivery->estate->name}}</td>
                             <td>{{$delivery->company->name}}</td>
-                            <td>{{$delivery->hour}}</td>
-                            <td>{{$delivery->date}}</td>
+                            <td>{{$delivery->ruc}}</td>
+                            @if($delivery->type == 'afternoon')
+                                <td>Tarde</td>
+                            @elseif($delivery->type == 'morning')
+                                <td>Mañana</td>
+                            @endif
                             <td>{{$delivery->total_liters}}</td>
+                            <td>{{$delivery->created_at}}</td>
                             <td>
                                 @if ($delivery->status === 1)
                                     <span
@@ -86,23 +92,23 @@
                                 @endif
                                 <div class="overlay-edit">
                                     @can('update_delivery')
-                                    <button
-                                        class="btn btn-icon btn-warning"
-                                        wire:click="edit({{ $delivery->id }})"
-                                        type="button"
-                                        data-toggle="modal" data-target="#updateModal">
-                                        <i class="feather icon-edit-2"></i></button>
+                                        <button
+                                            class="btn btn-icon btn-warning"
+                                            wire:click="edit({{ $delivery->id }})"
+                                            type="button"
+                                            data-toggle="modal" data-target="#updateModal">
+                                            <i class="feather icon-edit-2"></i></button>
                                     @endcan
                                     @can('destroy_delivery')
-                                    <button
-                                        wire:click="delete({{ $delivery->id }})"
-                                        data-toggle="tooltip"
-                                        title="Titulo"
-                                        type="button"
-                                        class="btn btn-icon btn-danger">
-                                        <i class="feather icon-trash-2"></i>
-                                    </button>
-                                        @endcan
+                                        <button
+                                            wire:click="delete({{ $delivery->id }})"
+                                            data-toggle="tooltip"
+                                            title="Titulo"
+                                            type="button"
+                                            class="btn btn-icon btn-danger">
+                                            <i class="feather icon-trash-2"></i>
+                                        </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

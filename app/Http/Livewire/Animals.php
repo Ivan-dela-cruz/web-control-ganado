@@ -73,11 +73,19 @@ class Animals extends Component
 
         $validation = $this->validate([
             'name' => 'required',
-            'code' => 'required',
+            'code' => 'required|unique:animals,code',
             'start_date' => 'required',
-            'end_date' => 'required',
+            //'end_date' => 'required',
             'status' => 'required',
             'estate_id' => 'required'
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'code.required' => 'Campo obligatorio.',
+            'code.unique' => 'Código en uso.',
+            'start_date.required' => 'Campo obligatorio.',
+            //'end_date.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
+            'estate_id.required' => 'Campo obligatorio.',
         ]);
         //UPLOAD IMAGE
         $path = 'img/user.jpg';
@@ -124,12 +132,20 @@ class Animals extends Component
     {
         $validate = $this->validate([
             'name' => 'required',
-            'code' => 'required',
-            'url_image' => 'required',
+            'code' => ['required',Rule::unique('animals')->ignore($this->data_id)],
+           // 'url_image' => 'required',
             'start_date' => 'required',
-            'end_date' => 'required',
+          //  'end_date' => 'required',
             'status' => 'required',
             'estate_id' => 'required'
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'code.required' => 'Campo obligatorio.',
+            'code.unique' => 'Código en uso.',
+            'start_date.required' => 'Campo obligatorio.',
+            //'end_date.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
+            'estate_id.required' => 'Campo obligatorio.',
         ]);
         //UPLOAD IMAGE
 
@@ -160,6 +176,6 @@ class Animals extends Component
     public function delete($id)
     {
         Animal::find($id)->delete();
-        $this->alert('success', 'Animal actualizado con exíto.');
+        $this->alert('success', 'Animal eliminado con exíto.');
     }
 }

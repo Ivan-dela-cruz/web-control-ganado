@@ -7,6 +7,7 @@ use Livewire\Component;
 use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use App\Scopes\StatusScope;
 
 class Estates extends Component
 {
@@ -17,7 +18,7 @@ class Estates extends Component
 
     protected $queryString = [
         'search' => ['except' => ''],
-        'perPage' => ['except' => '5'],
+        'perPage' => ['except' => '10'],
     ];
     public $perPage = '10';
     public $search = '';
@@ -32,6 +33,7 @@ class Estates extends Component
             ->orWhere('phone', 'LIKE', "%{$this->search}%")
             ->orWhere('address', 'LIKE', "%{$this->search}%")
             ->orWhere('email', 'LIKE', "%{$this->search}%")
+            ->withoutGlobalScope(Estate::class)
             ->paginate($this->perPage);
         return view('livewire.estates',compact('estates'));
     }
@@ -58,12 +60,30 @@ class Estates extends Component
     public function store()
     {
     	$validation = $this->validate([
-    		'name'	=>	'required|unique:estates',
-    		'ruc' => 'required|unique:estates',
+    		'name'	=>	'required|unique:estates|max:255',
+    		'ruc' => 'required|unique:estates|numeric|digits:13',
             'email' => 'required|email|unique:estates',
             'address' => 'required',
+            'owner' => 'required',
             'status' => 'required',
+            'phone' => 'required|numeric|digits:10',
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'name.unique' => 'Ya existe una Hacienda con ese nombre.',
+            'ruc.required' => 'Campo obligatorio.',
+            'ruc.numeric' => 'El ruc debe ser numérico.',
+            'ruc.digits' => 'RUC incorrecto.',
+            'email.required' => 'Campo obligatorio.',
+            'email.email' => 'El correo no es valido.',
+            'email.unique' => 'El correo ya esta en uso, intente con otro.',
+            'address.required' => 'Campo obligatorio.',
+            'owner.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
+            'phone.required' => 'Campo obligatorio.',
+            'phone.numeric' => 'Teléfono incorrecto.',
+            'phone.digits' => 'Teléfono incorrecto.',
         ]);
+
          //UPLOAD IMAGE
         $path = 'img/user.jpg';
         if ($this->url_image != '') {
@@ -85,6 +105,7 @@ class Estates extends Component
             'status'=>$this->status
         ];
         Estate::create($data);
+
         $this->alert('success','¡Registro creado con exíto!');
     	$this->resetInputFields();
     	$this->emit('studentStore');
@@ -109,11 +130,27 @@ class Estates extends Component
     {
         $validation = $this->validate([
             'name'	=>	['required',Rule::unique('estates')->ignore($this->data_id)],
-    		'ruc' => ['required',Rule::unique('estates')->ignore($this->data_id)],
+    		'ruc' => ['required',Rule::unique('estates')->ignore($this->data_id), 'numeric','digits:13'],
             'email' => ['required','email',Rule::unique('estates')->ignore($this->data_id)],
             'address' => 'required',
             'status' => 'required',
-            'url_image'=>'image'
+            'owner' => 'required',
+            'phone' => 'required|numeric|digits:10',
+        ],[
+            'name.required' => 'Campo obligatorio.',
+            'name.unique' => 'Ya existe una Hacienda con ese nombre.',
+            'ruc.required' => 'Campo obligatorio.',
+            'ruc.digits' => 'RUC incorrecto.',
+            'ruc.numeric' => 'El ruc debe ser numérico.',
+            'email.required' => 'Campo obligatorio.',
+            'email.email' => 'El correo no es valido.',
+            'email.unique' => 'El correo ya esta en uso, intente con otro.',
+            'address.required' => 'Campo obligatorio.',
+            'owner.required' => 'Campo obligatorio.',
+            'status.required' => 'Campo obligatorio.',
+            'phone.required' => 'Campo obligatorio.',
+            'phone.numeric' => 'Teléfono incorrecto.',
+            'phone.digits' => 'Teléfono incorrecto.',
         ]);
         $data = Estate::find($this->data_id);
          //UPLOAD IMAGE
@@ -137,7 +174,7 @@ class Estates extends Component
             'email'=>$this->email,
             'status'=>$this->status
         ]);
-        $this->alert('success','¡Registro modificado con exíto!');
+        $this->alert('success','¡Registro actializado con exíto!');
         $this->resetInputFields();
         $this->emit('studentStore');
     }
@@ -147,4 +184,17 @@ class Estates extends Component
         Estate::find($id)->delete();
         $this->alert('success','¡Registro eliminado con exíto!');
     }
+
+    /*public function rules()
+    {
+
+        //name, last_name,username,birth_date, gender, address, province, city, phone, url_image, email, password, status
+        return [
+            'ci' => 'required|numeric|unique:users|digits:10',
+            'name'=>'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
+            'last_name'=>'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
+            'address'=>'required|string|max:255',
+            'phone'=>'required||numeric|digits:10',]
+    }*/
+
 }

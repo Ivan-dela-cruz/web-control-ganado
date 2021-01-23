@@ -17,6 +17,8 @@
         <div class="switch switch-info m-r-10">
             <input  wire:model="status"  type="checkbox" id="switch-i-1" checked>
             <label for="switch-i-1" class="cr"></label>
+            @error('status')<span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
     </div>
 </div>
