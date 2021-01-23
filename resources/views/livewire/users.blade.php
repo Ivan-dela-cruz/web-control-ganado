@@ -1,6 +1,6 @@
 <div class="col-lg-12">
-    @include('admin.modals.users.create')
-    @include('admin.modals.users.edit')
+    @include('admin.modals.users.'.$view)
+
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -52,7 +52,6 @@
                         <th>Teléfono</th>
                         <th>Dirección</th>
                         <th>Rol</th>
-
                         <th>Registrado</th>
                         <th>Estado</th>
                     </tr>
@@ -88,8 +87,7 @@
                                     <button
                                         class="btn btn-icon btn-warning"
                                         wire:click="edit({{ $user->id }})"
-                                        type="button"
-                                        data-toggle="modal" data-target="#updateModal">
+                                        type="button">
                                         <i class="feather icon-edit-2"></i></button>
                                     @endcan
                                     @can('destroy_user')
@@ -114,6 +112,39 @@
             {{$users->links()}}
         </div>
     </div>
+
+    @section('scripts')
+        <script>
+            $('#role').each(function () {
+                $(this).select2({
+                    placeholder: "{{__('Seleccione...')}}",
+                    dropdownParent: $(this).parent()
+                });
+            });
+            $('#role').on('change', function (e) {
+                var data = $(this).select2("val");
+            @this.set('roles_selected', data);
+            });
+            document.addEventListener("livewire:load", () => {
+                Livewire.hook('message.processed', (message, component) => {
+                    $('#role').each(function () {
+                        $(this).select2({dropdownParent: $(this).parent()});
+                    })
+                });
+            });
+            window.livewire.on('showUpdate', () => {
+                $('#updateModal').modal('show');
+            });
+            window.livewire.on('showCreate', () => {
+                $('#createModal').modal('show');
+            });
+            window.livewire.on('modal', () => {
+                $('#updateModal').modal('hide');
+                //  $('#createModal').remove();
+                //data-dismiss="modal"
+            });
+        </script>
+    @endsection
 </div>
 
 

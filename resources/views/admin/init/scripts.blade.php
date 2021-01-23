@@ -26,6 +26,9 @@
 <script src="{{asset('assets2/js/pages/form-select-custom.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
 
+<script src="{{asset('plugins/select2/dist/js/select2.full.min.js')}}"></script>
+<script src="{{asset('plugins/select2/dist/js/select2.min.js')}}"></script>
+
  @livewireScripts
 
  <x-livewire-alert::scripts />
