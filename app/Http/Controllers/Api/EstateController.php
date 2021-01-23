@@ -191,7 +191,7 @@ class EstateController extends Controller
         'checkups.topic','checkups.date',
         'animals.id','animals.name','animals.code',
         'estates.name as name_estate',
-        'veterinaries.name as name_vet','veterinaries.last_name as last_name_vet')
+        'veterinaries.name as name_vet','veterinaries.last_name as last_name_vet','veterinaries.url_image')
         ->where('checkups.status',1)
         ->get();
         return response()->json([
