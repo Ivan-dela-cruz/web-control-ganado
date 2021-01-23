@@ -5,5 +5,6 @@
  <link rel="stylesheet" href="{{asset('assets2/css/plugins/select2.min.css')}}">
 <!-- vendor css -->
 <link rel="stylesheet" href="{{asset('assets2/css/style.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/select2/dist/css/select2.css')}}">
  @livewireStyles
 @yield('css')

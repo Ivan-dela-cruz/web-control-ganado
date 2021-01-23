@@ -19,15 +19,18 @@ class Users extends Component
 
     protected $queryString = [
         'search' => ['except' => ''],
-        'perPage' => ['except' => '5'],
+        'perPage' => ['except' => '10'],
 
     ];
     public $perPage = '10';
     public $search = '';
 
-    public $roles, $role_selected = [];
     public $data_id, $user_id, $name, $last_name;
-    public $url_image, $email, $phone, $status = true, $address, $password, $password_confirmation;
+    public $url_image, $email, $phone, $status = 1, $address, $password, $password_confirmation;
+
+    public  $roles, $uRoles = null;
+    public $roles_selected = null;
+    public $view = 'create';
 
 
     public function render()
@@ -51,20 +54,10 @@ class Users extends Component
         $this->perPage = '10';
     }
 
-    public function resetInputFields()
-    {
-        $this->name = '';
-        $this->last_name = '';
-        $this->url_image = '';
-        $this->email = '';
-        $this->address = '';
-        $this->status = true;
-        $this->phone = '';
-        $this->user_id = '';
-        $this->password = '';
-        $this->password_confirmation = '';
-        $this->role_selected = '';
-
+    public function create(){
+        $this->view = 'create';
+        $this->emit('showCreate');//IMPORTANT!
+        $this->resetInputFields();
     }
 
     public function store()
@@ -74,7 +67,7 @@ class Users extends Component
             'last_name' => 'required',
             'phone' => 'required|max:10',
             'address' => 'required',
-            'role_selected' => 'required',
+            // 'role_selected' => 'required',
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => 'required|confirmed|min:8',
             'password_confirmation' => 'required'
@@ -85,7 +78,7 @@ class Users extends Component
             'address.required' => 'Campo obligatorio.',
             'phone.number' => 'Teléfono incorrecto.',
             'phone.max' => 'Teléfono incorrecto.',
-            'role_selected.required' => 'Seleccione un rol.',
+            // 'role_selected.required' => 'Seleccione un rol.',
             'email.required' => 'Campo obligatorio.',
             'email.email' => 'El correo no es valido.',
             'email.unique' => 'El correo ya esta en uso, intente con otro.',
@@ -115,16 +108,16 @@ class Users extends Component
         ];
 
         $user = User::create($data);
-        $user->roles()->sync($this->role_selected);
+        $user->roles()->sync($this->roles_selected);
         $this->alert('success', '¡Usuario creado con exíto!');
         $this->resetInputFields();
-
         $this->emit('studentStore');
     }
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $this->view = 'edit';
+        $user = User::find($id);
         $this->name = $user->name;
         $this->last_name = $user->last_name;
         $this->url_image = $user->url_image;
@@ -134,20 +127,9 @@ class Users extends Component
         $this->status = $user->status;
         $this->data_id = $id;
 
-        $roles = Role::where('status', 1)->get(['id']);
-        $list = $user->roles;
-        $cont = 1;
-        $data_list = [];
-        foreach ($roles as $role) {
-            $find_role = $list->firstWhere('id', $role->id);
-            if (!isset($find_role)) {
-                $data_list[$cont] = false;
-            } else {
-                $data_list[$cont] = $find_role->id;
-            }
-            $cont++;
-        }
-        $this->role_selected = $data_list;
+        $this->uRoles = $user;
+        $this->roles_selected = null;
+        $this->emit('showUpdate');//IMPORTANT!
     }
 
     public function update()
@@ -157,7 +139,6 @@ class Users extends Component
             'last_name' => 'required',
             'phone' => 'required|max:10',
             'address' => 'required',
-            'role_selected' => 'required',
             'email' => ['required', 'email',Rule::unique('users')->ignore($this->data_id)],
 
         ], [
@@ -167,13 +148,10 @@ class Users extends Component
             'address.required' => 'Campo obligatorio.',
             'phone.number' => 'Teléfono incorrecto.',
             'phone.max' => 'Teléfono incorrecto.',
-            'role_selected.required' => 'Seleccione un rol.',
             'email.required' => 'Campo obligatorio.',
             'email.email' => 'El correo no es valido.',
             'email.unique' => 'El correo ya esta en uso, intente con otro.',
         ]);
-
-
 
         $user = User::find($this->data_id);
         if ($this->url_image != $user->url_image) {
@@ -196,15 +174,40 @@ class Users extends Component
             'status' => $this->status,
         ]);
 
-
-        $user->roles()->detach();
-        $user->syncRoles($this->role_selected);
-        $this->alert('success', '¡Usuario actualizado con exíto!');
-
+        if($this->roles_selected != null){
+            $user->roles()->detach();
+            $user->syncRoles($this->roles_selected);
+        }
         $this->resetInputFields();
-
-        $this->emit('studentStore');
+        $this->emit('modal');
+        $this->alert('success', 'Usuario actualizado con exíto.');
+        return redirect()->route('users');
     }
+
+    public function resetInputFields()
+    {
+        $this->view = 'create';
+        $this->name = '';
+        $this->last_name = '';
+        $this->url_image = '';
+        $this->email = '';
+        $this->address = '';
+        $this->status = 1;
+        $this->phone = '';
+        $this->user_id = '';
+        $this->password = '';
+        $this->password_confirmation = '';
+        $this->roles_selected = null ;
+        $this->uRoles = null;
+
+    }
+
+
+
+
+
+
+
 
     public function delete($id)
     {
