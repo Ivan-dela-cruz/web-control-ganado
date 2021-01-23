@@ -19,6 +19,7 @@ class Animal_production extends Model
         'animal_id',
         'estate_id',
     ];
+    
     public function animal()
     {
         return $this->belongsTo(Animal::class, 'animal_id');

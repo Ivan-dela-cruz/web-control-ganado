@@ -95,7 +95,8 @@ class Employes extends Component
             'email' => $this->email,
             'password' => $password
         ]);
-
+        
+        $user->assignRole('Empleado');
         $data = [
             'user_id' => $user->id,
             'estate_id' => $this->estate_id,

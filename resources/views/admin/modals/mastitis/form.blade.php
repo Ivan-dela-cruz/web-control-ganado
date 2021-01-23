@@ -36,7 +36,10 @@
         <select class="form-control" id="exampleFormControlInput3" wire:model="animal_production_id">
             <option value="">Seleccione</option>
             @foreach ($animals_production as $animal_production)
-                <option value="{{ $animal_production->id }}">{{$animal_production->name}}</option>
+                <option value="{{ $animal_production->id }}">
+                    {{"[".$animal_production->animal->code."]"}} &nbsp;&nbsp;&nbsp;&nbsp; 
+                    {{$animal_production->animal->name}}
+                </option>
             @endforeach
         </select>
         @error('animal_production_id')<span class="text-danger">{{ $message }}</span>

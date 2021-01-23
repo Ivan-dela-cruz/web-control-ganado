@@ -72,7 +72,6 @@
                             <td>{{$user->phone}}</td>
                             <td>{{$user->address}}</td>
                             <td>
-
                                 @foreach($user->roles as $rol)
                                     <span class="badge badge-info"> {{$rol->name}}</span>
                                 @endforeach
@@ -81,17 +80,9 @@
 
                             <td>{{$user->created_at->format('Y-m-d')}}</td>
                             <td>
-                                @if ($user->status === 1)
-                                    <span
-                                        class="badge badge-success">
-                           Activo
-                        </span>
-                                @else
-                                    <span
-                                        class="badge badge-danger">
-                                Inactivo
-                            </span>
-                                @endif
+                                <span class="{{$user->status ==1 ? "badge badge-success":"badge badge-danger"}}">
+                                    {{$user->status ==1 ? "Activo":"Inactivo"}}
+                                </span>
                                 <div class="overlay-edit">
                                     @can('update_user')
                                     <button

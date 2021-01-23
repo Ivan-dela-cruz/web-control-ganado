@@ -36,9 +36,9 @@
         <div class="input-group">
             <div class="input-group-prepend">
                 @if($url_image == '')
-                    <img src="{{asset('img/user.jpg')}}" alt="user image" class="img-radius align-top m-r-15" style="width:40px;">
+                    <img wire:ignore src="{{asset('img/user.jpg')}}" alt="user image" class="img-radius align-top m-r-15" style="width:40px;">
                 @else
-                    <img src="{{asset($url_image)}}" alt="user image" class="img-radius align-top m-r-15" style="width:40px;">
+                    <img wire:ignore src="{{asset($url_image)}}" alt="user image" class="img-radius align-top m-r-15" style="width:40px;">
                 @endif
             </div>
             <div class="custom-file">
@@ -72,8 +72,7 @@
     </div>
     <div class="col-md-6 form-group">
         <small  class="text-primary" for="password_confirmation">Rol</small>
-        <select wire:model="role_selected" class="form-control">
-            <option value="">---Rol---</option>
+        <select wire:model="role_selected" class="form-control" multiple>
             @foreach($roles as $k => $v)
                 <option value="{{$v->id}}">{{$v->name}}</option>
             @endforeach

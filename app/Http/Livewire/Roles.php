@@ -54,7 +54,7 @@ class Roles extends Component
         $this->description = $data->description;
         $this->status = $data->status;
         $this->data_id = $id;
-        $permissions = $data->permissions->pluck('id');
+        $permissions = $data->roles->pluck('id');
 
         $data_list = [];
         $list = [];

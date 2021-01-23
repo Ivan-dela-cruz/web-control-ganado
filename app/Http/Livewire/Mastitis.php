@@ -29,7 +29,8 @@ class Mastitis extends Component
     public function render()
     {
 
-        $this->animals_production = DB::table('animal_production')->select('*')->get();
+        $this->animals_production = Animal_production::where('status',1)->get();
+       
         $mastitiss = Mastitiss::where('tipe_mastitis', 'LIKE', "%{$this->search}%")
             ->orWhere('description', 'LIKE', "%{$this->search}%")
             ->orWhere('level', 'LIKE', "%{$this->search}%")
