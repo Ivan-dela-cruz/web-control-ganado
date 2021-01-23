@@ -17,7 +17,8 @@ class CreateCheckupsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('animal_id');
             $table->unsignedBigInteger('veterinarie_id');
-            $table->string('doctor_name')->nullable();
+            $table->string('topic')->nullable();
+            $table->string('description')->nullable();
             $table->date('date')->nullable(); 
             $table->string('disease')->nullable();     
             $table->date('next_date')->nullable();    

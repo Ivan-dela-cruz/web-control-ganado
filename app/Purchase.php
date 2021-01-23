@@ -17,10 +17,12 @@ class Purchase extends Model
         'status',
     ];
 
-    /*protected static function booted()
+    /*
+    protected static function booted()
     {
         static::addGlobalScope(new StatusScope());
-    }*/
+    }
+    */
 
     public function details()
     {

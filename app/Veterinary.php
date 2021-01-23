@@ -18,6 +18,7 @@ class Veterinary extends Model
         'phone1',
         'phone2',
         'direction',
+        'url_image',
         'status'
     ];
 }

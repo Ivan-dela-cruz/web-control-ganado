@@ -111,5 +111,9 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard.sales.list');
     }
+    public function checkups()
+    {
+        return view('admin.dashboard.checkups.index');
+    }
 }
 
