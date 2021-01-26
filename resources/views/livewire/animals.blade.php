@@ -5,7 +5,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-3">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <select id="estate" wire:model="estate_filter"
                                 class="form-control text-gray-500 text-sm my-border">
@@ -16,7 +16,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-sm-4">
                     <div class="form-group">
                         <input
                             wire:model="search"
@@ -25,9 +25,9 @@
                             placeholder="Buscar...">
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="form-group">
-                        <select wire:model="perPage" class="form-control text-gray-500 text-sm my-border">
+                <div class="col-sm-3">
+                    <div class="form-group d-flex justify-content-between">
+                        <select wire:model="perPage" class="form-control text-gray-500 text-sm my-border mr-4">
                             <option value="5">5 por página</option>
                             <option value="10">10 por página</option>
                             <option value="15">15 por página</option>
@@ -35,13 +35,14 @@
                             <option value="50">50 por página</option>
                             <option value="100">100 por página</option>
                         </select>
+                        @if($search !='' || $estate_filter != '')
+                            <button wire:click="clear" class="btn btn-outline-danger ">X</button>
+                        @endif
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-sm-2">
                     <div class="form-group">
-                        @if($search !='')
-                            <button wire:click="clear" class="btn btn-outline-danger ml-6">X</button>
-                        @endif
+
                         @can('create_animal')
                             <button class="btn btn-success btn-sm btn-round has-ripple float-lg-right"
                                     data-toggle="modal" data-target="#createModal">

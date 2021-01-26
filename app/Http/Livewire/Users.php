@@ -170,7 +170,7 @@ class Users extends Component
             'address' => $this->address,
             'email' => $this->email,
             'url_image' => $path,
-            'password' => Hash::make($this->password),
+            //'password' => Hash::make($this->password),
             'status' => $this->status,
         ]);
 
