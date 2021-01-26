@@ -19,7 +19,7 @@ class Animals extends Component
 
     protected $queryString = [
         'search' => ['except' => ''],
-        'perPage' => ['except' => '5'],
+        'perPage' => ['except' => '10'],
 
     ];
     public $perPage = '10';
@@ -66,6 +66,7 @@ class Animals extends Component
         $this->search = '';
         $this->page = 1;
         $this->perPage = '10';
+        $this->estate_filter = '';
     }
 
     public function store()

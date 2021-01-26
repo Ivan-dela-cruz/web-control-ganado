@@ -14,7 +14,7 @@ class Diseases extends Component
 
     protected $queryString = [
         'search' => ['except' => ''],
-        'perPage' => ['except' => '5'],
+        'perPage' => ['except' => '10'],
 
     ];
     public $perPage = '10';

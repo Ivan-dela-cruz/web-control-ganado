@@ -16,19 +16,19 @@ class Checkup extends Component
 
     protected $queryString = [
         'search' => ['except' => ''],
-        'perPage' => ['except' => '5'],
+        'perPage' => ['except' => '10'],
     ];
     public $perPage = '10';
     public $search = '';
     public $estate_filter = 0;
-    
+
     public $animal_id, $veterinarie_id, $estate_id, $topic, $description, $date, $disease, $next_date, $status=true;
    // public $checkupslist=[];
    public $estates = [], $data_id;
    public $animals = [], $veterinaries=[];
-   
 
-   
+
+
     public function render()
     {
         $this->estates = Estate::all();
@@ -59,6 +59,7 @@ class Checkup extends Component
         $this->search = '';
         $this->page = 1;
         $this->perPage = '10';
+        $this->estate_filter = '';
     }
 
     public function store()
@@ -71,7 +72,7 @@ class Checkup extends Component
             'description' => 'required',
            // 'date' => 'required',
         ]);
- 
+
         $data =  [
             'animal_id'=>$this->animal_id,
             'veterinarie_id'=>$this->veterinarie_id,
@@ -103,7 +104,7 @@ class Checkup extends Component
         $this->status = $checkup->status;
         $this->data_id = $checkup->id;
 
-       
+
     }
 
     public function update()
