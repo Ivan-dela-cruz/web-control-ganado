@@ -9,10 +9,10 @@ class="{{request()->is('/ruta')?'active':''}}"
                 <div class="main-menu-header">
                     @if(\Illuminate\Support\Facades\Auth::user()->url_image==='#')
                         <img wire:ignore class="img-radius" src="{{asset('img/user.jpg')}}"
-                             alt="User-Profile-Image" style="height: 60px; width: 60px">
+                             alt="User-Profile-Image" style="height: 50px; width: 50px">
                     @else
                         <img wire:ignore class="img-radius" src="{{asset(\Illuminate\Support\Facades\Auth::user()->url_image)}}"
-                             alt="User-Profile-Image" style="width: 60px; height: 60px">
+                             alt="User-Profile-Image" style="width: 50px; height: 50px">
                     @endif
                     <div class="user-details">
                         <div id="more-details">{{\Illuminate\Support\Facades\Auth::user()->name}} <i

@@ -1,9 +1,12 @@
-<div wire:ignore.self id="createModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+<div wire:ignore.self id="createModal" class="modal fade my-modal"
+     tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
+     aria-hidden="true" data-keyboard="false"
+     data-backdrop="static">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <h5 class="modal-title text-white" id="createModalLabel">Registro chequeo veterinaro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" wire:click.prevent="resetInputFields()" aria-label="Close">
                     <span aria-hidden="true close-btn">×</span>
                 </button>
             </div>

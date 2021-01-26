@@ -32,7 +32,7 @@
                     <div class="form-group">
                         @can('create_user')
                             <button class="btn btn-success btn-sm btn-round has-ripple float-lg-right"
-                                    data-toggle="modal" data-target="#createModal">
+                                    wire:click="create()">
                                 <i class="feather icon-plus"></i>
                                 Agregar
                             </button>
@@ -132,17 +132,7 @@
                     })
                 });
             });
-            window.livewire.on('showUpdate', () => {
-                $('#updateModal').modal('show');
-            });
-            window.livewire.on('showCreate', () => {
-                $('#createModal').modal('show');
-            });
-            window.livewire.on('modal', () => {
-                $('#updateModal').modal('hide');
-                //  $('#createModal').remove();
-                //data-dismiss="modal"
-            });
+
         </script>
     @endsection
 </div>

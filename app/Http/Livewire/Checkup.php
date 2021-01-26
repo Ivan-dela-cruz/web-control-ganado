@@ -27,6 +27,8 @@ class Checkup extends Component
    public $estates = [], $data_id;
    public $animals = [], $veterinaries=[];
 
+   public $view = 'create', $sAnimal = 0;
+
 
 
     public function render()
@@ -41,8 +43,16 @@ class Checkup extends Component
         ->paginate($this->perPage);
         return view('livewire.checkup',compact('checkupslist'));
     }
+    public function create(){
+        $this->view = 'create';
+        $this->emit('showCreate');//IMPORTANT!
+        $this->resetInputFields();
+    }
+
     public function resetInputFields()
     {
+        $this->view = 'create';
+        $this->sAnimal = 0;
         $this->animal_id = '';
         $this->veterinarie_id = '';
         $this->estate_id = '';
@@ -70,7 +80,14 @@ class Checkup extends Component
             'estate_id' => 'required',
             'topic' => 'required',
             'description' => 'required',
-           // 'date' => 'required',
+           'date' => 'required',
+        ],[
+            'animal_id.required' => 'Campo obligatorio.',
+            'veterinarie_id.required' => 'Campo obligatorio.',
+            'estate_id.required' => 'Campo obligatorio.',
+            'topic.required' => 'Campo obligatorio.',
+            'description.required' => 'Campo obligatorio.',
+            'date.required' => 'Campo obligatorio.',
         ]);
 
         $data =  [
@@ -92,6 +109,7 @@ class Checkup extends Component
 
     public function edit($id)
     {
+        $this->view = 'edit';
         $checkup = CheckUps::findOrFail($id);
         $this->animal_id = $checkup->animal_id;
         $this->veterinarie_id = $checkup->veterinarie_id;
@@ -103,6 +121,9 @@ class Checkup extends Component
         $this->next_date = $checkup->next_date;
         $this->status = $checkup->status;
         $this->data_id = $checkup->id;
+        $this->sAnimal = $checkup->animal_id;
+      //  dd($this->sAnimal);
+        $this->emit('showUpdate');//IMPORTANT!
 
 
     }
@@ -116,6 +137,13 @@ class Checkup extends Component
             'topic' => 'required',
             'description' => 'required',
             'date' => 'required',
+        ],[
+            'animal_id.required' => 'Campo obligatorio.',
+            'veterinarie_id.required' => 'Campo obligatorio.',
+            'estate_id.required' => 'Campo obligatorio.',
+            'topic.required' => 'Campo obligatorio.',
+            'description.required' => 'Campo obligatorio.',
+            'date.required' => 'Campo obligatorio.',
         ]);
         $data = CheckUps::find($this->data_id);
          //UPLOAD IMAGE
@@ -130,9 +158,10 @@ class Checkup extends Component
             'next_date'=>$this->next_date,
             'status'=>$this->status
         ]);
+        //$this->emit('checkups');
         $this->alert('success','¡Registro modificado con exíto!');
         $this->resetInputFields();
-        $this->emit('studentStore');
+        $this->emit('forceCloseModal');
     }
 
     public function delete($id)

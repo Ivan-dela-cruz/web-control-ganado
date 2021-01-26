@@ -1,6 +1,5 @@
 <div class="col-lg-12">
-    @include('admin.modals.mastitis.create')
-    @include('admin.modals.mastitis.edit')
+    @include('admin.modals.mastitis.'.$view)
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -32,7 +31,7 @@
                     <div class="form-group">
                         @can('create_disease')
                             <button class="btn btn-success btn-sm btn-round has-ripple float-lg-right"
-                                    data-toggle="modal" data-target="#createModal">
+                                    wire:click="create()">
                                 <i class="feather icon-plus"></i>
                                 Agregar
                             </button>
@@ -60,7 +59,7 @@
                         <th>Descripcion</th>
                         <th>Level</th>
                         <th>Tratamiento</th>
-                        <th>Nombre de Animal</th>
+                        <th>[Código]&nbsp;Animal</th>
                         <th>Registrado</th>
                         <th>Estado</th>
                     </tr>
@@ -73,7 +72,7 @@
                             <td>{{ $data->level }}</td>
 
                             <td>{{ $data->treatment->name}}</td>
-                            <td>{{$data->animal_production->animal->name }}</td>
+                            <td>{{"[".$data->animal_production->animal->code."]"}}&nbsp;{{$data->animal_production->animal->name }}</td>
                             <td>{{ $data->created_at->format('Y-m-d') }}</td>
                             <td>
                                 @if ($data->status === 1)
@@ -92,8 +91,7 @@
                                     <button
                                         class="btn btn-icon btn-warning"
                                         wire:click="edit({{ $data->id }})"
-                                        type="button"
-                                        data-toggle="modal" data-target="#updateModal">
+                                        type="button">
                                         <i class="feather icon-edit-2"></i></button>
                                     @endcan
                                     @can('destroy_disease')
@@ -119,3 +117,26 @@
         </div>
     </div>
 </div>
+@section('scripts')
+    <script>
+        $('#animal_id').each(function () {
+            $(this).select2({
+                placeholder: "{{__('Seleccione...')}}",
+                dropdownParent: $(this).parent()
+            });
+        });
+
+        $('#animal_id').on('change', function (e) {
+            var data = $(this).select2("val");
+        @this.set('animal_production_id', data);
+        });
+
+        document.addEventListener("livewire:load", () => {
+            Livewire.hook('message.processed', (message, component) => {
+                $('#animal_id').each(function () {
+                    $(this).select2({dropdownParent: $(this).parent()});
+                })
+            });
+        });
+    </script>
+@endsection

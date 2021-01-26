@@ -33,11 +33,14 @@
     </div>
     <div class="col-md-6 form-group">
         <small class="mr-3 text-primary">Animal</small>
-        <select class="form-control" id="exampleFormControlInput3" wire:model="animal_production_id">
+        <select id="animal_id" class="select2 form-control" id="exampleFormControlInput3" wire:model="animal_production_id">
             <option value="">Seleccione</option>
             @foreach ($animals_production as $animal_production)
-                <option value="{{ $animal_production->id }}">
-                    {{"[".$animal_production->animal->code."]"}} &nbsp;&nbsp;&nbsp;&nbsp; 
+                <option value="{{ $animal_production->id }}"
+                        @if($sAnimal > 0)
+                            @if($animal->id == $sAnimal) selected="selected"@endif
+                        @endif>
+                    {{"[".$animal_production->animal->code."]"}} &nbsp;&nbsp;&nbsp;&nbsp;
                     {{$animal_production->animal->name}}
                 </option>
             @endforeach
