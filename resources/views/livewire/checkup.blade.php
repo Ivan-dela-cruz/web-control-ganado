@@ -1,7 +1,6 @@
 <div class="col-lg-12">
 
-    @include('admin.modals.checkpus.create')
-    @include('admin.modals.checkpus.edit')
+    @include('admin.modals.checkpus.'.$view)
 
     <div class="card">
         <div class="card-body">
@@ -45,7 +44,7 @@
                     <div class="form-group">
 
                         <button class="btn btn-success btn-sm btn-round has-ripple float-lg-right"
-                                data-toggle="modal" data-target="#createModal">
+                                wire:click="create()">
                             <i class="feather icon-plus"></i>
                             Agregar
                         </button>
@@ -62,6 +61,7 @@
                     <thead>
                     <tr>
                         <th>Hacienda</th>
+                        <th>[Código]&nbsp;Animal</th>
                         <th>Motivo</th>
                         <th>Descripción</th>
                         <th>Fecha</th>
@@ -73,6 +73,11 @@
                     @foreach($checkupslist as $data)
                         <tr>
                             <td>{{ $data->estate->name}}</td>
+                            @foreach($animals as $a)
+                                @if($data->animal_id == $a->id)
+                                    <td>{{"[".$a->code."]"}}&nbsp;{{$a->name}}</td>
+                                    @endif
+                            @endforeach
                             <td>{{ $data->topic }}</td>
                             <td>{{ $data->description }}</td>
                             <td>{{ $data->date }}</td>
@@ -97,8 +102,7 @@
                                         <button
                                             class="btn btn-icon btn-warning"
                                             wire:click="edit({{ $data->id }})"
-                                            type="button"
-                                            data-toggle="modal" data-target="#updateModal">
+                                            type="button">
                                             <i class="feather icon-edit-2"></i></button>
                                     @endcan
                                     @can('destroy_animal')
@@ -122,3 +126,27 @@
         </div>
     </div>
 </div>
+
+@section('scripts')
+    <script>
+        $('#animal_id').each(function () {
+            $(this).select2({
+                placeholder: "{{__('Seleccione...')}}",
+                dropdownParent: $(this).parent()
+            });
+        });
+
+        $('#animal_id').on('change', function (e) {
+            var data = $(this).select2("val");
+        @this.set('animal_id', data);
+        });
+
+        document.addEventListener("livewire:load", () => {
+            Livewire.hook('message.processed', (message, component) => {
+                $('#animal_id').each(function () {
+                    $(this).select2({dropdownParent: $(this).parent()});
+                })
+            });
+        });
+    </script>
+    @endsection

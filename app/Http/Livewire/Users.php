@@ -181,7 +181,8 @@ class Users extends Component
         $this->emit('modal');
         $this->alert('success', 'Usuario actualizado con exíto.');
         $this->resetInputFields();
-        return redirect()->route('users');
+        $this->emit('forceCloseModal');
+        //return redirect()->route('users');
     }
 
     public function resetInputFields()

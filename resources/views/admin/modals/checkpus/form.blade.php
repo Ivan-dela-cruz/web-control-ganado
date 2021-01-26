@@ -1,5 +1,5 @@
 <div class="row p-l-20 p-r-20">
-  
+
     <div class="col-md-6 form-group">
         <small  class="mr-3 text-primary">Haciendas</small>
         <select wire:model="estate_id" class="form-control">
@@ -11,12 +11,18 @@
         @error('estate_id')<span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
-    <div class="col-md-6 form-group">
-        <small  class="mr-3 text-primary">Animal</small>
-        <select wire:model="animal_id" class="form-control">
-            <option  value="">Selecciona</option>
+    <div class="col-md-6 form-group" >
+        <small class="mr-3 text-primary">Animal</small>
+        <select id="animal_id"  class=" mt-5 form-control" wire:model="animal_id">
+            <option  value="">Seleccione...</option>
             @foreach($animals as $animal)
-                <option value="{{$animal->id}}"> {{$animal->name}} </option>
+                <option value="{{$animal->id}}"
+                        @if($sAnimal > 0)
+                            @if($animal->id == $sAnimal) selected="selected"@endif
+                        @endif>
+                    {{"[".$animal->code."]"}} &nbsp;&nbsp;&nbsp;&nbsp;
+                    {{$animal->name}}
+                </option>
             @endforeach
         </select>
         @error('animal_id')<span class="text-danger">{{ $message }}</span>

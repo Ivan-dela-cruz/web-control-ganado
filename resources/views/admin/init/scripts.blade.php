@@ -141,6 +141,18 @@ window.livewire.on('endSale', () => {
     $('#btnNewSale').removeClass('d-none');
 });
 
+window.livewire.on('showUpdate', () => {
+    $('#updateModal').modal('show');
+});
+window.livewire.on('showCreate', () => {
+    $('#createModal').modal('show');
+});
+window.livewire.on('forceCloseModal', () => {
+    if ($('.modal-backdrop').is(':visible')) {
+       $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    };
+});
 </script>
 
 @yield('scripts')

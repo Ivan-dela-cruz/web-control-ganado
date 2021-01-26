@@ -2,8 +2,8 @@
     <div class="m-header">
         <a class="mobile-menu" id="mobile-collapse" href="javascript:void(0);"><span></span></a>
         <a href="javascript: return void();" class="b-brand">
-            <img src="assets2/images/logo.png" alt="" class="logo">
-            <img src="assets2/images/logo-icon.png" alt="" class="logo-thumb">
+            <img src="{{asset('assets2/images/logo.png')}}" alt="" class="logo">
+            <img src="{{asset('assets2/images/logo-icon.png')}}" alt="" class="logo-thumb">
         </a>
         <a href="javascript:void(0);" class="mob-toggler">
             <i class="feather icon-more-vertical"></i>
@@ -33,8 +33,8 @@
                                 <img src="{{asset('img/user.jpg')}}" class="img-radius"
                                      alt="User-Profile-Image">
                             @else
-                                <img src="{{\Illuminate\Support\Facades\Auth::user()->url_image}}" class="img-radius"
-                                     alt="User-Profile-Image">
+                                <img src="{{asset(\Illuminate\Support\Facades\Auth::user()->url_image)}}" class="img-radius"
+                                     alt="User-Profile-Image" style="height: 40px; width: 40px">
                             @endif
 
                             <span>{{\Illuminate\Support\Facades\Auth::user()->name}} {{\Illuminate\Support\Facades\Auth::user()->last_name}}</span>

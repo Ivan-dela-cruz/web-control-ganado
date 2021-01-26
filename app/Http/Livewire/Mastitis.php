@@ -26,6 +26,7 @@ class Mastitis extends Component
 
     public  $animals_production,$treatments, $tipe_mastitis, $description, $level,$animal_production_id,$treatment_id,$status = 1;
    public $data_id;
+    public $view = 'create', $sAnimal = 0;
     public function render()
     {
 
@@ -38,8 +39,16 @@ class Mastitis extends Component
         $this->treatments = Treatment::all();
         return view('livewire.mastitis',compact('mastitiss'));
     }
+
+    public function create(){
+        $this->view = 'create';
+        $this->emit('showCreate');//IMPORTANT!
+        $this->resetInputFields();
+    }
     public function resetInputFields()
     {
+        $this->view = 'create';
+        $this->sAnimal = 0;
     	$this->tipe_mastitis = '';
         $this->description = '';
         $this->level = '';
@@ -81,6 +90,7 @@ class Mastitis extends Component
 
     public function edit($id)
     {
+        $this->view = 'edit';
         $data = Mastitiss::findOrFail($id);
         $this->tipe_mastitis = $data->tipe_mastitis;
         $this->description = $data->description;
@@ -89,6 +99,7 @@ class Mastitis extends Component
         $this->animal_production_id = $data->animal_production_id;
         $this->treatment_id = $data->treatment_id;
         $this->data_id = $id;
+        $this->emit('showUpdate');//IMPORTANT!
     }
 
     public function update()
@@ -100,7 +111,14 @@ class Mastitis extends Component
             'status' => 'required',
             'animal_production_id' => 'required',
             'treatment_id' => 'required'
-    	]);
+    	],[
+            'tipe_mastitis.required' =>'Campo obligatorio.',
+            'description.required' =>'Campo obligatorio.',
+            'level.required' =>'Campo obligatorio.',
+            'status.required' =>'Campo obligatorio.',
+            'animal_production_id.required' =>'Campo obligatorio.',
+            'treatment_id.required' =>'Campo obligatorio.',
+        ]);
 
         $data = Mastitiss::find($this->data_id);
 
@@ -117,7 +135,7 @@ class Mastitis extends Component
 
         $this->resetInputFields();
 
-        $this->emit('animalStore');
+        $this->emit('forceCloseModal');
     }
 
     public function delete($id)
