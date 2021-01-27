@@ -9,7 +9,7 @@ class Employ extends Model
 {
     use SoftDeletes;
     protected $table = 'employs';
-   
+
     protected $fillable = [
         'user_id',
         'estate_id',
@@ -24,10 +24,10 @@ class Employ extends Model
         'end_date',
         'status'
     ];
-    protected static function booted()
+   /* protected static function booted()
     {
         static::addGlobalScope(new StatusScope());
-    }
+    }*/
 
     public function user()
     {

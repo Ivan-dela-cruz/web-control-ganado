@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Employ;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -63,8 +64,8 @@ class Users extends Component
     public function store()
     {
         $this->validate([
-            'name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
+            'last_name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
             'phone' => 'required|max:10',
             'address' => 'required',
             // 'role_selected' => 'required',
@@ -73,6 +74,8 @@ class Users extends Component
             'password_confirmation' => 'required'
         ], [
             'name.required' => 'Campo obligatorio.',
+            'name.regex' => 'Nombre incorrecto.',
+            'last_name.regex' => 'Nombre incorrecto.',
             'last_name.required' => 'Campo obligatorio.',
             'phone.required' => 'Campo obligatorio.',
             'address.required' => 'Campo obligatorio.',
@@ -135,14 +138,16 @@ class Users extends Component
     public function update()
     {
         $this->validate([
-            'name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
+            'last_name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
             'phone' => 'required|max:10',
             'address' => 'required',
             'email' => ['required', 'email',Rule::unique('users')->ignore($this->data_id)],
 
         ], [
             'name.required' => 'Campo obligatorio.',
+            'name.regex' => 'Nombre incorrecto.',
+            'last_name.regex' => 'Nombre incorrecto.',
             'last_name.required' => 'Campo obligatorio.',
             'phone.required' => 'Campo obligatorio.',
             'address.required' => 'Campo obligatorio.',
@@ -203,16 +208,43 @@ class Users extends Component
 
     }
 
-
-
-
-
-
-
-
     public function delete($id)
     {
-        User::find($id)->delete();
-        $this->alert('success', '¡Usuario eliminado con exíto!');
+        $user = User::find($id);
+        $employee = Employ::where('user_id',$user->id)
+            ->withTrashed()->first();
+        if ($employee){
+            $user->update(['status' => 0,]);
+            $employee->delete();
+            $this->alert('warning', '¡Usuario actualizado como inactivo!');
+        }else{
+            $user->delete();
+            $this->alert('success', '¡Usuario eliminado con exíto!');
+        }
+    }
+
+    public function activate($id){
+        $data = '';
+        $user = User::find($id);
+        $employee = Employ::where('user_id',$user->id)
+            ->withTrashed()->first();
+
+
+        if($employee) {
+            $employee->restore();
+            $employee->update(['status' => 1]);
+            $data = 'Empleado';
+            $user->update([
+                'status' => 1,
+            ]);
+            $this->alert('success', $data.' activado con exíto.',[ 'showCancelButton' =>  false, ]);
+        }else{
+            $data = 'Empleado';
+            $this->alert('error', 'Error al activar '.$data.'.',[ 'showCancelButton' =>  false, ]);
+        }
+
+
+      //  $this->alert('success', $data.' activado con exíto.',[ 'showCancelButton' =>  false, ]);
+
     }
 }

@@ -83,6 +83,15 @@
                                     {{$user->status ==1 ? "Activo":"Inactivo"}}
                                 </span>
                                 <div class="overlay-edit">
+                                    @if($user->status == 0)
+                                        @can('update_user')
+                                            <button
+                                                class="btn btn-icon btn-success"
+                                                wire:click="activate({{ $user->id }})"
+                                                type="button">
+                                                <i class="feather icon-unlock"></i></button>
+                                        @endcan
+                                    @else
                                     @can('update_user')
                                     <button
                                         class="btn btn-icon btn-warning"
@@ -100,6 +109,7 @@
                                         <i class="feather icon-trash-2"></i>
                                     </button>
                                         @endcan
+                                        @endif
                                 </div>
                             </td>
                         </tr>

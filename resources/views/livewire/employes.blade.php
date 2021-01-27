@@ -87,6 +87,15 @@
                             </span>
                                 @endif
                                 <div class="overlay-edit">
+                                    @if($employe->status == 0)
+                                        @can('update_user')
+                                            <button
+                                                class="btn btn-icon btn-success"
+                                                wire:click="activate({{ $employe->id }})"
+                                                type="button">
+                                                <i class="feather icon-unlock"></i></button>
+                                        @endcan
+                                    @else
                                     @can('update_employe')
                                     <button
                                         class="btn btn-icon btn-warning"
@@ -97,7 +106,7 @@
                                     @endcan
                                     @can('destroy_employe')
                                     <button
-                                        wire:click="delete({{ $employe->id }})"
+                                        wire:click="delete({{ $employe->id }},{{$employe->user_id}})"
                                         data-toggle="tooltip"
                                         title="Titulo"
                                         type="button"
@@ -105,6 +114,7 @@
                                         <i class="feather icon-trash-2"></i>
                                     </button>
                                         @endcan
+                                    @endif
                                 </div>
                             </td>
                         </tr>
