@@ -78,8 +78,10 @@ class Employes extends Component
             'estate_id' => 'required',
             'address' => 'required',
             'start_date' => 'required',
-        ],[
+        ], [
             'name.required' => 'Campo obligatorio.',
+            'name.regex' => 'Nombre incorrecto.',
+            'last_name.regex' => 'Nombre incorrecto.',
             'last_name.required' => 'Campo obligatorio.',
             'email.required' => 'Campo obligatorio.',
             'email.unique' => 'El correo ya esta en uso.',
@@ -94,10 +96,10 @@ class Employes extends Component
             'start_date.required' => 'Campo obligatorio.',
         ]);
 
-        if($this->phone != ''){
+        if ($this->phone != '') {
             $this->validate([
                 'phone' => 'numeric|digits:10',
-            ],[
+            ], [
                 'phone.numeric' => 'Teléfono incorrecto.',
                 'phone.digits' => 'Teléfono incorrecto.',
             ]);
@@ -166,15 +168,17 @@ class Employes extends Component
         $validation = $this->validate([
             'name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
             'last_name' => 'required|regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/u|max:255',
-            'email' => ['required', Rule::unique('employs')->ignore($this->data_id),'email'],
-            'dni' => ['required', Rule::unique('employs')->ignore($this->data_id),'numeric','digits:10'],
+            'email' => ['required', Rule::unique('employs')->ignore($this->data_id), 'email'],
+            'dni' => ['required', Rule::unique('employs')->ignore($this->data_id), 'numeric', 'digits:10'],
             'status' => 'required',
             'estate_id' => 'required',
             'address' => 'required',
             'start_date' => 'required',
             'phone' => 'numeric|digits:10'
-        ],[
+        ], [
             'name.required' => 'Campo obligatorio.',
+            'name.regex' => 'Nombre incorrecto.',
+            'last_name.regex' => 'Nombre incorrecto.',
             'last_name.required' => 'Campo obligatorio.',
             'email.required' => 'Campo obligatorio.',
             'email.unique' => 'El correo ya esta en uso.',
@@ -190,15 +194,29 @@ class Employes extends Component
             'phone.numeric' => 'Teléfono incorrecto.',
             'phone.digits' => 'Teléfono incorrecto.',
         ]);
+        $user = User::find($this->user_id);
         $data = Employ::find($this->data_id);
+
         if ($this->url_image != $data->url_image) {
             $this->validate(['url_image' => 'image'], ['url_image.image' => 'La imagen debe ser de formato: .jpg,.jpeg ó .png']);
             //save image
             $name = "file-" . time() . '.' . $this->url_image->getClientOriginalExtension();
-            $path = 'users/' . $this->url_image->storeAs('/', $name, 'users');
+            $path = 'employees/' . $this->url_image->storeAs('/', $name, 'employees');
         } else {
             $path = $data->url_image;
         }
+
+
+        $user->update([
+            'name' => $this->name,
+            'last_name' => $this->last_name,
+            'url_image' => $path,
+            'phone' => $this->phone,
+            'address' => $this->address,
+            'email' => $this->email,
+            'status' => $this->status
+        ]);
+
         $data->update([
             'estate_id' => $this->estate_id,
             'name' => $this->name,
@@ -218,9 +236,26 @@ class Employes extends Component
         $this->emit('studentStore');
     }
 
-    public function delete($id)
+    public function delete($id, $user_id)
     {
         Employ::find($id)->delete();
+        $user = User::find($user_id);
+        $user->update([
+            'status' => 0,
+        ]);
         $this->alert('success', 'Empleado eliminado con exíto.');
+    }
+
+    public function activate($id)
+    {
+        $employee = Employ::find($id);
+        $user = User::where('id', $employee->user_id)->first();
+        $employee->update([
+            'status' => 1,
+        ]);
+        $user->update([
+            'status' => 1,
+        ]);
+        $this->alert('success', 'Empleado activado con exíto.', ['showCancelButton' => false,]);
     }
 }

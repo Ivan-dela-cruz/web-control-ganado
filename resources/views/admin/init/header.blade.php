@@ -31,7 +31,7 @@
                         <div class="pro-head">
                             @if(\Illuminate\Support\Facades\Auth::user()->url_image==='#')
                                 <img src="{{asset('img/user.jpg')}}" class="img-radius"
-                                     alt="User-Profile-Image">
+                                     alt="User-Profile-Image" style="width: 40px; height: 40px;">
                             @else
                                 <img src="{{asset(\Illuminate\Support\Facades\Auth::user()->url_image)}}" class="img-radius"
                                      alt="User-Profile-Image" style="height: 40px; width: 40px">
