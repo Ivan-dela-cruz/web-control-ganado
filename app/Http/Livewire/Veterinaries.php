@@ -22,7 +22,7 @@ class Veterinaries extends Component
     public $perPage = '10';
     public $search = '';
 
-    public $data_id,$name,$last_name,$dni,$email,$phone1,$phone2, $direction, $status = 1;
+    public $data_id,$name,$last_name,$dni,$email,$phone1,$phone2, $direction, $status = 1, $url_image;
     public function render()
     {
         $veterinaries = Veterinary::where('name', 'LIKE', "%{$this->search}%")
@@ -45,6 +45,7 @@ class Veterinaries extends Component
         $this->phone2 = '';
         $this->direction = '';
         $this->status = '';
+        $this->url_image = '';
     }
 
     public function clear()
@@ -75,7 +76,6 @@ class Veterinaries extends Component
             'phone1.numeric' => 'Teléfono incorrecto.',
             'phone1.digits' => 'Teléfono incorrecto.',
         ]);
-
     	if($this->phone2 != ''){
     	    $this->validate([
                 'phone2' => 'numeric|digits:10',
@@ -83,6 +83,13 @@ class Veterinaries extends Component
                 'phone2.numeric' => 'Teléfono incorrecto.',
                 'phone2.digits' => 'Teléfono incorrecto.',
             ]);
+        }
+        $path = 'img/user.jpg';
+        if ($this->url_image != '') {
+            $this->validate(['url_image' => 'image'], ['url_image.image' => 'La imagen debe ser de formato: .jpg,.jpeg ó .png']);
+            //save image
+            $name = "file-" . time() . '.' . $this->url_image->getClientOriginalExtension();
+            $path = 'users/' . $this->url_image->storeAs('/', $name, 'users');
         }
 
         $data =  [
@@ -93,6 +100,7 @@ class Veterinaries extends Component
             'phone1'=>$this->phone1,
             'phone2'=>$this->phone2,
             'direction'=>$this->direction,
+            'url_image' => $path,
             'status'=> $this->status
         ];
         Veterinary::create($data);
@@ -147,9 +155,16 @@ class Veterinaries extends Component
                 'phone2.digits' => 'Teléfono incorrecto.',
             ]);
         }
+        
+        $path = 'img/user.jpg';
+        if ($this->url_image != '') {
+            $this->validate(['url_image' => 'image'], ['url_image.image' => 'La imagen debe ser de formato: .jpg,.jpeg ó .png']);
+            //save image
+            $name = "file-" . time() . '.' . $this->url_image->getClientOriginalExtension();
+            $path = 'users/' . $this->url_image->storeAs('/', $name, 'users');
+        }
 
         $data = Veterinary::find($this->data_id);
-
         $data->update([
             'name'=>$this->name,
             'last_name'=>$this->last_name,
@@ -158,12 +173,12 @@ class Veterinaries extends Component
             'phone1'=>$this->phone1,
             'phone2'=>$this->phone2,
             'direction'=>$this->direction,
+            'url_image' => $path,
             'status'=> $this->status
         ]);
+
         $this->alert('success', 'Veterinario actualizado con exíto.');
-
         $this->resetInputFields();
-
         $this->emit('veterinaryStore');
     }
 
