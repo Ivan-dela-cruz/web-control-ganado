@@ -142,6 +142,7 @@ class Sales extends Component
             $d->update([
                 'status' => 1,
             ]);
+            
         }
         $this->resetInputFields();
         $this->emit('endSale');

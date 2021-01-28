@@ -68,10 +68,25 @@
                     <tbody>
                     @foreach($veterinaries as $veterinary)
                         <tr>
-                            <td>{{$veterinary->name}} {{$veterinary->last_name}}</td>
+                            <td> 
+                                <div class="d-inline-block align-middle">
+                                    <img src="{{asset($veterinary->url_image)}}" alt="user image" class="img-radius align-top m-r-15" style="width:40px; height: 40px">
+                                    <div class="d-inline-block">
+                                        <h6 class="m-b-0">{{$veterinary->name}} {{$veterinary->last_name}}</h6>
+                                        <p class="m-b-0">{{$veterinary->email}}</p>
+                                    </div>
+                                </div>
+                            </td>
                             <td>{{$veterinary->dni}}</td>
                             <td>{{$veterinary->email}}</td>
-                            <td>{{$veterinary->phone1}} - {{$veterinary->phone2}} </td>
+                            <td>
+                                <div class="d-inline-block align-middle">
+                                    <div class="d-inline-block">
+                                        <h6 class="m-b-0"> {{$veterinary->phone1}}</h6>
+                                        <p class="m-b-0">{{$veterinary->phone2}} </p>
+                                    </div>
+                                </div>
+                            </td>
                             <td>{{$veterinary->direction}}</td>
                             <td>{{$veterinary->created_at->format('Y-m-d')}}</td>
                             <td>
