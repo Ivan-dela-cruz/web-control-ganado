@@ -29,7 +29,7 @@ $(document).ready(function() {
                 '<a href="#!"></a>' +
             '</div>' +
             '<div class="style-block">' +
-                '<h4 class="mb-2">UTC <small class="font-weight-normal">Cursos</small></h4>' +
+                '<h4 class="mb-2">Hacienda <small class="font-weight-normal">Myrita </small></h4>' +
                 '<hr class="">' +
                 '<div class="m-style-scroller">' +
                     '<h6 class="mt-2">Diseño</h6>' +
@@ -102,8 +102,8 @@ $(document).ready(function() {
                         '<label>Barra de posición</label>' +
                     '</div>' +
                 '</div>' +
-                '<a href="https://clinicasourilatacunga.com/" target="_blank" class="btn btn-success btn-block m-r-15 m-t-10 m-b-10">Web</a>' +
-                '<a href="http://ableproadmin.com/doc-7.0/" target="_blank" class="btn btn-primary btn-block m-r-15 m-t-5 m-b-10 ">Provedor Diseño</a>' +
+                '<a href="https://www.haciendamayrita.com/" target="_blank" class="btn btn-success btn-block m-r-15 m-t-10 m-b-10">Web</a>' +
+                '<a href="https://www.haciendamayrita.com/" target="_blank" class="btn btn-primary btn-block m-r-15 m-t-5 m-b-10 ">Provedor Diseño</a>' +
                 '<div class="text-center">' +
                     '<span class="text-center f-18 m-t-15 m-b-15 d-block">!Gracias por preferirnos!</span>' +
                     '<a href="https://www.facebook.com/carlos.delacruz.12576049" target="_blank" class="btn text-white bg-facebook btn-icon m-b-20">' +
@@ -122,7 +122,7 @@ $('body').append('' +
                 '<a href="#!"></a>' +
             '</div>' +
             '<div class="style-block">' +
-                '<h4 class="mb-2">UTC <small class="font-weight-normal">Cursos</small></h4>' +
+                '<h4 class="mb-2">Hacienda <small class="font-weight-normal">Mayrita</small></h4>' +
                 '<hr class="">' +
                 '<div class="m-style-scroller">' +
                     '<h6 class="mt-2">Diseño</h6>' +
@@ -195,8 +195,8 @@ $('body').append('' +
                         '<label>Barra de posición</label>' +
                     '</div>' +
                 '</div>' +
-                '<a href="https://clinicasourilatacunga.com/" target="_blank" class="btn btn-success btn-block m-r-15 m-t-10 m-b-10">Web</a>' +
-                '<a href="http://ableproadmin.com/doc-7.0/" target="_blank" class="btn btn-primary btn-block m-r-15 m-t-5 m-b-10 ">Provedor Diseño</a>' +
+                '<a href="https://www.haciendamayrita.com/" target="_blank" class="btn btn-success btn-block m-r-15 m-t-10 m-b-10">Web</a>' +
+                '<a href="https://www.haciendamayrita.com/" target="_blank" class="btn btn-primary btn-block m-r-15 m-t-5 m-b-10 ">Provedor Diseño</a>' +
                 '<div class="text-center">' +
                     '<span class="text-center f-18 m-t-15 m-b-15 d-block">!Gracias por preferirnos!</span>' +
                     '<a href="https://www.facebook.com/carlos.delacruz.12576049" target="_blank" class="btn text-white bg-facebook btn-icon m-b-20">' +
