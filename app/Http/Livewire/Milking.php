@@ -8,6 +8,7 @@ use App\Income;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Carbon\Carbon;
 class Milking extends Component
 {
     use WithFileUploads;
@@ -37,7 +38,7 @@ class Milking extends Component
     public function render()
     {
         $this->estates = Estate::all();
-       
+        $now = Carbon::now();
         switch($this->timeWhere){
 
             case 'day':
