@@ -203,7 +203,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </a>
                     <ul class="pcoded-submenu">
                         <li><a href="{{route('roles')}}">Roles & Permisos</a></li>
-                        <li><a href="">Crear rol</a></li>
+                        
                     </ul>
                 </li>
 
