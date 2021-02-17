@@ -53,5 +53,10 @@ Route::namespace('Admin')->group(function () {
 
         ///CHEQUEOS
         Route::get('dashboard/checkups','DashboardController@checkups')->name('checkups');
+
+
+        //PRODUCTION
+        Route::get('dashboard/production/animals','DashboardController@aminalProductions')->name('production-animal');
+        Route::get('dashboard/production/milkings','DashboardController@milkingList')->name('milking-list');
 });
 });

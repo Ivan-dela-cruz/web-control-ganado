@@ -115,5 +115,13 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard.checkups.index');
     }
+    public function aminalProductions()
+    {
+        return view('admin.dashboard.production.index');
+    }
+    public function milkingList()
+    {
+        return view('admin.dashboard.production.milkings');
+    }
 }
 

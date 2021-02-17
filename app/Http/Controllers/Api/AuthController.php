@@ -110,6 +110,27 @@ class AuthController extends Controller
     {
         try{
             $user = User::find(Auth::user()->id);
+            $profile = $user->employe;
+
+            if(is_null($profile)){
+                $profile = [
+                    'id'=> 1,
+                    'user_id'=> 1,
+                    'estate_id'=> 1,
+                    'name'=> $user->name,
+                    'last_name'=> $user->last_name,
+                    'dni'=> "N/A",
+                    'url_image'=>$user->url_image,
+                    'phone'=> $user->phone,
+                    'address'=> $user->address,
+                    'email'=>$user->email,
+                    'start_date'=> $user->created_at->format('Y-m-d'),
+                    'end_date'=> $user->created_at->format('Y-m-d'),
+                    'status'=> 1,
+                    'created_at'=> $user->created_at->format('Y-m-d'),
+                    'updated_at'=> $user->updated_at->format('Y-m-d')
+                ];
+            }
            
             if(is_null($user)){
                 return response()->json([
@@ -120,7 +141,7 @@ class AuthController extends Controller
             }else{
                 
                 return response()->json([
-                    'profile' => $user,
+                    'profile' => $profile,
                     'user' => $user,
                     'success' => true,
                     'code' => 'PROFILE_FOUND',

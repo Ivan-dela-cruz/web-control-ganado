@@ -55,20 +55,23 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </a>
                 </li>
 
-
-
                 <li class="nav-item pcoded-hasmenu">
-                    <a href="javascript: void(0);" class="nav-link ">
+                    <a href="javascript: return void();" class="nav-link ">
                         <span class="pcoded-micon">
                             <i class="feather icon-layout"></i>
                         </span>
-                        <span class="pcoded-mtext">Accesos</span>
+                        <span class="pcoded-mtext">Producción</span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li><a href="{{route('roles')}}">Roles & Permisos</a></li>
-                        <li><a href="">Crear rol</a></li>
+                        <li><a href="{{route('animalprodcution')}}">Crear de producción</a></li>
+                        <li><a href="{{route('production-animal')}}">Animales</a></li>
+                        <li><a href="{{route('milking-list')}}">Ordeños</a></li>
+
+
                     </ul>
                 </li>
+
+               
 
                 <li class="nav-item pcoded-hasmenu">
                     <a href="javascript: void(0);" class="nav-link ">
@@ -134,7 +137,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </a>
                     <ul class="pcoded-submenu">
                         <li><a href="{{route('animals')}}">Lista de Animales</a></li>
-                        <li><a href="{{route('animalprodcution')}}">Animales de producción</a></li>
+                       
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
@@ -148,7 +151,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <li><a href="{{route('mastitis')}}">Lista de Mastitis</a></li>
                     </ul>
                 </li>
-
+                
                  <li class="nav-item pcoded-hasmenu">
                     <a href="javascript: return void();" class="nav-link ">
                         <span class="pcoded-micon">
@@ -189,6 +192,18 @@ class="{{request()->is('/ruta')?'active':''}}"
                     <ul class="pcoded-submenu">
                         <li><a href="{{route('sales')}}">Nueva Venta</a></li>
                         <li><a href="{{route('sales.list')}}">Lista de Ventas</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item pcoded-hasmenu">
+                    <a href="javascript: void(0);" class="nav-link ">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-layout"></i>
+                        </span>
+                        <span class="pcoded-mtext">Accesos</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li><a href="{{route('roles')}}">Roles & Permisos</a></li>
+                        <li><a href="">Crear rol</a></li>
                     </ul>
                 </li>
 

@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Animal_production extends Model
 {
     //
-    use SoftDeletes;
+
     protected $table = 'animal_production';
     protected $fillable = [
         'name',
