@@ -16,37 +16,47 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('dashboard/courses','Admin\DashboardController@courses')->name('courses');
+
 Auth::routes();
-Route::get('dashboard/periods','Admin\DashboardController@periods')->name('periods');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('dashboard','Admin\DashboardController@index')->name('dashboard');
-Route::get('dashboard/deliveries','Admin\DashboardController@deliveries')->name('deliveries');
-Route::get('dashboard/roles','Admin\DashboardController@roles')->name('roles');
-Route::get('dashboard/students','Admin\DashboardController@students')->name('students');
 
-Route::get('dashboard/companies','Admin\DashboardController@companies')->name('companies');
-Route::get('dashboard/levels','Admin\DashboardController@levels')->name('levels');
-Route::get('dashboard/tasks','Admin\DashboardController@tasks')->name('tasks');
-Route::get('dashboard/files','Admin\DashboardController@files')->name('files');
+Route::namespace('Admin')->group(function () {
+    Route::group(['middleware' => ['auth']], function () {
 
-Route::get('dashboard/estates','Admin\DashboardController@estates')->name('estates');
-Route::get('dashboard/users','Admin\DashboardController@users')->name('users');
-Route::get('dashboard/employes','Admin\DashboardController@employes')->name('employes');
+        Route::get('/home', 'HomeController@index')->name('home');
+        Route::get('dashboard','DashboardController@index')->name('dashboard');
+        Route::get('dashboard/deliveries','DashboardController@deliveries')->name('deliveries');
+        Route::get('dashboard/roles','DashboardController@roles')->name('roles');
+        Route::get('dashboard/students','DashboardController@students')->name('students');
 
-Route::get('dashboard/veterinaries','Admin\DashboardController@veterinaries')->name('veterinaries');
-Route::get('dashboard/treatments','Admin\DashboardController@Treatments')->name('treatments');
-Route::get('dashboard/diseases','Admin\DashboardController@Diseases')->name('diseases');
-Route::get('dashboard/animals','Admin\DashboardController@Animals')->name('animals');
-Route::get('dashboard/mastitis','Admin\DashboardController@Mastitis')->name('mastitis');
-Route::get('dashboard/animals/production','Admin\DashboardController@animalProduction')->name('animalprodcution');
+        Route::get('dashboard/companies','DashboardController@companies')->name('companies');
+        Route::get('dashboard/levels','DashboardController@levels')->name('levels');
+        Route::get('dashboard/tasks','DashboardController@tasks')->name('tasks');
+        Route::get('dashboard/files','DashboardController@files')->name('files');
 
-//code
-Route::get('dashboard/purchases','Admin\DashboardController@Purchases')->name('purchase');
-Route::get('dashboard/purchases/list','Admin\DashboardController@List_purchases')->name('purchases.list');
-Route::get('dashboard/sales','Admin\DashboardController@Sales')->name('sales');
-Route::get('dashboard/sales/list','Admin\DashboardController@List_sales')->name('sales.list');
+        Route::get('dashboard/estates','DashboardController@estates')->name('estates');
+        Route::get('dashboard/users','DashboardController@users')->name('users');
+        Route::get('dashboard/employes','DashboardController@employes')->name('employes');
+
+        Route::get('dashboard/veterinaries','DashboardController@veterinaries')->name('veterinaries');
+        Route::get('dashboard/treatments','DashboardController@Treatments')->name('treatments');
+        Route::get('dashboard/diseases','DashboardController@Diseases')->name('diseases');
+        Route::get('dashboard/animals','DashboardController@Animals')->name('animals');
+        Route::get('dashboard/mastitis','DashboardController@Mastitis')->name('mastitis');
+        Route::get('dashboard/animals/production','DashboardController@animalProduction')->name('animalprodcution');
+
+        //code
+        Route::get('dashboard/purchases','DashboardController@Purchases')->name('purchase');
+        Route::get('dashboard/purchases/list','DashboardController@List_purchases')->name('purchases.list');
+        Route::get('dashboard/sales','DashboardController@Sales')->name('sales');
+        Route::get('dashboard/sales/list','DashboardController@List_sales')->name('sales.list');
 
 
-///CHEQUEOS
-Route::get('dashboard/checkups','Admin\DashboardController@checkups')->name('checkups');
+        ///CHEQUEOS
+        Route::get('dashboard/checkups','DashboardController@checkups')->name('checkups');
+
+
+        //PRODUCTION
+        Route::get('dashboard/production/animals','DashboardController@aminalProductions')->name('production-animal');
+        Route::get('dashboard/production/milkings','DashboardController@milkingList')->name('milking-list');
+});
+});

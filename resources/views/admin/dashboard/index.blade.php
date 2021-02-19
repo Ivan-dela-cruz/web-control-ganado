@@ -5,8 +5,8 @@
 @section('content')
     <div class="pcoded-main-container">
         <div class="pcoded-content">
-            <x-content title="Estadisticas" position="Estados"></x-content>
-            <div class="row">
+            <x-content title="Estadisticas" position="Panel de control"></x-content>
+            <div hidden class="row">
                 <!-- seo analytics start -->
                 <div class="col-xl-3 col-md-6">
                     <div class="card">

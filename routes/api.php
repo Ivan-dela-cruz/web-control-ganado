@@ -34,5 +34,6 @@ Route::namespace('Api')->group(function () {
     Route::get('estates/animals/production/{id}','EstateController@AnimalsProductionByEstate');
     Route::get('estates/animals/productions/milkings/{id}','EstateController@AnimalsProductionByMilking');
     Route::post('estates/animals/milking/{id}','EstateController@milkingByEstate');
+    Route::get('estates/production/milking/{id}','EstateController@incomesByEstate');
 
 });

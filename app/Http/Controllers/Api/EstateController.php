@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Log;
 
@@ -201,6 +202,26 @@ class EstateController extends Controller
             'status'=>200
         ],200);
 
+    }
+
+    public function incomesByEstate($id)
+    {
+       
+       $incomes = Income::select(
+            DB::raw('sum(total_liters) as sums'), 
+            DB::raw("DATE_FORMAT(created_at,'%M %Y') as months"),
+            DB::raw("DATE_FORMAT(created_at,'%m') as monthKey")
+        )
+        ->whereYear('created_at', date('Y'))
+        ->where('estate_id',$id)
+        ->groupBy('months', 'monthKey')
+        ->orderBy('created_at', 'ASC')
+        ->get();
+      
+       return response()->json([
+           'success'=>true,
+           'incomes'=>$incomes
+       ],200);
     }
 
 
