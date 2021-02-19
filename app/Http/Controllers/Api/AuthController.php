@@ -16,6 +16,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
 use Exception;
+
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -27,14 +28,14 @@ class AuthController extends Controller
                 'message' => 'invalid credentials'
             ], 401);
         }
-        $user =  Auth::user();
+        $user = Auth::user();
         //LIMPIAR DATA DE USER
         unset($user["email_verified_at"]);
         unset($user["created_at"]);
         unset($user["updated_at"]);
 
         //ADJUNTAR LA DATA DEL ESTUDAINTE A LA DATA DE USER
-       
+
         return response()->json([
             'success' => true,
             'token' => $token,
@@ -89,14 +90,17 @@ class AuthController extends Controller
     public function profileUser(Request $request)
     {
         $user = User::find(Auth::user()->id);
+        $temp_image = $user->url_image;
         $user->name = $request->name;
         $user->last_name = $request->last_name;
-    
+
         if ($request->url_image) {
             if ($user->url_image != $request->url_image) {
                 $this->destroyFile($user->url_image);
-                $user->url_image = $this->UploadImage($request);
+                $user->url_image = $this->UploadImage($request,$temp_image);
             }
+        }else{
+            $user->url_image = $temp_image;
         }
         $user->update();
         return response()->json([
@@ -106,89 +110,82 @@ class AuthController extends Controller
             'last_name' => $user->last_name
         ], 200);
     }
+
     public function getProfile(Request $request)
     {
-        try{
+        try {
             $user = User::find(Auth::user()->id);
-            $profile = $user->employe;
 
-            if(is_null($profile)){
-                $profile = [
-                    'id'=> 1,
-                    'user_id'=> 1,
-                    'estate_id'=> 1,
-                    'name'=> $user->name,
-                    'last_name'=> $user->last_name,
-                    'dni'=> "N/A",
-                    'url_image'=>$user->url_image,
-                    'phone'=> $user->phone,
-                    'address'=> $user->address,
-                    'email'=>$user->email,
-                    'start_date'=> $user->created_at->format('Y-m-d'),
-                    'end_date'=> $user->created_at->format('Y-m-d'),
-                    'status'=> 1,
-                    'created_at'=> $user->created_at->format('Y-m-d'),
-                    'updated_at'=> $user->updated_at->format('Y-m-d')
-                ];
-            }
-           
-            if(is_null($user)){
+            $data = [
+                'id' => $user->id,
+                //'user_id'=>$student->user_id,
+                'name' => $user->name,
+                'last_name' => $user->last_name,
+                'url_image' => $user->url_image,
+
+                'phone' => $user->phone,
+                'email' => $user->email,
+                'status' => $user->status,
+                'address' => $user->address,
+            ];
+
+            if (is_null($user)) {
                 return response()->json([
                     'success' => false,
                     'code' => 'PROFILE_NOT_FOUND',
                     'status' => 404,
-                ],404);
-            }else{
-                
+                ], 404);
+            } else {
+
                 return response()->json([
-                    'profile' => $profile,
-                    'user' => $user,
+                  //  'profile' => $user,
+                    'user' => $data,
                     'success' => true,
                     'code' => 'PROFILE_FOUND',
                     'status' => 200,
-                    
-                ],200);
+
+                ], 200);
             }
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return response()->json([
-               
+
                 'success' => false,
                 'code' => 'ERROR_PROFILE',
                 'status' => 500,
-            ],500);
+            ], 500);
         }
     }
 
     public function ChangePassword(Request $request)
     {
-        try{
+        try {
             $user = User::find(Auth::user()->id);
-            if(is_null($user)){
+            if (is_null($user)) {
                 return response()->json([
                     'success' => false,
                     'code' => 'USER_NOT_FOUND',
                     'status' => 404,
-                ],404);
-            }else{
+                ], 404);
+            } else {
                 $user->password = $this->generatePassword($request->password);
                 $user->update();
                 return response()->json([
                     'success' => true,
                     'code' => 'PASSWORD_CHANGED',
                     'status' => 200,
-                    'user'=>$user,
-                ],200);
+                    'user' => $user,
+                ], 200);
             }
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return response()->json([
                 'success' => false,
                 'code' => 'ERROR_CHANGE_PASSWORD',
                 'status' => 500,
-            ],500);
+            ], 500);
         }
-        
+
     }
-    
+
     public function generatePassword($password)
     {
         $user_password = Hash::make($password);
@@ -196,28 +193,21 @@ class AuthController extends Controller
     }
 
 
-    public function UploadImage(Request $request)
+    public function UploadImage(Request $request,$temp_image)
     {
         $url_file = "img/users/";
-        if ($request->url_image && $request->url_image != '#') {
+        if ($request->url_image && $request->url_image != $temp_image) {
             $foto = time() . '.jpg';
             file_put_contents('img/users/' . $foto, base64_decode($request->url_image));
             return $url_file . $foto;
 
         } else {
-            return "#";
+            return $temp_image;
         }
-        /*if ($request->url_image && $request->url_image != '#') {
-            $image = $request->get('url_image');
-            $name = time() . '.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-            Image::make($request->get('url_image'))->save(public_path($url_file) . $name);
-            return $url_file . $name;
-        } else {
-            return "#";
-        }
-        */
+
     }
-     public function destroyFile($path_file)
+
+    public function destroyFile($path_file)
     {
         if (File::exists(public_path($path_file))) {
 
