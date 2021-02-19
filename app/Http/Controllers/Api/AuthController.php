@@ -122,19 +122,11 @@ class AuthController extends Controller
                 'name' => $user->name,
                 'last_name' => $user->last_name,
                 'url_image' => $user->url_image,
-              //  'dni' => $user->employee->dni,
-                //'passport'=>$student->passport,
-                //'instruction'=>$student->instruction,
-                // 'marital_status'=>$student->marital_status,
-                //'birth_date'=>$student->birth_date,
+
                 'phone' => $user->phone,
                 'email' => $user->email,
                 'status' => $user->status,
                 'address' => $user->address,
-                //'province' => $user->address->parish->canton->province->name_province,
-                //'canton' => $user->address->parish->canton->name_canton,
-                //'parish' => $user->address->parish->name_parish,
-                //'gender' => ''
             ];
 
             if (is_null($user)) {
