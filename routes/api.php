@@ -25,7 +25,7 @@ Route::namespace('Api')->group(function () {
     Route::get('profile','AuthController@getProfile')->name('profile')->middleware('jwtAuth');
     Route::post('change-password','AuthController@ChangePassword')->name('change-password')->middleware('jwtAuth');
 
-    //RUTAS PARA EL 
+    //RUTAS PARA EL
     Route::get('estates','EstateController@index')->name('estates');
     Route::get('checkups','EstateController@CheckupsAnimalsByEstate');
     Route::get('estates/info/{id}','EstateController@genaralInformation');
@@ -35,5 +35,6 @@ Route::namespace('Api')->group(function () {
     Route::get('estates/animals/productions/milkings/{id}','EstateController@AnimalsProductionByMilking');
     Route::post('estates/animals/milking/{id}','EstateController@milkingByEstate');
     Route::get('estates/production/milking/{id}','EstateController@incomesByEstate');
+    Route::get('employee/tasks/','EstateController@employeeTasks')->middleware('jwtAuth');
 
 });

@@ -37,4 +37,9 @@ class Employ extends Model
     {
         return $this->belongsTo(Estate::class, 'estate_id');
     }
+
+    public function tasks(){
+        return $this->morphMany(Task::class,'taskeable');
+    }
+
 }
