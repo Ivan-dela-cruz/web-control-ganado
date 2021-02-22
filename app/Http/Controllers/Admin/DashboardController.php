@@ -123,5 +123,10 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard.production.milkings');
     }
+    public function tasks_employees()
+    {
+        return view('admin.dashboard.employes.tasks');
+    }
+
 }
 

@@ -3,7 +3,7 @@
     <div class="col-md-6 form-group">
         <small  class="mr-3 text-primary">Haciendas</small>
         <select wire:model="estate_id" class="form-control">
-            <option value="">Selecciona</option>
+            <option value="">Seleccione</option>
             @foreach($estates as $estate)
                 <option value="{{$estate->id}}"> {{$estate->name}} </option>
             @endforeach
@@ -14,7 +14,7 @@
     <div class="col-md-6 form-group" >
         <small class="mr-3 text-primary">Animal</small>
         <select id="animal_id"  class=" mt-5 form-control" wire:model="animal_id">
-            <option  value="">Seleccione...</option>
+            <option  value="">Seleccione</option>
             @foreach($animals as $animal)
                 <option value="{{$animal->id}}"
                         @if($sAnimal > 0)
@@ -31,7 +31,7 @@
     <div class="col-md-6 form-group">
         <small  class="mr-3 text-primary">Veterinarios</small>
         <select wire:model="veterinarie_id" class="form-control">
-            <option  value="">Selecciona</option>
+            <option  value="">Seleccione</option>
             @foreach($veterinaries as $veterinary)
                 <option value="{{$veterinary->id}}"> {{$veterinary->name}} </option>
             @endforeach

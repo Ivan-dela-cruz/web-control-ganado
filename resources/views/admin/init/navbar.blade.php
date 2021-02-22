@@ -71,7 +71,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </ul>
                 </li>
 
-               
+
 
                 <li class="nav-item pcoded-hasmenu">
                     <a href="javascript: void(0);" class="nav-link ">
@@ -93,6 +93,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </a>
                     <ul class="pcoded-submenu">
                         <li><a href="{{route('employes')}}">Empleados</a></li>
+                        <li><a href="{{route('tasks')}}">Tareas</a></li>
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
@@ -137,7 +138,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </a>
                     <ul class="pcoded-submenu">
                         <li><a href="{{route('animals')}}">Lista de Animales</a></li>
-                       
+
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
@@ -151,7 +152,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <li><a href="{{route('mastitis')}}">Lista de Mastitis</a></li>
                     </ul>
                 </li>
-                
+
                  <li class="nav-item pcoded-hasmenu">
                     <a href="javascript: return void();" class="nav-link ">
                         <span class="pcoded-micon">
@@ -203,7 +204,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </a>
                     <ul class="pcoded-submenu">
                         <li><a href="{{route('roles')}}">Roles & Permisos</a></li>
-                        
+
                     </ul>
                 </li>
 

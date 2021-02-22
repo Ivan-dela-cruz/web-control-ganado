@@ -22,9 +22,9 @@ class RolesSeeder extends Seeder
         /// crea los permisos para el crud del roles
         ///
         Permission::create(['name' => 'create_role', 'modulo' => 'Roles', 'alias' => 'Crear']);
-        Permission::create(['name' => 'read_role',  'modulo' => 'Roles', 'alias' => 'Leer']);
-        Permission::create(['name' => 'update_role',  'modulo' => 'Roles', 'alias' => 'Modificar']);
-        Permission::create(['name' => 'destroy_role',  'modulo' => 'Roles', 'alias' => 'Eliminar']);
+        Permission::create(['name' => 'read_role', 'modulo' => 'Roles', 'alias' => 'Leer']);
+        Permission::create(['name' => 'update_role', 'modulo' => 'Roles', 'alias' => 'Modificar']);
+        Permission::create(['name' => 'destroy_role', 'modulo' => 'Roles', 'alias' => 'Eliminar']);
 
         /// crea los permisos para el crud del usuario
         ///
@@ -59,19 +59,19 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'update_income', 'modulo' => 'Ingresos', 'alias' => 'Modificar ']);
         Permission::create(['name' => 'destroy_income', 'modulo' => 'Ingresos', 'alias' => 'Eliminar ']);
 
-                //permisos para el crud de los subjects
+        //permisos para el crud de los subjects
         Permission::create(['name' => 'create_delivery', 'modulo' => 'Entregas', 'alias' => 'Crear']);
         Permission::create(['name' => 'read_delivery', 'modulo' => 'Entregas', 'alias' => 'Leer']);
         Permission::create(['name' => 'update_delivery', 'modulo' => 'Entregas', 'alias' => 'Modificar']);
         Permission::create(['name' => 'destroy_delivery', 'modulo' => 'Entregas', 'alias' => 'Eliminar']);
 
-          //permisos para el crud de los tasks
+        //permisos para el crud de los tasks
         Permission::create(['name' => 'create_disease', 'modulo' => 'Enfermedades', 'alias' => 'Crear']);
         Permission::create(['name' => 'read_disease', 'modulo' => 'Enfermedades', 'alias' => 'Leer']);
         Permission::create(['name' => 'update_disease', 'modulo' => 'Enfermedades', 'alias' => 'Modificar']);
         Permission::create(['name' => 'destroy_disease', 'modulo' => 'Enfermedades', 'alias' => 'Eliminar']);
 
-            //permisos para el crud de los academic period
+        //permisos para el crud de los academic period
         Permission::create(['name' => 'create_ac_births', 'modulo' => 'Partos', 'alias' => 'Crear']);
         Permission::create(['name' => 'read_ac_births', 'modulo' => 'Partos', 'alias' => 'Leer']);
         Permission::create(['name' => 'update_ac_births', 'modulo' => 'Partos', 'alias' => 'Modificar']);
@@ -95,11 +95,11 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'update_sales', 'modulo' => 'Ventas', 'alias' => 'Modificar']);
         Permission::create(['name' => 'destroy_sales', 'modulo' => 'Ventas', 'alias' => 'Eliminar']);
 
-           //permisos para el crud de los files
-         Permission::create(['name' => 'create_purcharse', 'modulo' => 'Compras', 'alias' => 'Crear']);
-         Permission::create(['name' => 'read_purcharse', 'modulo' => 'Compras', 'alias' => 'Leer ']);
-         Permission::create(['name' => 'update_purcharse', 'modulo' => 'Compras', 'alias' => 'Modificar']);
-         Permission::create(['name' => 'destroy_purcharse', 'modulo' => 'Compras', 'alias' => 'Eliminar']);
+        //permisos para el crud de los files
+        Permission::create(['name' => 'create_purcharse', 'modulo' => 'Compras', 'alias' => 'Crear']);
+        Permission::create(['name' => 'read_purcharse', 'modulo' => 'Compras', 'alias' => 'Leer ']);
+        Permission::create(['name' => 'update_purcharse', 'modulo' => 'Compras', 'alias' => 'Modificar']);
+        Permission::create(['name' => 'destroy_purcharse', 'modulo' => 'Compras', 'alias' => 'Eliminar']);
 
         //permisos para el crud de los veterinarios
         Permission::create(['name' => 'create_vets', 'modulo' => 'Veterinarios', 'alias' => 'Crear']);
@@ -114,15 +114,14 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'destroy_company', 'modulo' => 'Companias', 'alias' => 'Eliminar']);
 
 
-
         /// cramos los roles para que son admin, propietario, secretaria, medico
-        $role = Role::create(['name' => 'Administrador', 'description'=>'Rol de administrador','status' => true]);
+        $role = Role::create(['name' => 'Administrador', 'description' => 'Rol de administrador', 'status' => true]);
 
         //asignacion de los permisos al rol admin
         $role->givePermissionTo(Permission::all());
 
-        $role = Role::create(['name' => 'Empleado','description'=>'Rol de Empleado', 'status' => true]);
-        $role = Role::create(['name' => 'Mayordomo','description'=>'Rol de mayordomo', 'status' => true]);
+        $role = Role::create(['name' => 'Empleado', 'description' => 'Rol de Empleado', 'status' => true]);
+        $role = Role::create(['name' => 'Mayordomo', 'description' => 'Rol de mayordomo', 'status' => true]);
 
         ///crearmos el usario por defecto
         $user_password = Hash::make('root1234');
@@ -139,5 +138,46 @@ class RolesSeeder extends Seeder
             ]
         );
         $user->assignRole('Administrador');
+        $permitted_chars = '0123456789';
+        $employee_password = Hash::make('empleado');
+        //estates
+        for ($i = 0; $i < 2; $i++) {
+            $estate = \App\Estate::create([
+                'name' => 'HACIENDA ' . $i,
+                'ruc' => substr(str_shuffle($permitted_chars), 0, 11),
+                'owner' => 'DUEÑO ' . $i,
+                'url_image' => 'img/user.jpg',
+                'phone' => substr(str_shuffle($permitted_chars), 0, 9),
+                'address' => 'DIRECCION ' . $i,
+                'email' => 'estate' . $i . '@email.com',
+                'status' => 1
+            ]);
+        }
+
+        for ($i = 0; $i < 20; $i++) {
+            $user = User::create([
+                'name' => 'Empleado'.$i,
+                'email'=>'employee'.$i.'@email.com',
+                'password' => $employee_password,
+                'last_name' => 'Apellido'.$i,
+                'url_image' => 'img/user.jpg',
+                'phone' => substr(str_shuffle($permitted_chars), 0, 9),
+                'address' => 'Direccion'.$i,
+            ]);
+            $employee = \App\Employ::create([
+                'user_id' => $user->id,
+                'estate_id' => rand(1,2),
+                'name' => $user->name,
+                'last_name' => $user->last_name,
+                'dni' => substr(str_shuffle($permitted_chars), 0, 9),
+                'url_image' => 'img/user.jpg',
+                'phone'=> substr(str_shuffle($permitted_chars), 0, 9),
+                'address' => $user->address,
+                'email' => $user->email,
+                'start_date' => now(),
+            ]);
+
+            $user->assignRole('Empleado');
+        }
     }
 }

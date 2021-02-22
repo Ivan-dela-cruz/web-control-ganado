@@ -30,7 +30,7 @@ Route::namespace('Admin')->group(function () {
 
         Route::get('dashboard/companies','DashboardController@companies')->name('companies');
         Route::get('dashboard/levels','DashboardController@levels')->name('levels');
-        Route::get('dashboard/tasks','DashboardController@tasks')->name('tasks');
+
         Route::get('dashboard/files','DashboardController@files')->name('files');
 
         Route::get('dashboard/estates','DashboardController@estates')->name('estates');
@@ -58,5 +58,8 @@ Route::namespace('Admin')->group(function () {
         //PRODUCTION
         Route::get('dashboard/production/animals','DashboardController@aminalProductions')->name('production-animal');
         Route::get('dashboard/production/milkings','DashboardController@milkingList')->name('milking-list');
+
+        //empleados
+        Route::get('dashboard/employee/tasks','DashboardController@tasks_employees')->name('tasks');
 });
 });
