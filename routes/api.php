@@ -36,5 +36,6 @@ Route::namespace('Api')->group(function () {
     Route::post('estates/animals/milking/{id}','EstateController@milkingByEstate');
     Route::get('estates/production/milking/{id}','EstateController@incomesByEstate');
     Route::get('employee/tasks/','EstateController@employeeTasks')->middleware('jwtAuth');
+    Route::post('update/task','EstateController@updateTask')->middleware('jwtAuth');
 
 });
