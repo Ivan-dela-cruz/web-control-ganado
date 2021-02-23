@@ -11,7 +11,8 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <img wire:ignore class="img-radius" src="{{asset('img/user.jpg')}}"
                              alt="User-Profile-Image" style="height: 50px; width: 50px">
                     @else
-                        <img wire:ignore class="img-radius" src="{{asset(\Illuminate\Support\Facades\Auth::user()->url_image)}}"
+                        <img wire:ignore class="img-radius"
+                             src="{{asset(\Illuminate\Support\Facades\Auth::user()->url_image)}}"
                              alt="User-Profile-Image" style="width: 50px; height: 50px">
                     @endif
                     <div class="user-details">
@@ -72,7 +73,6 @@ class="{{request()->is('/ruta')?'active':''}}"
                 </li>
 
 
-
                 <li class="nav-item pcoded-hasmenu">
                     <a href="javascript: void(0);" class="nav-link ">
                         <span class="pcoded-micon">
@@ -93,7 +93,10 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </a>
                     <ul class="pcoded-submenu">
                         <li><a href="{{route('employes')}}">Empleados</a></li>
-                        <li><a href="{{route('tasks')}}">Tareas</a></li>
+
+                        @canany(['create_task','read_task','update_task','destroy_task'])
+                            <li><a href="{{route('tasks')}}">Tareas</a></li>
+                        @endcanany
                     </ul>
                 </li>
                 <li class="nav-item pcoded-hasmenu">
@@ -153,7 +156,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </ul>
                 </li>
 
-                 <li class="nav-item pcoded-hasmenu">
+                <li class="nav-item pcoded-hasmenu">
                     <a href="javascript: return void();" class="nav-link ">
                         <span class="pcoded-micon">
                             <i class="feather icon-layout"></i>

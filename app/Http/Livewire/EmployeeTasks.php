@@ -6,9 +6,14 @@ use App\Employ;
 use App\Estate;
 use App\Task;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class EmployeeTasks extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
     protected $queryString = [
         'search' => ['except' => ''],
         'perPage' => ['except' => '10'],
@@ -21,19 +26,32 @@ class EmployeeTasks extends Component
     public $employees = [], $employee_id;
     public $tasks = [];
 
-    public $title, $description, $date, $hour;
+    public $task_id, $title, $description, $date, $hour;
+
+    public $position = 'new_task';
+
+    public $header_task = 'Nueva Tarea';
 
     public function render()
     {
         $this->estates = Estate::all();
         $this->employees = Employ::all();
+        $allTasks = Task::where('title', 'LIKE', "%{$this->search}%")
+            ->orWhere('description', 'LIKE', "%{$this->search}%")
+            ->orWhere('date', 'LIKE', "%{$this->search}%")
+            ->orWhere('hour', 'LIKE', "%{$this->search}%")
+            ->orderBy('updated_at', 'desc')->paginate($this->perPage);
 
-        if($this->employee_id > 0) {
+        /*  if ($this->search != '') {
+              $this->position = 'list_task';
+          }*/
+
+        if ($this->employee_id > 0) {
             $employee = Employ::find($this->employee_id);
             $this->tasks = $employee->tasks;
         }
 
-        return view('livewire.employee-tasks');
+        return view('livewire.employee-tasks', compact('allTasks'));
     }
 
     public function storeTask()
@@ -72,10 +90,11 @@ class EmployeeTasks extends Component
 
     }
 
-    public function taskCompleted($id){
+    public function taskCompleted($id)
+    {
         $task = Task::find($id);
         $new_status = '';
-        switch ($task->status){
+        switch ($task->status) {
             case 'Pendiente':
                 $new_status = 'Finalizada';
                 break;
@@ -84,10 +103,80 @@ class EmployeeTasks extends Component
                 break;
         }
         $task->update([
-           'status' => $new_status
+            'status' => $new_status
         ]);
 
-        $this->alert('success', 'Tarea '.$new_status);
+        $this->alert('success', 'Tarea ' . $new_status);
+    }
+
+    public function editTask($id)
+    {
+        $this->header_task = 'Editar Tarea';
+        $this->position = 'new_task';
+
+        $task = Task::find($id);
+        $this->task_id = $task->id;
+        $this->estate_id = $task->estate_id;
+        $this->employee_id = $task->taskeable->id;
+        $this->title = $task->title;
+        $this->description = $task->description;
+        $this->date = $task->date;
+        $this->hour = $task->hour;
+
+    }
+
+    public function updateTask()
+    {
+        $this->validate([
+            'estate_id' => 'required',
+            'employee_id' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+            'date' => 'required',
+            'hour' => 'required',
+        ], [
+            'estate_id.required' => 'Campo obligatorio.',
+            'employee_id.required' => 'Campo obligatorio.',
+            'title.required' => 'Campo obligatorio.',
+            'description.required' => 'Campo obligatorio.',
+            'date.required' => 'Campo obligatorio.',
+            'hour.required' => 'Campo obligatorio.',
+        ]);
+
+        $task = Task::find($this->task_id);
+        $task->taskeable_id = $this->employee_id;
+        $task->estate_id = $this->estate_id;
+        $task->title = $this->title;
+        $task->description = $this->description;
+        $task->date = $this->date;
+        $task->hour = $this->hour;
+        $task->save();
+
+
+        $this->resetInputFields();
+        $this->alert('success', 'Tarea actualizada con exíto.');
+
+    }
+
+    public function destroyTask($id)
+    {
+        $task = Task::find($id);
+        $task->delete();
+        $this->alert('success', 'Tarea eliminada con exíto.');
+
+    }
+
+    public function setPos($pos)
+    {
+        switch ($pos) {
+            case 'new_task':
+                $this->position = 'new_task';
+                break;
+            case 'list_task':
+                $this->position = 'list_task';
+                $this->resetInputFields();
+                break;
+        }
     }
 
     public function resetInputFields()
@@ -99,6 +188,7 @@ class EmployeeTasks extends Component
         $this->date = '';
         $this->hour = '';
         $this->tasks = [];
+        $this->header_task = 'Nueva Tarea';
     }
 
     public function clear()
