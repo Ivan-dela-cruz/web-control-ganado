@@ -41,7 +41,7 @@ class EmployeeTasks extends Component
             ->orWhere('date', 'LIKE', "%{$this->search}%")
             ->orWhere('hour', 'LIKE', "%{$this->search}%")
             ->orderBy('updated_at', 'desc')->paginate($this->perPage);
-        
+
         if ($this->employee_id > 0) {
             $employee = Employ::find($this->employee_id);
             $this->tasks = $employee->tasks;
