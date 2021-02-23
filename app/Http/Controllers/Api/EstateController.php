@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Estate;
+use App\Task;
 use App\Veterinary;
 use App\Employ;
 use App\Income;
@@ -238,6 +239,7 @@ class EstateController extends Controller
         $list = new Collection();
         foreach ($tasks as $k => $v) {
             $item = [
+                'id' => $v['id'],
                 'estate_id' => $v['estate_id'],
                 'title' => $v['title'],
                 'description' => $v['description'],
@@ -251,6 +253,25 @@ class EstateController extends Controller
             'success' => true,
             'tasks' => $list,
         ], 200);
+    }
+
+    public function updateTask(Request $request){
+      //  $task = Task::find($request->task_id);
+        $task = Task::find($request->task_id);
+        $new_status = '';
+        switch ($task->status){
+            case 'Pendiente':
+                $new_status = 'Finalizada';
+                break;
+            case 'Finalizada':
+                $new_status = 'Pendiente';
+                break;
+        }
+        $task->update([
+            'status' => $new_status
+        ]);
+
+        return $this->employeeTasks();
     }
 
 }
