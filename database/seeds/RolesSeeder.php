@@ -113,6 +113,12 @@ class RolesSeeder extends Seeder
         Permission::create(['name' => 'update_company', 'modulo' => 'Companias', 'alias' => 'Modificar']);
         Permission::create(['name' => 'destroy_company', 'modulo' => 'Companias', 'alias' => 'Eliminar']);
 
+        //permisos para el crud de los checkeos
+        Permission::create(['name' => 'create_checkup', 'modulo' => 'Chequeos', 'alias' => 'Crear']);
+        Permission::create(['name' => 'read_checkup', 'modulo' => 'Chequeos', 'alias' => 'Leer ']);
+        Permission::create(['name' => 'update_checkup', 'modulo' => 'Chequeos', 'alias' => 'Modificar']);
+        Permission::create(['name' => 'destroy_checkup', 'modulo' => 'Chequeos', 'alias' => 'Eliminar']);
+
         //permisos para el crud de los tareas de empleados
         Permission::create(['name' => 'create_task', 'modulo' => 'Tareas de Empleados', 'alias' => 'Crear']);
         Permission::create(['name' => 'read_task', 'modulo' => 'Tareas de Empleados', 'alias' => 'Leer ']);
