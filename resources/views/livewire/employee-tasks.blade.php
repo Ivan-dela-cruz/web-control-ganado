@@ -147,8 +147,8 @@
                                                                 class="btn btn-sm btn-primary float-right mr-2">
                                                             Actualizar
                                                         </button>
-                                                        @endcan
-                                                    @endif
+                                                    @endcan
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -172,7 +172,8 @@
                                                         <span class="cr mr-3">
                                             <i class="cr-icon fas fa-check txt-primary"></i>
                                         </span>
-                                                        <span>{{$task->description}}</span>
+                                                        <span data-toggle="tooltip"
+                                                              title="{{$task->description}}">{{\Illuminate\Support\Str::limit($task->title ,150) }}</span>
                                                     </label>
                                                 </div>
 
@@ -256,7 +257,9 @@
                                         @endif
                                     @endforeach
                                     <td>{{$task->title}}</td>
-                                    <td>{{$task->description}}</td>
+                                    <td><span data-toggle="tooltip"
+                                              title="{{$task->description}}">{{\Illuminate\Support\Str::limit($task->description ,50) }}</span>
+                                    </td>
                                     <td>{{$task->date}}</td>
                                     <td>{{$task->hour}}</td>
                                     <td>
@@ -265,15 +268,15 @@
 
                                         <div class="overlay-edit">
                                             @can('update_task')
-                                            <button type="button" class="btn btn-icon btn-warning"
-                                                    wire:click="editTask({{$task->id}})"><i
-                                                    class="feather icon-edit-2"></i></button>
+                                                <button type="button" class="btn btn-icon btn-warning"
+                                                        wire:click="editTask({{$task->id}})"><i
+                                                        class="feather icon-edit-2"></i></button>
                                             @endcan
-                                                @can('destroy_task')
-                                            <button type="button" class="btn btn-icon btn-danger"
-                                                    wire:click="destroyTask({{$task->id}})"><i
-                                                    class="feather icon-trash-2"></i></button>
-                                                @endcan
+                                            @can('destroy_task')
+                                                <button type="button" class="btn btn-icon btn-danger"
+                                                        wire:click="destroyTask({{$task->id}})"><i
+                                                        class="feather icon-trash-2"></i></button>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
