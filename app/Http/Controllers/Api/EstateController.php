@@ -17,7 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 
 class EstateController extends Controller
@@ -104,13 +104,11 @@ class EstateController extends Controller
         //fechas
         $now = Carbon::now("America/Guayaquil");
         $date = $now->format('Y-m-d');
-
         //coleccion de animae sd eprocuccion
         $animals = Animal_production::join('animals', 'animal_production.animal_id', '=', 'animals.id')
             ->select('animal_production.id', 'animals.name', 'animals.code', 'animals.start_date', 'animals.url_image')
             ->where('animal_production.estate_id', $id)
             ->get();
-
 
         //ANIMALES YA ORÑADOS
         $income = null;
@@ -126,7 +124,6 @@ class EstateController extends Controller
                 }
             }
         }
-
         foreach ($animals as $k => $v) {
             $item = [
                 'id' => $v->id,
@@ -213,10 +210,16 @@ class EstateController extends Controller
 
     public function incomesByEstate($id)
     {
-
+        Carbon::setLocale('es');
+        $now = Carbon::now("America/Guayaquil");
+    
+        $month = $now->month;
+        $nameMonth = $now->isoFormat('MMMM');
+        $estate = Estate::find($id);
+        DB::statement("SET lc_time_names = 'es_ES'");
         $incomes = Income::select(
             DB::raw('sum(total_liters) as sums'),
-            DB::raw("DATE_FORMAT(created_at,'%M %Y') as months"),
+            DB::raw("DATE_FORMAT(created_at,'%M') as months"),
             DB::raw("DATE_FORMAT(created_at,'%m') as monthKey")
         )
             ->whereYear('created_at', date('Y'))
@@ -225,10 +228,26 @@ class EstateController extends Controller
             ->orderBy('created_at', 'ASC')
             ->get();
 
+        $milkings = Milking::join('animal_production','milkings.animalproduction_id','=','animal_production.id')
+        ->join('animals','animal_production.animal_id','=','animals.id')
+        ->select('animals.name','animals.code','animals.url_image',
+                  DB::raw('sum(milkings.total_liters) as sums')
+        )
+        ->whereMonth('milkings.created_at',$month)
+        ->groupBy('animals.name', 'animals.code','animals.url_image')
+        ->get();
+        $totalMonth = Milking::whereMonth('created_at',$month)->sum('total_liters');
         return response()->json([
             'success' => true,
-            'incomes' => $incomes
+            'estate'=>$estate->name,
+            'total'=>$totalMonth,
+            'month'=>Str::title($nameMonth),
+            'incomes' => $incomes,
+            'milkings'=>$milkings
+            
         ], 200);
+
+
     }
 
     public function employeeTasks()
