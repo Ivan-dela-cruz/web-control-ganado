@@ -26,6 +26,12 @@ class CreateDeliveriesTable extends Migration
             $table->string('description')->nullable();
             $table->enum('type',['morning','afternoon'])->default('morning');
             $table->boolean('status')->default(true);
+            $table->string('dato1')->nullable();
+            $table->string('dato2')->nullable();
+            $table->string('dato3')->nullable();
+            $table->integer('valor1')->nullable();
+            $table->integer('valor2')->nullable();
+            $table->double('valor3')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('company_id')->references('id')->on('companies');
