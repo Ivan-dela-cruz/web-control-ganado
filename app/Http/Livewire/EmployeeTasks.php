@@ -177,8 +177,8 @@ class EmployeeTasks extends Component
 
     public function resetInputFields()
     {
-        $this->estate_id = 0;
-        $this->employee_id = 0;
+        $this->estate_id = null;
+        $this->employee_id = null;
         $this->title = '';
         $this->description = '';
         $this->date = '';
