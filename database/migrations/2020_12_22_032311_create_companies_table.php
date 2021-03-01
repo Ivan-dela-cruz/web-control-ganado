@@ -23,6 +23,12 @@ class CreateCompaniesTable extends Migration
             $table->string('address')->nullable();
             $table->string('email')->unique();
             $table->tinyInteger('status')->nullable()->default(1);
+            $table->string('dato1')->nullable();
+            $table->string('dato2')->nullable();
+            $table->string('dato3')->nullable();
+            $table->integer('valor1')->nullable();
+            $table->integer('valor2')->nullable();
+            $table->double('valor3')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

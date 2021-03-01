@@ -18,6 +18,12 @@ class CreateTreatmentsTable extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->boolean('status')->nullable()->default(true);
+            $table->string('dato1')->nullable();
+            $table->string('dato2')->nullable();
+            $table->string('dato3')->nullable();
+            $table->integer('valor1')->nullable();
+            $table->integer('valor2')->nullable();
+            $table->double('valor3')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

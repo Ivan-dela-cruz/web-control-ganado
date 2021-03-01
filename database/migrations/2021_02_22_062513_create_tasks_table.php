@@ -22,6 +22,12 @@ class CreateTasksTable extends Migration
             $table->date('date')->nullable();
             $table->time('hour')->nullable();
             $table->enum('status',['Pendiente','Finalizada'])->default('Pendiente');
+            $table->string('dato1')->nullable();
+            $table->string('dato2')->nullable();
+            $table->string('dato3')->nullable();
+            $table->integer('valor1')->nullable();
+            $table->integer('valor2')->nullable();
+            $table->double('valor3')->nullable();
             $table->timestamps();
         });
     }
