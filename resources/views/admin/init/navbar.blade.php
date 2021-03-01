@@ -127,7 +127,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                         <span class="pcoded-micon">
                             <i class="feather icon-layout"></i>
                         </span>
-                            <span class="pcoded-mtext">Emfermedades</span>
+                            <span class="pcoded-mtext">Enfermedades</span>
                         </a>
                         <ul class="pcoded-submenu">
                             <li><a href="{{route('diseases')}}">Lista de emfermedades</a></li>
