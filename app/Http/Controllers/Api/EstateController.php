@@ -9,6 +9,7 @@ use App\Employ;
 use App\Income;
 use App\Milking;
 use App\Checkup;
+use App\Animal;
 use App\Animal_production;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -234,9 +235,12 @@ class EstateController extends Controller
                   DB::raw('sum(milkings.total_liters) as sums')
         )
         ->whereMonth('milkings.created_at',$month)
+        ->where('animal_production.estate_id', $id)
         ->groupBy('animals.name', 'animals.code','animals.url_image')
         ->get();
-        $totalMonth = Milking::whereMonth('created_at',$month)->sum('total_liters');
+        $totalMonth = Income::whereMonth('created_at',$month)
+        ->where('estate_id', $id)
+        ->sum('total_liters');
         return response()->json([
             'success' => true,
             'estate'=>$estate->name,
@@ -291,6 +295,48 @@ class EstateController extends Controller
         ]);
 
         return $this->employeeTasks();
+    }
+    public function incomesByAnimal( $id)
+    {
+        Carbon::setLocale('es');
+        $now = Carbon::now("America/Guayaquil");
+    
+        $month = $now->month;
+        $nameMonth = $now->isoFormat('MMMM');
+        $animal = Animal::find($id);
+        DB::statement("SET lc_time_names = 'es_ES'");
+        $incomes =Milking::join('animal_production','milkings.animalproduction_id','=','animal_production.id')
+        ->join('animals','animal_production.animal_id','=','animals.id')
+        ->select(
+            DB::raw('sum(total_liters) as sums'),
+            DB::raw("DATE_FORMAT(milkings.created_at,'%M') as months"),
+            DB::raw("DATE_FORMAT(milkings.created_at,'%m') as monthKey")
+        )
+            ->whereYear('milkings.created_at', date('Y'))
+            ->where('animals.id', $id)
+            ->groupBy('months', 'monthKey')
+            ->orderBy('milkings.created_at', 'ASC')
+            ->get();
+
+        $milkings = Milking::join('animal_production','milkings.animalproduction_id','=','animal_production.id')
+        ->join('animals','animal_production.animal_id','=','animals.id')
+        ->select('milkings.date','animals.code','animals.url_image',
+                  DB::raw('sum(milkings.total_liters) as sums')
+        )
+        ->whereMonth('milkings.created_at',$month)
+        ->where('animals.id', $id)
+        ->groupBy('milkings.date', 'animals.code','animals.url_image')
+        ->get();
+        $totalMonth = Milking::whereMonth('created_at',$month)->sum('total_liters');
+        return response()->json([
+            'success' => true,
+            'estate'=>$animal->name,
+            'total'=>$totalMonth,
+            'month'=>Str::title($nameMonth),
+            'incomes' => $incomes,
+            'milkings'=>$milkings
+            
+        ], 200);
     }
 
 }
