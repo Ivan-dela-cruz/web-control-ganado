@@ -272,7 +272,7 @@
         <table id="facarticulo">
             <thead>
             <tr style="color: black; text-align: center; background-color: white;">
-                <th class="tdOrdenDetalle" style="text-align: center;">Total  <b>$suma</b> litros</th>
+                <th class="tdOrdenDetalle" style="text-align: center;">Total  <b>{{$suma}}</b> litros</th>
             </tr>
             <tr style="text-align: left;" id="fa">
 
