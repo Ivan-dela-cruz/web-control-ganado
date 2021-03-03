@@ -152,7 +152,7 @@ class DashboardController extends Controller
 
        
        $pdf = PDF::loadView('pdf.income', compact('income', 'details','estate'));
-       $nombrePdf = 'tratamiento-' . $income->id . '.pdf';
+       $nombrePdf = 'reporte-ordenio-' . $income->id . '.pdf';
 
        return $pdf->download($nombrePdf);
     }
