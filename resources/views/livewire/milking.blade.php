@@ -58,7 +58,7 @@
                     </li>
                     @if($estate_filter>0)
                     <li class="nav-item dropdown">
-                        <a class="btn btn-sm btn-info float-right ml-5 mt-2" target="blank" href="{{url('dashboard/report/incomes/lists?timeWhere='.$timeWhere.'&estate_filter='.$estate_filter.'&search='.$search)}}">Reporte</a>
+                        <a class="btn btn-sm btn-info float-right ml-1 mt-2" target="blank" href="{{url('dashboard/report/incomes/lists?timeWhere='.$timeWhere.'&estate_filter='.$estate_filter.'&search='.$search)}}">Reporte</a>
                     </li>
                     @endif
                    
