@@ -313,7 +313,7 @@
 
             <tr style="color: black; text-align: center; background-color: #FFFFFF; border: 1px solid #FFFFFF;">
                 <th style="text-align: left; font-size: 11px;" colspan="3">Reporte de tareas preteneciente a -  {{$employee->last_name}} {{$employee->name}}   {{$employee->dni}}</th>
-                <th style="text-align: left;  font-weight: normal; font-size: 11px; font-size: 12px;" colspan="2">Usuario
+                <th style="text-align: left;  font-weight: normal; font-size: 11px; font-size: 12px;" colspan="3">Usuario
                     - {{\Illuminate\Support\Facades\Auth::user()->name}} {{\Illuminate\Support\Facades\Auth::user()->last_name}}
                     Fecha
                     - {{\Carbon\Carbon::parse(time())->toFormattedDateString()}}
@@ -324,7 +324,8 @@
                 <th width="15px">N°</th>
                 <th style="text-align: center" width="150px">Titulo</th>
                 <th style="text-align: center" width="170px">Descripción</th>
-                <th style="text-align: center" width="150px">Fecha/Hora</th>
+                <th style="text-align: center" width="120px">Fecha/Hora</th>
+                <th style="text-align: center" width="30px">Estado</th>
                 <th style="text-align: center" width="120px">Observación</th>
 
             </tr>
@@ -353,6 +354,9 @@
                         {{\Carbon\Carbon::parse($task->hour)->format('H:i a')}}
                     </td>
                     <td >
+                        {{$task->status}}
+                    </td>
+                    <td >
                         
                     </td>
 
@@ -371,7 +375,7 @@
             <tr style="text-align: center; background-color: #FFFFFF; border: 1px solid #FFFFFF;">
                 <th style="text-align: left; font-size: 11px;" colspan="3">	</th>
               
-                <th style="text-align: right; font-size: 11px;"  colspan="2">Registros: {{$contador -1}}</th>
+                <th style="text-align: right; font-size: 11px;"  colspan="3">Registros: {{$contador -1}}</th>
                 
             </tr>
             </tbody>
