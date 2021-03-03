@@ -159,7 +159,13 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Tareas</h5>
+                                    @if($employee_id > 0)
+                                    <a class="btn btn-info btn-sm " target="blank" href="{{route('report-week-task',$employee_id)}}">Activadad de esta semana</a>
+                               
+                                    @endif
                                 </div>
+                               
+                                    
                                 <div class="card-body">
                                     <div class="new-task">
                                         @foreach($tasks as $task)
@@ -224,6 +230,7 @@
             </div>
 
             <div class="card user-profile-list ">
+                
                 <div class="card-body">
                     <div class="dt-responsive table-responsive">
                         <table id="user-list-table" class="table nowrap dataTable">

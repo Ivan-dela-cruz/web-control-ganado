@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Income;
 use App\Milking;
 use App\Estate;
+use App\Employ;
+use App\Task;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 class DashboardController extends Controller
@@ -222,6 +224,21 @@ class DashboardController extends Controller
  
         return $pdf->download($nombrePdf);
         
+    }
+
+
+    public function getWeekTaskByEmploye($id)
+    {
+        $now = Carbon::now();
+        $employee = Employ::find($id);
+
+        $tasks = Task::whereBetween('created_at',[Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+
+      
+        $pdf = PDF::loadView('pdf.report_weeks', compact('employee','tasks'));
+        $nombrePdf = 'reporte-lista-tareas-semanal-' . time() . '.pdf';
+ 
+        return $pdf->download($nombrePdf);
     }
 
 

@@ -23,7 +23,7 @@ class EmployeeTasks extends Component
     public $estate_filter = 0;
     public $employee_filter = 0;
     public $estates = [], $estate_id;
-    public $employees = [], $employee_id;
+    public $employees = [], $employee_id =0;
     public $tasks = [];
 
     public $task_id, $title, $description, $date, $hour;

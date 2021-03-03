@@ -67,6 +67,7 @@ Route::namespace('Admin')->group(function () {
         Route::get('dashboard/report/income/{id}','DashboardController@getPdfIncome')->name('report-income');
         
         Route::get('dashboard/report/incomes/lists','DashboardController@getPdfListIncomes')->name('report-list-income');
+        Route::get('dashboard/report/week/tasks/{id}','DashboardController@getWeekTaskByEmploye')->name('report-week-task');
 });
 });
 
