@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Income;
 use App\Milking;
+use App\Estate;
 use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 class DashboardController extends Controller
 {
 
@@ -155,6 +157,71 @@ class DashboardController extends Controller
        $nombrePdf = 'reporte-ordenio-' . $income->id . '.pdf';
 
        return $pdf->download($nombrePdf);
+    }
+
+    public function getPdfListIncomes(Request $request)
+    {
+        
+        $timeWhere = $request->query('timeWhere');
+        $estate_filter= $request->query('estate_filter');
+        $search= $request->query('search');
+        
+      
+
+        $estate = Estate::find($estate_filter);
+        $now = Carbon::now();
+        $incomes = null;
+        switch($timeWhere){
+
+            case 'day':
+                $time = $now->day;
+                $incomes = Income::where('estate_id', $estate_filter)
+                ->whereDay('created_at',$time)
+                ->get();
+                break;
+            case 'yesterday':
+                $now = Carbon::yesterday();
+                $time = $now->day;
+            
+                $incomes = Income::where('estate_id', $estate_filter)
+                ->whereDay('created_at',$time)
+                ->get();
+            
+                break;
+            case 'week':
+                $time = $now->startOfWeek()->format('Y-m-d');
+
+                $incomes = Income::where('estate_id', $estate_filter)
+                ->whereBetween('created_at',[Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->get();
+                break;
+            case 'month':
+                $time = $now->month;
+                $incomes = Income::where('estate_id', $estate_filter)
+                ->whereMonth('created_at',$time)
+                ->get();
+            
+                break;
+            case 'year':
+                $time = $now->year;
+                $incomes = Income::where('estate_id', $estate_filter)
+                ->whereYear('created_at',$time)
+                ->get();
+                break;
+            case '':
+                $time = "";
+                $incomes = Income::where('estate_id', $estate_filter)
+                ->get();
+                break; 
+        }
+
+
+    
+        $pdf = PDF::loadView('pdf.list_incomes', compact('incomes','estate','timeWhere'));
+        $nombrePdf = 'reporte-lista-ordenio-' . time() . '.pdf';
+ 
+        return $pdf->download($nombrePdf);
+        
     }
 
 

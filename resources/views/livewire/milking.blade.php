@@ -56,7 +56,12 @@
                             <button wire:click="clear" class="btn btn-outline-danger ">X</button>
                         @endif
                     </li>
-                    
+                    @if($estate_filter>0)
+                    <li class="nav-item dropdown">
+                        <a class="btn btn-sm btn-info float-right ml-5 mt-2" target="blank" href="{{url('dashboard/report/incomes/lists?timeWhere='.$timeWhere.'&estate_filter='.$estate_filter.'&search='.$search)}}">Reporte</a>
+                    </li>
+                    @endif
+                   
                 </ul>
             </nav>
     </div>
@@ -104,8 +109,8 @@
     <div class="card user-profile-list">
         <div class="card-header">
                 <h5>{{ \Carbon\Carbon::parse($income->date)->isoFormat('LL') }}  </h5>
+                <a class="btn btn-info btn-sm float-right ml-5" target="blank" href="{{route('report-income',$income->id)}}">Imprimir</a>
                 <span class="float-right">Total litros (<b>{{$income->total_liters}}</b>)</span>
-                <a class="btn btn-success btn-md" target="blank" href="{{route('report-income',$income->id)}}">Imprimir</a>
         </div>
         <div class="card-body">
             <div class="dt-responsive table-responsive">
