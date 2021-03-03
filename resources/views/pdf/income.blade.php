@@ -157,7 +157,7 @@
 
         <p id="tiutlo_pdf">
             <b>Hacienda Mayrita</b>
-            <br> Pichincha
+            <br> Reportes
         </p>
         <p id="encabezado">
 
