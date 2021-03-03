@@ -262,7 +262,7 @@
                 <tr>
                     <td class="tdOrdenDetalle">{{$contador}}</td>
                     <td style=" text-transform: uppercase;"  class="tdOrdenDetalle">
-                       {{$detail->animalproduction_id}}
+                       {{$detail->production->animal->name}}
                     </td>
                     <td class="tdOrdenDetalle">
                         {{$detail->total_liters}}
@@ -299,7 +299,11 @@
             {{----  @foreach ($detalles as $det)--}}
             <tr>
                 <td style=" text-transform: uppercase;" class="tdOrdenDetalle">
-                    
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                 </td>
                 
             </tr>
