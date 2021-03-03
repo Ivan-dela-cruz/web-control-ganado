@@ -232,7 +232,7 @@ class DashboardController extends Controller
         $now = Carbon::now();
         $employee = Employ::find($id);
 
-        $tasks = Task::whereBetween('created_at',[Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        $tasks = $employee->tasks()->whereBetween('created_at',[Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
 
       
         $pdf = PDF::loadView('pdf.report_weeks', compact('employee','tasks'));
