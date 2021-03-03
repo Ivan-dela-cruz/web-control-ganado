@@ -105,7 +105,7 @@
         <div class="card-header">
                 <h5>{{ \Carbon\Carbon::parse($income->date)->isoFormat('LL') }}  </h5>
                 <span class="float-right">Total litros (<b>{{$income->total_liters}}</b>)</span>
-
+                <a class="btn btn-success btn-md" target="blank" href="{{route('report-income',$income->id)}}">Imprimir</a>
         </div>
         <div class="card-body">
             <div class="dt-responsive table-responsive">

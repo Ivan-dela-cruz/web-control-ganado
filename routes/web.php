@@ -61,5 +61,11 @@ Route::namespace('Admin')->group(function () {
 
         //empleados
         Route::get('dashboard/employee/tasks','DashboardController@tasks_employees')->name('tasks');
+        
+        //reportes
+
+        Route::get('dashboard/report/income/{id}','DashboardController@getPdfIncome')->name('report-income');
 });
 });
+
+Route::get('download-apk','Admin\DashboardController@downloadapk')->name('download-apk');
