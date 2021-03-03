@@ -369,7 +369,7 @@
                 <th></th>
             </tr>
             <tr style="text-align: center; background-color: #FFFFFF; border: 1px solid #FFFFFF;">
-                <th style="text-align: left; font-size: 11px;" colspan="5">	</th>
+                <th style="text-align: left; font-size: 11px;" colspan="3">	</th>
               
                 <th style="text-align: right; font-size: 11px;"  colspan="2">Registros: {{$contador -1}}</th>
                 
