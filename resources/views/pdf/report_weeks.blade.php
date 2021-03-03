@@ -291,7 +291,7 @@
 <body>
 <section style="margin-bottom: 0px; height: auto;">
     <div class="encabezado">
-        <img class="logo" src="{{asset('img/logo_pantallas.png')}}" alt="CompartiendoCodigo">
+        <img class="logo"  src="{{asset('img/logocontrol.png')}}" alt="CompartiendoCodigo">
         <div class="box-company">
             <h1 class="name-company">Hacienda Mayrita</h1>
             <small class="dates-company">Avenida 5 de Junio y Río Langoa Sector la Estación, Pichincha,
@@ -314,16 +314,18 @@
             <tr style="color: black; text-align: center; background-color: #FFFFFF; border: 1px solid #FFFFFF;">
                 <th style="text-align: left; font-size: 11px;" colspan="3">Reporte de tareas preteneciente a -  {{$employee->last_name}} {{$employee->name}}   {{$employee->dni}}</th>
                 <th style="text-align: left;  font-weight: normal; font-size: 11px; font-size: 12px;" colspan="2">Usuario
-                    - {{\Illuminate\Support\Facades\Auth::user()->name}} {{\Illuminate\Support\Facades\Auth::user()->last_name}}</th>
-                <th style="text-align: right; font-weight: normal; font-size: 11px;" colspan="2">Fecha
-                    - {{\Carbon\Carbon::parse(time())->toFormattedDateString()}}</th>
+                    - {{\Illuminate\Support\Facades\Auth::user()->name}} {{\Illuminate\Support\Facades\Auth::user()->last_name}}
+                    Fecha
+                    - {{\Carbon\Carbon::parse(time())->toFormattedDateString()}}
+                </th>
+               
             </tr>
             <tr style="text-align: left; background-color: #5de2c9; border: 2px solid #5de2c9;">
                 <th width="15px">N°</th>
                 <th style="text-align: center" width="150px">Titulo</th>
                 <th style="text-align: center" width="170px">Descripción</th>
-                <th style="text-align: center" width="120px">Observación</th>
                 <th style="text-align: center" width="150px">Fecha/Hora</th>
+                <th style="text-align: center" width="120px">Observación</th>
 
             </tr>
             </thead>
@@ -343,16 +345,16 @@
                         {{$task->description}}
                     </td>
 
-                    <td >
-                        
-                    </td>
+                    
 
                     <td>
                         {{\Carbon\Carbon::setLocale('es')}}
                         {{\Carbon\Carbon::parse($task->date)->toFormattedDateString()}}
                         {{\Carbon\Carbon::parse($task->hour)->format('H:i a')}}
                     </td>
-                   
+                    <td >
+                        
+                    </td>
 
                 </tr>
                 {{$contador++}}
