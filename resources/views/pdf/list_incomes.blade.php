@@ -182,7 +182,7 @@
             <tr>
                 <th>
                     <p>
-                        Sr(a).
+                        Nombre.
                         <span style="font-weight: normal; text-transform: uppercase;">{!!$estate->name!!}</span>
                     </p>
                     <p id="cliente">
