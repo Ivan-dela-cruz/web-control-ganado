@@ -142,9 +142,14 @@ class="{{request()->is('/ruta')?'active':''}}"
                         </span>
                             <span class="pcoded-mtext">Veterinarios</span>
                         </a>
+                      
                         <ul class="pcoded-submenu">
                             <li><a href="{{route('veterinaries')}}">Lista de veterinarios</a></li>
+                            @canany(['create_checkup','read_checkup','update_checkup','destroy_checkup'])
+                            <li><a href="{{route('checkups')}}">Chequeos</a></li>
+                        @endcanany
                         </ul>
+                       
                     </li>
                 @endcanany
                 @canany(['create_animal','read_animal','update_animal','destroy_animal'])
@@ -173,6 +178,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                             <li><a href="{{route('mastitis')}}">Lista de Mastitis</a></li>
                         </ul>
                     </li>
+                   
                 @endcanany
                 @canany(['create_estate','read_estate','update_estate','destroy_estate','create_checkup','read_checkup','update_checkup','destroy_checkup','create_company','read_company','update_company','destroy_company','create_delivery','read_delivery','update_delivery','destroy_delivery'])
                     <li class="nav-item pcoded-hasmenu">
@@ -186,9 +192,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                             @canany(['create_estate','read_estate','update_estate','destroy_estate'])
                                 <li><a href="{{route('estates')}}">Haciendas</a></li>
                             @endcanany
-                            @canany(['create_checkup','read_checkup','update_checkup','destroy_checkup'])
-                                <li><a href="{{route('checkups')}}">Chequeos</a></li>
-                            @endcanany
+                           
                             @canany(['create_company','read_company','update_company','destroy_company'])
                                 <li><a href="{{route('companies')}}">Companias</a></li>
                             @endcanany
@@ -201,6 +205,19 @@ class="{{request()->is('/ruta')?'active':''}}"
                 @endcanany
 
             <!--code-->
+            @canany(['create_role','read_role','update_role','destroy_role'])
+                <li class="nav-item pcoded-hasmenu">
+                    <a href="javascript: void(0);" class="nav-link ">
+                    <span class="pcoded-micon">
+                        <i class="feather icon-layout"></i>
+                    </span>
+                        <span class="pcoded-mtext">Accesos</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li><a href="{{route('roles')}}">Roles & Permisos</a></li>
+                    </ul>
+                </li>
+            @endcanany
                 @canany(['create_purcharse','read_purcharse','update_purcharse','destroy_purcharse'])
                     <li class="nav-item pcoded-hasmenu">
                         <a href="javascript: return void(0);" class="nav-link ">
@@ -239,19 +256,7 @@ class="{{request()->is('/ruta')?'active':''}}"
                     </li>
                 @endcanany
 
-                @canany(['create_role','read_role','update_role','destroy_role'])
-                    <li class="nav-item pcoded-hasmenu">
-                        <a href="javascript: void(0);" class="nav-link ">
-                        <span class="pcoded-micon">
-                            <i class="feather icon-layout"></i>
-                        </span>
-                            <span class="pcoded-mtext">Accesos</span>
-                        </a>
-                        <ul class="pcoded-submenu">
-                            <li><a href="{{route('roles')}}">Roles & Permisos</a></li>
-                        </ul>
-                    </li>
-                @endcanany
+              
 
             </ul>
         </div>
